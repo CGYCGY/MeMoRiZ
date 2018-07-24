@@ -8,7 +8,7 @@
     tools:context=".RegisterActivity">
 
     <EditText
-        android:id="@+id/userID"
+        android:id="@+id/register_userID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -19,53 +19,53 @@
         tools:layout_editor_absoluteY="56dp" />
 
     <EditText
-        android:id="@+id/userPassword"
+        android:id="@+id/register_userPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/userID"
+        android:layout_below="@+id/register_userID"
         android:ems="10"
         android:hint="User Password"
         android:inputType="textPassword"
         android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/userID"
+        app:layout_constraintTop_toBottomOf="@+id/register_userID"
         tools:layout_editor_absoluteX="25dp"
         tools:layout_editor_absoluteY="56dp" />
 
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/userName"
-        android:layout_marginStart="67dp"
-        android:text="Register"
-        app:layout_constraintTop_toBottomOf="@+id/userEmail"
-        tools:layout_editor_absoluteX="83dp" />
-
     <EditText
-        android:id="@+id/userName"
+        android:id="@+id/register_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/userEmail"
+        android:layout_below="@+id/register_userEmail"
         android:ems="10"
         android:hint="User Name"
         android:inputType="textPersonName"
         android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/userPassword"
+        app:layout_constraintTop_toBottomOf="@+id/register_userPass"
         tools:layout_editor_absoluteX="25dp" />
 
     <EditText
-        android:id="@+id/userEmail"
+        android:id="@+id/register_userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/userPassword"
+        android:layout_below="@+id/register_userPass"
         android:ems="10"
         android:hint="User Email"
         android:inputType="textEmailAddress"
         android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/userName"
+        app:layout_constraintTop_toBottomOf="@+id/register_userName"
         tools:layout_editor_absoluteX="25dp" />
+
+    <Button
+        android:id="@+id/register_registerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/register_userName"
+        android:layout_marginStart="67dp"
+        android:text="@string/register"
+        app:layout_constraintTop_toBottomOf="@+id/register_userEmail"
+        tools:layout_editor_absoluteX="83dp" />
 </RelativeLayout>

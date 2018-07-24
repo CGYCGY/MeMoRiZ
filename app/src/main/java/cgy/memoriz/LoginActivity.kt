@@ -1,5 +1,6 @@
 package cgy.memoriz
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,48 +9,53 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONException
 import org.json.JSONObject
 
-class RegisterActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_login)
 
-//      set what happen after user click the register button
-        register_registerBtn.setOnClickListener {
-            register()
+        login_loginBtn.setOnClickListener {
+            login()
+        }
+
+        login_registerBtn.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    private fun register() {
+    private fun login() {
 
 //      start the StringRequest to get message from php after POST data to the database
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlRegister,
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlLogin,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
                         Toast.makeText(applicationContext, obj.getString("message"), Toast.LENGTH_LONG).show()
+
+                        val intent = Intent(this, RegisterActivity::class.java)
+                        startActivity(intent)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-//          pack the registration info to POSt it
+            //          pack the registration info to POSt it
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["ad_id"] = register_userID.text.toString()
-                params["ad_pass"] = register_userPass.text.toString()
-                params["ad_name"] = register_userName.text.toString()
-                params["ad_email"] = register_userEmail.text.toString()
+                params["ad_email"] = login_userEmail.text.toString()
+                params["ad_pass"] = login_userPass.text.toString()
                 return params
             }
         }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
-}//Log.d("testing", params["ad_id"])
+}
