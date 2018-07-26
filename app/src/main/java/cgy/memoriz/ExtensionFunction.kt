@@ -18,15 +18,6 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
-//validate for only 1 rule
-fun EditText.validate(rule: (String) -> Boolean, errorMessage: String) {
-    this.afterTextChanged {
-        this.error = if (!rule(it)) errorMessage else null
-    }
-//    this.error = if (!rule(this.text.toString())) errorMessage else null
-}
-
-//validate for more than 1 rule
 fun EditText.validate(rule: Array<(String) -> Boolean>, errorMessage: Array<String>) {
     this.afterTextChanged {
         loop@ for (i in rule.indices) {
