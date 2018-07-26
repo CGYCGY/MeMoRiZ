@@ -6,7 +6,6 @@ import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONException
@@ -17,6 +16,11 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        register_userPass.validate(arrayOf({ s -> s.isPassFormatCorrect()},{ s -> s.isEmailValid()}),
+                arrayOf("Password must be at least 6 character", "Valid email address required"))
+//        register_userEmail.validate({s -> s.isEmailValid()},
+//                "Valid email address required")
 
 //      set what happen after user click the register button
         register_registerBtn.setOnClickListener {
