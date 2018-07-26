@@ -19,8 +19,8 @@ class RegisterActivity : AppCompatActivity() {
 
         register_userPass.validate(arrayOf({ s -> s.isPassFormatCorrect()},{ s -> s.isEmailValid()}),
                 arrayOf("Password must be at least 6 character", "Valid email address required"))
-//        register_userEmail.validate({s -> s.isEmailValid()},
-//                "Valid email address required")
+        register_userEmail.validate({s -> s.isEmailValid()},
+                "Valid email address required")
 
 //      set what happen after user click the register button
         register_registerBtn.setOnClickListener {
