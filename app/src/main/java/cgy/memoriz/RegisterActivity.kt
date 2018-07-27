@@ -17,8 +17,10 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        register_userPass.validate(arrayOf({ s -> s.isPassFormatCorrect()},{ s -> s.isEmailValid()}),
-                arrayOf("Password must be at least 6 character", "Valid email address required"))
+        register_userName.validate(arrayOf({ s -> s.isOnlyLetterOrDigit()}, { s -> s.isLengthAtLeast(6)}),
+                arrayOf("Username only accept letter and digit", "Username must be at least 6 character"))
+        register_userPass.validate(arrayOf({ s -> s.isLengthAtLeast(6)},{ s -> s.isPassMix()}),
+                arrayOf("Password must be at least 6 character", "Password must contain number, uppercase and lowercase letter"))
         register_userEmail.validate(arrayOf({ s -> s.isEmailValid()}),
                 arrayOf("Valid email address required"))
 
@@ -47,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["ad_id"] = register_userID.text.toString()
+//                params["ad_id"] = register_userID.text.toString()
                 params["ad_pass"] = register_userPass.text.toString()
                 params["ad_name"] = register_userName.text.toString()
                 params["ad_email"] = register_userEmail.text.toString()
