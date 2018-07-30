@@ -31,7 +31,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register() {
-
 //      start the StringRequest to get message from php after POST data to the database
         val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlRegister,
                 Response.Listener<String> { response ->
@@ -51,6 +50,12 @@ class RegisterActivity : AppCompatActivity() {
                 val params = HashMap<String, String>()
 //                params["ad_id"] = register_userID.text.toString()
                 params["ad_pass"] = register_userPass.text.toString()
+
+//                var test = "aaaaaa"
+//                test.encryptPass()
+                val test = "DBCFcJNcMvuJTLBtkmABfX5DUw2CV2jKhhnJ2hUAAAA="
+                test.decryptPass()
+
                 params["ad_name"] = register_userName.text.toString()
                 params["ad_email"] = register_userEmail.text.toString()
                 return params
