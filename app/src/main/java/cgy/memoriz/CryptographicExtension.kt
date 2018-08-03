@@ -9,30 +9,39 @@ import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
+val secureRandom = SecureRandom()
+
+fun generateIV() : ByteArray {
+    val iv = ByteArray(12)
+    secureRandom.nextBytes(iv)
+    return iv
+}
+
 fun String.encryptPass() : String {
     Log.d("string", this)
-    val secureRandom = SecureRandom()
     val key = ByteArray(16)
-    val iv = ByteArray(12)
 
     Log.d("key", Base64.encodeToString(key, Base64.DEFAULT))
     secureRandom.nextBytes(key)
-    secureRandom.nextBytes(iv)
 
     Log.d("key", Base64.encodeToString(key, Base64.DEFAULT))
 
+    val iv = generateIV()
+
+    Log.d("iv", Base64.encodeToString(iv, Base64.DEFAULT))
+
     val secretKey = SecretKeySpec(key, "AES")
     val paramSpec = GCMParameterSpec(128, iv)
-    val encrypt = Cipher.getInstance("AES/CBC/PKCS5Padding")
+    val encrypt = Cipher.getInstance("AES/GCM/NoPadding")
     encrypt.init(Cipher.ENCRYPT_MODE, secretKey, paramSpec)
 
 //    Log.d("secret key", secretKey.toString())
 
     val tempPass = encrypt.doFinal(this.toByteArray(Charsets.UTF_8))
-    val byteBuffer = ByteBuffer.allocate(4 + iv.size + tempPass.size)
+    val byteBuffer = ByteBuffer.allocate(1 + iv.size + tempPass.size)
     Log.d("iv size", iv.size.toString())
     byteBuffer.put(iv.size.toByte())
-    byteBuffer.put(iv)
+    byteBuffer.put(iv)      //這裡開始encode decode try how
     byteBuffer.put(tempPass)
     val encryptedPass = byteBuffer.array()
 
@@ -52,19 +61,23 @@ fun String.decryptPass() : String {
 
     val byteBuffer = ByteBuffer.wrap(byteThis)
 
-    if (byteBuffer.int < 12 || byteBuffer.int >= 16) throw IllegalArgumentException("invalid iv length")
+    Log.d("byteBuffer", byteBuffer.get().toInt().toString())
+    Log.d("byteBuffer", byteBuffer.getInt(0).toString())
+    Log.d("byteBuffer", byteBuffer.getInt(1).toString())
+    Log.d("byteBuffer", byteBuffer.getInt(2).toString())
+    Log.d("byteBuffer", byteBuffer.getInt(3).toString())
 
-    Log.d("byteBuffer", byteBuffer.int.toString())
+//    if (byteBuffer.int < 12 || byteBuffer.int >= 16) throw IllegalArgumentException("invalid iv length")
 
-    val iv = ByteArray(byteBuffer.int)
+    val iv = ByteArray(12)
     byteBuffer.get(iv)
     val tempPass = ByteArray(byteBuffer.remaining())
     byteBuffer.get(tempPass)
 
 
-    val key = Base64.decode("0H97GG3ZeMKfIU3UPRknzA==", Base64.DEFAULT)
+    val key = Base64.decode("KOQsjolqMGJiGCL5KU62NQ==", Base64.DEFAULT)
 
-    val decrypt = Cipher.getInstance("AES/CBC/PKCS5Padding")
+    val decrypt = Cipher.getInstance("AES/GCM/NoPadding")
     decrypt.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(128, iv))
     val decryptedPass = decrypt.doFinal(tempPass)
 

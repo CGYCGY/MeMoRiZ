@@ -51,9 +51,9 @@ class RegisterActivity : AppCompatActivity() {
 //                params["ad_id"] = register_userID.text.toString()
                 params["ad_pass"] = register_userPass.text.toString()
 
-//                var test = "aaaaaa"
-//                test.encryptPass()
-                val test = "DBCFcJNcMvuJTLBtkmABfX5DUw2CV2jKhhnJ2hUAAAA="
+                var test = "aaaaaa"
+                test.encryptPass()
+                test = "DP96g/FxCglrEgVDlhEWpGRx3BhqbuhCs8is1TGXhidfOgU="
                 test.decryptPass()
 
                 params["ad_name"] = register_userName.text.toString()
