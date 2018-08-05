@@ -53,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 var test = "aaaaaa"
                 test.encryptPass()
-                test = "DP96g/FxCglrEgVDlhEWpGRx3BhqbuhCs8is1TGXhidfOgU="
+                test = "DJpGiO0XE9pz3bwmIixr6cOFVaw4kMj6Uhhmroc5ayDMYK8="
                 test.decryptPass()
 
                 params["ad_name"] = register_userName.text.toString()

@@ -40,6 +40,7 @@ fun String.encryptPass() : String {
     val tempPass = encrypt.doFinal(this.toByteArray(Charsets.UTF_8))
     val byteBuffer = ByteBuffer.allocate(1 + iv.size + tempPass.size)
     Log.d("iv size", iv.size.toString())
+    Log.d("tempPass size", tempPass.size.toString())
     byteBuffer.put(iv.size.toByte())
     byteBuffer.put(iv)      //這裡開始encode decode try how
     byteBuffer.put(tempPass)
@@ -49,7 +50,7 @@ fun String.encryptPass() : String {
 
     Log.d("before encode size", encryptedPass.size.toString())
     Log.d("encrypted string", Base64.encodeToString(encryptedPass, Base64.DEFAULT))
-    return encryptedPass.toString(Charsets.UTF_8)
+    return Base64.encodeToString(encryptedPass, Base64.DEFAULT)
 }
 
 fun String.decryptPass() : String {
@@ -57,30 +58,44 @@ fun String.decryptPass() : String {
 
     val byteThis = Base64.decode(this, Base64.DEFAULT)
 
-    Log.d("after encode size", byteThis.size.toString())
+    Log.d("after decode size", byteThis.size.toString())
 
     val byteBuffer = ByteBuffer.wrap(byteThis)
+    Log.d("byteBuffer position", byteBuffer.position().toString())
+    val IVSize = byteBuffer.get().toInt()
+//    byteBuffer.position(0)
 
-    Log.d("byteBuffer", byteBuffer.get().toInt().toString())
-    Log.d("byteBuffer", byteBuffer.getInt(0).toString())
-    Log.d("byteBuffer", byteBuffer.getInt(1).toString())
-    Log.d("byteBuffer", byteBuffer.getInt(2).toString())
-    Log.d("byteBuffer", byteBuffer.getInt(3).toString())
+//    Log.d("byteBuffer", byteBuffer.capacity().toString())
+//    Log.d("byteBuffer", byteBuffer.get().toInt().toString())
+//    Log.d("byteBuffer", byteBuffer.int.toString())
+//    Log.d("byteBuffer", byteBuffer.get().toString())
+//    Log.d("byteBuffer get Int", byteBuffer.getInt(0).toString())
+//    Log.d("byteBuffer get Int", byteBuffer.getInt(1).toString())
+//    Log.d("byteBuffer get Int", byteBuffer.getInt(2).toString())
+//    Log.d("byteBuffer get Int", byteBuffer.getInt(3).toString())
 
-//    if (byteBuffer.int < 12 || byteBuffer.int >= 16) throw IllegalArgumentException("invalid iv length")
+    if (IVSize < 12 || IVSize >= 16) throw IllegalArgumentException("invalid iv length")
 
-    val iv = ByteArray(12)
+    Log.d("byteBuffer position", byteBuffer.position().toString())
+    val iv = ByteArray(IVSize)
     byteBuffer.get(iv)
+
+    Log.d("iv", Base64.encodeToString(iv, Base64.DEFAULT))
+
+    Log.d("byteBuffer position", byteBuffer.position().toString())
+
     val tempPass = ByteArray(byteBuffer.remaining())
     byteBuffer.get(tempPass)
 
+    Log.d("byteBuffer position", byteBuffer.position().toString())
 
-    val key = Base64.decode("KOQsjolqMGJiGCL5KU62NQ==", Base64.DEFAULT)
+    val key = Base64.decode("v7Hfvbf7h8jka3xpVtL7Mw==", Base64.DEFAULT)
 
     val decrypt = Cipher.getInstance("AES/GCM/NoPadding")
     decrypt.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(128, iv))
     val decryptedPass = decrypt.doFinal(tempPass)
 
-    Log.d("encrypted string", Base64.encodeToString(decryptedPass, Base64.DEFAULT))
-    return decryptedPass.toString(Charsets.UTF_8)
+    Log.d("decrypted string", String(decryptedPass))
+    return String(decryptedPass)
 }
+
