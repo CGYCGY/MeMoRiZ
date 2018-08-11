@@ -3,11 +3,11 @@ package cgy.memoriz
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONException
@@ -37,10 +37,21 @@ class LoginActivity : AppCompatActivity() {
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
-                        Toast.makeText(applicationContext, obj.getString("message"), Toast.LENGTH_LONG).show()
+                        val checkEmail = obj.getString("message").contains("Welcome", false)
+                        val checkPassword = (obj.getString("password").decryptPass() == login_userPass.text.toString())
+                        Log.d("check email", checkEmail.toString())
+                        Log.d("check password", checkPassword.toString())
+                        Log.d("password keyin", login_userPass.text.toString())
 
-                        val intent = Intent(this, RegisterActivity::class.java)
-                        startActivity(intent)
+                        if (checkEmail && checkPassword) {
+//                            val intent = Intent(this, RegisterActivity::class.java)
+//                            startActivity(intent)
+                            Toast.makeText(applicationContext, obj.getString("message"), Toast.LENGTH_LONG).show()
+                        }
+                        else if (checkEmail && !checkPassword) {
+                            Toast.makeText(applicationContext, "Your password is incorrect", Toast.LENGTH_LONG).show()
+                        }
+                        else Toast.makeText(applicationContext, obj.getString("message"), Toast.LENGTH_LONG).show()
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -52,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
                 params["ad_email"] = login_userEmail.text.toString()
-                params["ad_pass"] = login_userPass.text.toString()
+//                params["ad_pass"] = login_userPass.text.toString().decryptPass()
                 return params
             }
         }

@@ -1,5 +1,6 @@
 package cgy.memoriz
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -38,6 +39,11 @@ class RegisterActivity : AppCompatActivity() {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
                         Toast.makeText(applicationContext, obj.getString("message"), Toast.LENGTH_LONG).show()
+
+                        if (obj.getString("message") == "User infomation added successfully") {
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -49,12 +55,10 @@ class RegisterActivity : AppCompatActivity() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 //                params["ad_id"] = register_userID.text.toString()
-                params["ad_pass"] = register_userPass.text.toString()
+                params["ad_pass"] = register_userPass.text.toString().encryptPass()
 
-                var test = "aaaaaa"
-                test.encryptPass()
-                test = "DJpGiO0XE9pz3bwmIixr6cOFVaw4kMj6Uhhmroc5ayDMYK8="
-                test.decryptPass()
+//                test = "DJpGiO0XE9pz3bwmIixr6cOFVaw4kMj6Uhhmroc5ayDMYK8="
+//                test.decryptPass()
 
                 params["ad_name"] = register_userName.text.toString()
                 params["ad_email"] = register_userEmail.text.toString()
