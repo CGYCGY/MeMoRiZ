@@ -51,6 +51,7 @@
         android:layout_below="@+id/register_userPass"
         android:layout_marginStart="67dp"
         android:text="@string/register"
+        android:clickable="false"
         app:layout_constraintTop_toBottomOf="@+id/register_userEmail"
         tools:layout_editor_absoluteX="83dp" />
 </RelativeLayout>

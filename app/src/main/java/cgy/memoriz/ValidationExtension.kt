@@ -2,10 +2,9 @@ package cgy.memoriz
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
-
-
 
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object: TextWatcher {
@@ -17,20 +16,32 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
-fun EditText.validate(rule: Array<(String) -> Boolean>, errorMessage: Array<String>) {
+fun EditText.validate(rule: Array<(String) -> Boolean>, errorMessage: Array<String>, sharedPref: sharedPref, num : Int) {
     this.afterTextChanged {
         loop@ for (i in rule.indices) {
             if (!rule[i](it)) {
                 this.error = errorMessage[i]
+                recordErrorCount(num, false, sharedPref)
+                Log.d("error record", num.toString()+"false")
                 break@loop
-            } else this.error = null
+            } else {
+                this.error = null
+                recordErrorCount(num, true, sharedPref)
+                Log.d("error record", num.toString()+"true")
+            }
         }
     }
     loop@ for (i in rule.indices) {
         if (!rule[i](this.text.toString())) {
             this.error = errorMessage[i]
+            recordErrorCount(num, false, sharedPref)
+            Log.d("error record", num.toString()+"false")
             break@loop
-        } else this.error = null
+        } else {
+            this.error = null
+            recordErrorCount(num, true, sharedPref)
+            Log.d("error record", num.toString()+"true")
+        }
     }
 }
 
@@ -64,4 +75,20 @@ fun String.isPassMix(): Boolean {
         }
     }
     return checker[0] && checker[1] && checker[2]
+}
+
+fun recordErrorCount(num : Int, bool : Boolean, sharedPref: sharedPref) {
+    if (num == 1) {
+        sharedPref.registerError1 = bool
+    }
+    else if (num == 2) {
+        sharedPref.registerError2 = bool
+    }
+    else if (num == 3) {
+        sharedPref.registerError3 = bool
+    }
+}
+
+fun checkErrorExist(sharedPref: sharedPref) : Boolean {
+    return (sharedPref.registerError1 && sharedPref.registerError2 && sharedPref.registerError3)
 }
