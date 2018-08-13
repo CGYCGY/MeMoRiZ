@@ -3,6 +3,7 @@ package cgy.memoriz
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -17,17 +18,19 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        sharedPref.init(this)
 
         register_userName.validate(arrayOf({ s -> s.isOnlyLetterOrDigit()}, { s -> s.isLengthAtLeast(6)}),
-                arrayOf("Username only accept letter and digit", "Username must be at least 6 character"))
+                arrayOf("Username only accept letter and digit", "Username must be at least 6 character"), sharedPref, 1)
         register_userPass.validate(arrayOf({ s -> s.isLengthAtLeast(6)},{ s -> s.isPassMix()}),
-                arrayOf("Password must be at least 6 character", "Password must contain number, uppercase and lowercase letter"))
+                arrayOf("Password must be at least 6 character", "Password must contain number, uppercase and lowercase letter"), sharedPref, 2)
         register_userEmail.validate(arrayOf({ s -> s.isEmailValid()}),
-                arrayOf("Valid email address required"))
+                arrayOf("Valid email address required"), sharedPref, 3)
 
 //      set what happen after user click the register button
         register_registerBtn.setOnClickListener {
-            register()
+            Log.d("check error exist", checkErrorExist(sharedPref).toString())
+            if (checkErrorExist(sharedPref)) register()
         }
     }
 
