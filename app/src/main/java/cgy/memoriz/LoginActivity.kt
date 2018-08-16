@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        SharedPref.init(this)
 
         login_loginBtn.setOnClickListener {
             login()
@@ -44,9 +45,14 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("password keyin", login_userPass.text.toString())
 
                         if (checkEmail && checkPassword) {
-//                            val intent = Intent(this, RegisterActivity::class.java)
-//                            startActivity(intent)
                             Toast.makeText(applicationContext, obj.getString("message"), Toast.LENGTH_LONG).show()
+
+                            SharedPref.userName = obj.getString("message").substring(8)
+                            SharedPref.userEmail = login_userEmail.text.toString()
+                            Log.d("user Name", SharedPref.userName)
+
+                            val intent = Intent(this, MainMenuActivity::class.java)
+                            startActivity(intent)
                         }
                         else if (checkEmail && !checkPassword) {
                             Toast.makeText(applicationContext, "Your password is incorrect", Toast.LENGTH_LONG).show()
@@ -58,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-            //          pack the registration info to POSt it
+            //          pack the registration info to POST it
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()

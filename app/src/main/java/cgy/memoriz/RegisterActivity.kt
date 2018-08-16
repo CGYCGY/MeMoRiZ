@@ -18,19 +18,19 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        sharedPref.init(this)
+        SharedPref.init(this)
 
         register_userName.validate(arrayOf({ s -> s.isOnlyLetterOrDigit()}, { s -> s.isLengthAtLeast(6)}),
-                arrayOf("Username only accept letter and digit", "Username must be at least 6 character"), sharedPref, 1)
+                arrayOf("Username only accept letter and digit", "Username must be at least 6 character"), SharedPref, 1)
         register_userPass.validate(arrayOf({ s -> s.isLengthAtLeast(6)},{ s -> s.isPassMix()}),
-                arrayOf("Password must be at least 6 character", "Password must contain number, uppercase and lowercase letter"), sharedPref, 2)
+                arrayOf("Password must be at least 6 character", "Password must contain number, uppercase and lowercase letter"), SharedPref, 2)
         register_userEmail.validate(arrayOf({ s -> s.isEmailValid()}),
-                arrayOf("Valid email address required"), sharedPref, 3)
+                arrayOf("Valid email address required"), SharedPref, 3)
 
 //      set what happen after user click the register button
         register_registerBtn.setOnClickListener {
-            Log.d("check error exist", checkErrorExist(sharedPref).toString())
-            if (checkErrorExist(sharedPref)) register()
+            Log.d("check error exist", checkErrorExist(SharedPref).toString())
+            if (checkErrorExist(SharedPref)) register()
         }
     }
 
