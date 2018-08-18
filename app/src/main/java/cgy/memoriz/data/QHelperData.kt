@@ -1,6 +1,8 @@
 package cgy.memoriz.data
 
-open class QHelperData {
+import java.io.Serializable
+
+open class QHelperData : Serializable {
 
     var title : String? = null
     var body : String? = null

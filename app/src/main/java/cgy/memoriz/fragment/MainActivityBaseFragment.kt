@@ -9,14 +9,11 @@ open class MainActivityBaseFragment : Fragment() {
 
     /*
     * This class main function is allow other fragment use some common .
-    * you just need use the following , other no touch nwm. no need chg implementation just used
     * 1 . showProgressDialog(), hideProgressDialog()
     * 2. showToastMessage(your message)
     * 3. switchFragment (your next fragment)
     * 4. setTitle ("your toolbar title")
-    * No need care too much how to implement. The function is well done.
-    * Just remember extend all your fragment to this class.
-    * you can also start new activity also in fragment
+    * can start new activity also in fragment
     * */
 
     private val LOG_TAG = "MainBaseFragment"

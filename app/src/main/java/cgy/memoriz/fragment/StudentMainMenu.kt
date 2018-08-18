@@ -11,7 +11,7 @@ import cgy.memoriz.fragment.mainmenu.second.MainMenu2
 import cgy.memoriz.fragment.second.SecondPage
 import kotlinx.android.synthetic.main.fragment_home_page.view.*
 
-/*Every fragment exted MainActivityBaseFragment() so that can use the function implemented.
+/*Every fragment extend MainActivityBaseFragment() so that can use the function implemented.
  * Default will extend fragment. Change it.*/
 class StudentMainMenu : MainActivityBaseFragment() {
 

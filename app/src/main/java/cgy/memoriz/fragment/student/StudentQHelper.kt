@@ -38,6 +38,7 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
 
     override fun onClick(question: QHelperData) {
         Log.d("CLICKED HERE YOUR DATA", question.title)
+        switchFragment(StudentQHelperDetail().newInstance(question))
     }
 
     override fun onLongClick(question: QHelperData) {
