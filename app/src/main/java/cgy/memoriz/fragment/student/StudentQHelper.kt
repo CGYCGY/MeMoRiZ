@@ -116,6 +116,7 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
 
         for (i in 0 until obj.length())
             list.add(QHelperData(
+                    obj.getJSONObject(i).getInt("qstn_id"),
                     obj.getJSONObject(i).getString("qstn_title"),
                     obj.getJSONObject(i).getString("qstn_body"),
                     obj.getJSONObject(i).getString("qstn_datetime"),
