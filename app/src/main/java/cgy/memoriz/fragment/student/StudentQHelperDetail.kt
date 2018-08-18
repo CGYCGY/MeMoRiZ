@@ -9,15 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.*
-import cgy.memoriz.adapter.QHelperAdapterInterface
 import cgy.memoriz.data.QHelperData
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import cgy.memoriz.fragment.StudentMainMenu
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_create_question.view.*
 import kotlinx.android.synthetic.main.fragment_qhelper_detail.view.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -60,7 +57,7 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
         return view
     }
 
-    fun update(question: QHelperData) {
+    private fun update(question: QHelperData) {
         val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateQuestion,
                 Response.Listener<String> { response ->
                     try {
