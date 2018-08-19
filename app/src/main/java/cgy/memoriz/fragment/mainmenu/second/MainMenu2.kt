@@ -8,6 +8,7 @@ import cgy.memoriz.R
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.fragment.StudentMainMenu
 import cgy.memoriz.fragment.student.StudentQHelper
+import cgy.memoriz.fragment.student.StudentQSolver
 import kotlinx.android.synthetic.main.fragment_student_mainmenu2.view.*
 
 class MainMenu2 : MainActivityBaseFragment() {
@@ -62,7 +63,7 @@ class MainMenu2 : MainActivityBaseFragment() {
              */
 
             view.studentQSolverBtn.setOnClickListener {
-                switchFragment(StudentMainMenu())
+                switchFragment(StudentQSolver())
             }
         }
         else if (textGet == "Classroom") {

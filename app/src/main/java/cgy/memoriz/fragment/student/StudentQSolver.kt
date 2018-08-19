@@ -8,37 +8,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import cgy.memoriz.*
-import cgy.memoriz.adapter.QHelperAdapter
+import cgy.memoriz.R
+import cgy.memoriz.URLEndpoint
+import cgy.memoriz.VolleySingleton
 import cgy.memoriz.adapter.QHelperAdapterInterface
+import cgy.memoriz.adapter.QSolverAdapter
 import cgy.memoriz.data.QuestionData
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_student_qhelper.view.*
+import kotlinx.android.synthetic.main.fragment_student_qsolver.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
-    private lateinit var recycleAdapter: QHelperAdapter
+class StudentQSolver : MainActivityBaseFragment(),QHelperAdapterInterface {
+    private lateinit var recycleAdapter: QSolverAdapter
     private lateinit var recycleView: RecyclerView
 
     private var textGet : String ?= null
 
-    fun newInstance(text : String) : StudentQHelper {
+    fun newInstance(text : String) : StudentQSolver {
         val args = Bundle()
         args.putString("value1", text)
-        val fragment = StudentQHelper()
+        val fragment = StudentQSolver()
         fragment.arguments = args
         return fragment
     }
 
     override fun onClick(question: QuestionData) {
         Log.d("CLICKED HERE YOUR DATA", question.title)
-        switchFragment(StudentQHelperDetail().newInstance(question))
+//        switchFragment(StudentQHelperDetail().newInstance(question))
     }
 
     override fun onLongClick(question: QuestionData) {
@@ -47,8 +48,8 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_student_qhelper, container, false)
-        recycleView = view.qHelper
+        val view = inflater.inflate(R.layout.fragment_student_qsolver, container, false)
+        recycleView = view.qSolver
         /*
          * Get the data from previous fragment
          */
@@ -57,21 +58,17 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
             textGet = bundle.getString("value1")
             setTitle("$textGet")
         }else {
-            setTitle("Question Helper")
+            setTitle("Question Solver")
         }
 
         loadQuestionList()
-
-        view.createQuestionBtn.setOnClickListener {
-            switchFragment(CreateQuestion())
-        }
 
         return view
     }
 
     private fun setRecycleView(questionList: ArrayList<QuestionData>) {
         try {
-            recycleAdapter = QHelperAdapter(context!!, questionList, this)
+            recycleAdapter = QSolverAdapter(context!!, questionList, this)
             val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
             recycleView.layoutManager = recycleLayout
             recycleView.adapter = recycleAdapter
@@ -81,7 +78,7 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
     }
 
     private fun loadQuestionList() {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetQuestionnHelper,
+        val stringRequest = object : StringRequest(Request.Method.GET, URLEndpoint.urlGetQuestionSolver,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
@@ -101,12 +98,6 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-            @Throws(AuthFailureError::class)
-            override fun getParams(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params["ad_email"] = SharedPref.userEmail
-                return params
-            }
         }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
@@ -117,6 +108,7 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
         for (i in 0 until obj.length())
             list.add(QuestionData(
                     obj.getJSONObject(i).getInt("qstn_id"),
+                    obj.getJSONObject(i).getString("qstn_owner"),
                     obj.getJSONObject(i).getString("qstn_title"),
                     obj.getJSONObject(i).getString("qstn_body"),
                     obj.getJSONObject(i).getString("qstn_datetime"),

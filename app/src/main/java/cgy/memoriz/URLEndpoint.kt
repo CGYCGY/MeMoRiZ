@@ -7,4 +7,5 @@ object URLEndpoint {
     val urlInsertQuestion = urlRoot + "insert_question"
     val urlGetQuestionnHelper = urlRoot + "get_question_helper"
     val urlUpdateQuestion = urlRoot + "update_question"
+    val urlGetQuestionSolver = urlRoot + "get_question_solver"
 }

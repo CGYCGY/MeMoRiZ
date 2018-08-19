@@ -83,7 +83,7 @@ open class MainActivityBaseFragment : Fragment() {
         }
     }
 
-    private fun getBaseActivity(): MainMenuBase? {
+    protected fun getBaseActivity(): MainMenuBase? {
         try {
             return super.getActivity() as MainMenuBase
         } catch (e: Exception) {

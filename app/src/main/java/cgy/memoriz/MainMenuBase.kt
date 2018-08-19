@@ -156,4 +156,8 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
             progressDialog.dismiss()
         }
     }
+
+    fun manualClickBack() {
+        onBackPressed()
+    }
 }

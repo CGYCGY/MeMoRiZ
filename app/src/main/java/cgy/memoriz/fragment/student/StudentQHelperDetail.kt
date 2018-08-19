@@ -1,6 +1,5 @@
 package cgy.memoriz.fragment.student
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -9,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.*
-import cgy.memoriz.data.QHelperData
+import cgy.memoriz.data.QuestionData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -21,7 +20,7 @@ import org.json.JSONObject
 
 class StudentQHelperDetail : MainActivityBaseFragment() {
 
-    fun newInstance(question: QHelperData): StudentQHelperDetail{
+    fun newInstance(question: QuestionData): StudentQHelperDetail{
         val args = Bundle()
         args.putSerializable("question detail", question)
         val fragment = StudentQHelperDetail()
@@ -37,7 +36,7 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
          */
         val bundle = arguments
         if (bundle != null) {
-            val question : QHelperData = bundle.getSerializable("question detail") as QHelperData
+            val question : QuestionData = bundle.getSerializable("question detail") as QuestionData
 
             view.qhelper_detail_title.text = Editable.Factory.getInstance().newEditable(question.title)
             view.qhelper_detail_body.text = Editable.Factory.getInstance().newEditable(question.body)
@@ -51,13 +50,13 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
             }
 
         }else {
-            Log.e("missing QHelperData", "StudentQHelperDetail got error!")
+            Log.e("missing QuestionData", "StudentQHelperDetail got error!")
         }
 
         return view
     }
 
-    private fun update(question: QHelperData) {
+    private fun update(question: QuestionData) {
         val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateQuestion,
                 Response.Listener<String> { response ->
                     try {
@@ -66,9 +65,10 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
                         if (obj.getString("message") == "Question updated successfully") {
-                            val intent = Intent(context, MainMenuActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            startActivity(intent)
+                            super.getBaseActivity()?.manualClickBack()
+//                            val intent = Intent(context, MainMenuActivity::class.java)
+//                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                            startActivity(intent)
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()

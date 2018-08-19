@@ -1,10 +1,10 @@
 package cgy.memoriz.adapter
 
-import cgy.memoriz.data.QHelperData
+import cgy.memoriz.data.QuestionData
 
 interface QHelperAdapterInterface {
 
-    fun onClick(question : QHelperData)
+    fun onClick(question : QuestionData)
 
-    fun onLongClick(question : QHelperData)
+    fun onLongClick(question : QuestionData)
 }

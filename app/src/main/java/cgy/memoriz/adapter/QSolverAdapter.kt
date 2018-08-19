@@ -8,26 +8,26 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cgy.memoriz.R
 import cgy.memoriz.data.QuestionData
-import kotlinx.android.synthetic.main.base_list_qhelper.view.*
+import kotlinx.android.synthetic.main.base_list_qsolver.view.*
 
-class QHelperAdapter : RecyclerView.Adapter<QHelperAdapter.ViewHolder> {
+class QSolverAdapter : RecyclerView.Adapter<QSolverAdapter.ViewHolder> {
 
 
     private var c: Context
     private var questionList : List<QuestionData>
-    private var qHelperView : QHelperAdapterInterface
+    private var qSolverView : QHelperAdapterInterface
     var count = 1
 
-    constructor(c: Context, dbList: List<QuestionData>, qHelperView : QHelperAdapterInterface) {
+    constructor(c: Context, dbList: List<QuestionData>, qSolverView : QHelperAdapterInterface) {
         this.c = c
         this.questionList = dbList
-        this.qHelperView = qHelperView
+        this.qSolverView = qSolverView
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.base_list_qhelper, parent, false)
+                .inflate(R.layout.base_list_qsolver, parent, false)
         val holder = ViewHolder(view)
         return holder
     }
@@ -37,15 +37,16 @@ class QHelperAdapter : RecyclerView.Adapter<QHelperAdapter.ViewHolder> {
         val data = questionList[position]
         holder.title.text = data.title
         holder.body.text = data.body
+        holder.owner.text = data.owner
         holder.datetime.text = data.datetime
         holder.condition.text = data.condition
 
         holder.itemView?.setOnClickListener(View.OnClickListener {
-              qHelperView.onClick(data)
+            qSolverView.onClick(data)
         })
 
         holder.itemView?.setOnLongClickListener(View.OnLongClickListener {
-               qHelperView.onLongClick(data)
+            qSolverView.onLongClick(data)
             true
         })
     }
@@ -57,14 +58,16 @@ class QHelperAdapter : RecyclerView.Adapter<QHelperAdapter.ViewHolder> {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView
         var body: TextView
+        var owner: TextView
         var datetime: TextView
         var condition: TextView
 
         init {
-            title = itemView.qhelper_title
-            body = itemView.qhelper_body
-            datetime = itemView.qhelper_datetime
-            condition = itemView.qhelper_condition
+            title = itemView.qsolver_title
+            body = itemView.qsolver_body
+            owner = itemView.qsolver_owner
+            datetime = itemView.qsolver_datetime
+            condition = itemView.qsolver_condition
         }
     }
 }
