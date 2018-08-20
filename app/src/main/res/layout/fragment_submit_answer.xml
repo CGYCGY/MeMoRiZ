@@ -5,28 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.student.CreateQuestion">
+    tools:context=".fragment.student.SubmitAnswer">
+
+    <include layout="@layout/base_list_qsolver" />
 
     <EditText
-        android:id="@+id/cq_question_title"
+        android:id="@+id/sa_answer_body"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Question title"
-        android:inputType="textMultiLine"
-        android:textSize="36sp"
-        android:lines="2"
-        android:minLines="1"
-        android:maxLines="2"/>
-
-    <EditText
-        android:id="@+id/cq_question_body"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_margin="15dp"
         android:ems="10"
@@ -38,9 +24,9 @@
         android:maxLines="4"/>
 
     <Button
-        android:id="@+id/cq_createBtn"
+        android:id="@+id/sa_submitBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="create" />
+        android:text="Submit Answer" />
 </LinearLayout>

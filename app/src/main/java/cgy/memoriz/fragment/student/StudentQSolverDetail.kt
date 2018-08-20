@@ -66,6 +66,14 @@ class StudentQSolverDetail : MainActivityBaseFragment(), QSolverAnswerAdapterInt
             setTitle("Question Answer")
 
             loadAnswerList(question)
+
+            view.submitAnswerBtn.setOnClickListener{
+                switchFragment(SubmitAnswer().newInstance(question))
+                /**
+                 * TO-DO
+                 * create submit question
+                 */
+            }
         }else {
             Log.e("missing QuestionData", "StudentQSolverDetail got error!")
         }

@@ -53,14 +53,6 @@ class MainMenu2 : MainActivityBaseFragment() {
             view.studentQHelperBtn.setOnClickListener {
                 switchFragment(StudentQHelper())
             }
-            /**
-             * TO-DO
-             * create question helper page
-             * create new class question helper
-             * create new fragment xml
-             * show list of question owned
-             * let user create new question
-             */
 
             view.studentQSolverBtn.setOnClickListener {
                 switchFragment(StudentQSolver())
