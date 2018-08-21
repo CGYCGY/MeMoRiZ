@@ -1,7 +1,6 @@
 package cgy.memoriz.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
         }
 
         view.studentReportBtn.setOnClickListener {
-            switchFragment(SecondPage())
+            switchFragment(MainMenu2().newInstance(view.studentReportBtn.text.toString()))
         }
 
         view.studentClassBtn.setOnClickListener {

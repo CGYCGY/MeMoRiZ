@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import cgy.memoriz.*
+import cgy.memoriz.R
+import cgy.memoriz.URLEndpoint
+import cgy.memoriz.VolleySingleton
 import cgy.memoriz.data.QuestionData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import com.android.volley.AuthFailureError
@@ -65,7 +67,7 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
                         if (obj.getString("message") == "Question updated successfully") {
-                            super.getBaseActivity()?.manualClickBack()
+                            super.getBaseActivity()!!.onBackPressed()
 //                            val intent = Intent(context, MainMenuActivity::class.java)
 //                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                            startActivity(intent)

@@ -75,7 +75,7 @@ class SubmitAnswer : MainActivityBaseFragment() {
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
                         if (obj.getString("message") == "Answer added successfully") {
-                            super.getBaseActivity()?.manualClickBack() // a bit weird
+                            super.getBaseActivity()?.onBackPressed() // a bit weird
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()

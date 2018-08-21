@@ -63,6 +63,26 @@ open class MainActivityBaseFragment : Fragment() {
         }
     }
 
+    protected fun switchToDashboardHome(){
+        try {
+            getBaseActivity()!!.switchToDashboard()
+        } catch (e: Exception) {
+            if (Log.isLoggable(LOG_TAG, Log.ERROR)) {
+                Log.e(LOG_TAG,"switch to dashboard error ", e)
+            }
+        }
+    }
+
+    protected fun cleanAndSwitchFragment(fragment: MainActivityBaseFragment){
+        try {
+            getBaseActivity()!!.cleanAndSwitchFragment(fragment)
+        } catch (e: Exception) {
+            if (Log.isLoggable(LOG_TAG, Log.ERROR)) {
+                Log.e(LOG_TAG, "fragment=[$fragment]", e)
+            }
+        }
+    }
+
     protected fun updateToolbarIconState(isArrow: Boolean) {
         try {
             getBaseActivity()!!.updateToolbarIconState(isArrow)

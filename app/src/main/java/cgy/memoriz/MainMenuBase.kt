@@ -2,6 +2,7 @@ package cgy.memoriz
 
 
 import android.animation.ValueAnimator
+import android.app.FragmentManager
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -15,11 +16,12 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import cgy.memoriz.fragment.StudentMainMenu
+import cgy.memoriz.fragment.second.SecondPage
 import cgy.memoriz.others.CustomColor
 import cgy.memoriz.others.DialogFactory
-import cgy.memoriz.fragment.second.SecondPage
-import kotlinx.android.synthetic.main.main_navigation.*
 import kotlinx.android.synthetic.main.main_app_bar.*
+import kotlinx.android.synthetic.main.main_navigation.*
 
 //extend this to create the drawer
 open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -104,6 +106,17 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    fun switchToDashboard(){
+        val fragmentManager = supportFragmentManager
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        replaceContainerFragment(StudentMainMenu())
+    }
+
+    fun cleanAndSwitchFragment(fragment: Fragment){
+        switchToDashboard()
+        replaceContainerFragment(fragment)
+    }
+
     fun updateToolbarIconState(isArrow: Boolean) {
         if (isArrow) {
             changeToolbarIconToBackArrow()
@@ -155,9 +168,5 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (progressDialog != null) {
             progressDialog.dismiss()
         }
-    }
-
-    fun manualClickBack() {
-        onBackPressed()
     }
 }

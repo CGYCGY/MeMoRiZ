@@ -19,4 +19,6 @@
     <string name="QSolver">Question Solver</string>
     <string name="Quiz">Quiz</string>
     <string name="Slides">Slides</string>
+    <string name="CReport">Create Report</string>
+    <string name="VReport">View Report</string>
 </resources>

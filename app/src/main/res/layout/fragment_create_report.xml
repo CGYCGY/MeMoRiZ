@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.student.CreateQuestion">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/cq_question_title"
+        android:id="@+id/create_report_title"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_gravity="center"
@@ -23,8 +21,18 @@
         android:minLines="1"
         android:maxLines="2"/>
 
+    <Spinner
+        android:id="@+id/create_report_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:textSize="24sp"
+        android:spinnerMode="dropdown"/>
+
     <EditText
-        android:id="@+id/cq_question_body"
+        android:id="@+id/create_report_body"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="center"
@@ -38,9 +46,10 @@
         android:maxLines="4"/>
 
     <Button
-        android:id="@+id/cq_createBtn"
+        android:id="@+id/createReportBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:text="Create" />
+
 </LinearLayout>

@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.fragment.StudentMainMenu
+import cgy.memoriz.fragment.report.CreateReport
+import cgy.memoriz.fragment.report.ViewReport
 import cgy.memoriz.fragment.student.StudentQHelper
 import cgy.memoriz.fragment.student.StudentQSolver
 import kotlinx.android.synthetic.main.fragment_student_mainmenu2.view.*
@@ -68,6 +70,18 @@ class MainMenu2 : MainActivityBaseFragment() {
 
             view.studentQSolverBtn.setOnClickListener {
                 switchFragment(StudentMainMenu())
+            }
+        }
+        else if (textGet == "Report") {
+            view.studentQHelperBtn.text = getString(R.string.CReport)
+            view.studentQSolverBtn.text = getString(R.string.VReport)
+
+            view.studentQHelperBtn.setOnClickListener {
+                switchFragment(CreateReport())
+            }
+
+            view.studentQSolverBtn.setOnClickListener {
+                switchFragment(ViewReport())
             }
         }
 
