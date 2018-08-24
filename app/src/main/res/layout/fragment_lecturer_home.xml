@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.LecturerMainMenu">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="4">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Profile"
+            android:id="@+id/lecturerProfileBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Class Manager"
+            android:id="@+id/lecturerCManagerBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Report"
+            android:id="@+id/lecturerReportBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Question Solver"
+            android:id="@+id/lecturerQSolverBtn" />
+
+    </LinearLayout>
+
+</FrameLayout>

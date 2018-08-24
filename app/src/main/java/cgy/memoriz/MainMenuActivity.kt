@@ -1,6 +1,7 @@
 package cgy.memoriz
 
 import android.os.Bundle
+import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.StudentMainMenu
 import kotlinx.android.synthetic.main.main_navigation.*
 import kotlinx.android.synthetic.main.main_navigation_header.view.*
@@ -16,7 +17,10 @@ class MainMenuActivity : MainMenuBase() {
         nav_view.getHeaderView(0).userName.text = SharedPref.userName
 
         //Init the view of Home fragment.
-        replaceContainerFragment(StudentMainMenu())
+        if (SharedPref.userType == "Student")
+            replaceContainerFragment(StudentMainMenu())
+        else if (SharedPref.userType == "Lecturer")
+            replaceContainerFragment(LecturerMainMenu())
     }
 }
 

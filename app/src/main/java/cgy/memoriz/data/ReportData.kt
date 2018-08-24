@@ -22,3 +22,12 @@ open class ReportData : Serializable {
         this.status = status
     }
 }
+
+/**
+ * TO-DO
+ *
+ * setup user insert method
+ * add user type when login and register
+ * spilt different user register page
+ *
+ */

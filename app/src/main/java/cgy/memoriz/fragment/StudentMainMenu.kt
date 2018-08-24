@@ -8,7 +8,7 @@ import cgy.memoriz.R
 import cgy.memoriz.SharedPref
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
 import cgy.memoriz.fragment.second.SecondPage
-import kotlinx.android.synthetic.main.fragment_home_page.view.*
+import kotlinx.android.synthetic.main.fragment_student_home.view.*
 
 /*Every fragment extend MainActivityBaseFragment() so that can use the function implemented.
  * Default will extend fragment. Change it.*/
@@ -16,7 +16,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home_page, container, false)
+        val view = inflater.inflate(R.layout.fragment_student_home, container, false)
         SharedPref.init(context!!)
         SharedPref.arrow = false
 

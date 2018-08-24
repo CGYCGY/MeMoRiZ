@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import cgy.memoriz.fragment.third.ThirdPage
+import cgy.memoriz.fragment.StudentMainMenu
 import kotlinx.android.synthetic.main.fragment_second_page.view.*
 
 class SecondPage : MainActivityBaseFragment() {
@@ -48,7 +48,7 @@ class SecondPage : MainActivityBaseFragment() {
         }
 
         view.secondBtn.setOnClickListener {
-            switchFragment(ThirdPage())
+            switchFragment(StudentMainMenu())
         }
         return view
     }

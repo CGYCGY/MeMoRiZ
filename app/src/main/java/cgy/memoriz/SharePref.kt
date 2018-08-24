@@ -14,6 +14,7 @@ object SharedPref {
     private val arrowData = Pair("arrow", false)
     private val userNameData = Pair("user's name", "")
     private val userEmailData = Pair("user's email", "")
+    private val userTypeData = Pair("user's type", "")
 
     fun init(context: Context) {
         sharedPreferences = context.getSharedPreferences("memoriz", Context.MODE_PRIVATE)
@@ -74,5 +75,12 @@ object SharedPref {
 
         set(value) = sharedPreferences.edit {
             it.putString(userEmailData.first, value)
+        }
+
+    var userType: String
+        get() = sharedPreferences.getString(userTypeData.first, userTypeData.second)
+
+        set(value) = sharedPreferences.edit {
+            it.putString(userTypeData.first, value)
         }
 }
