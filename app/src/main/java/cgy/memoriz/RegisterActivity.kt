@@ -68,7 +68,7 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-//                params["ad_id"] = register_userID.text.toString()
+//                params["u_id"] = register_userID.text.toString()
                 params["u_type"] = typeSelected.toString()
                 params["u_pass"] = register_userPass.text.toString().encryptPass()
                 params["u_name"] = register_userName.text.toString()
@@ -86,4 +86,4 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     override fun onNothingSelected(adapterView: AdapterView<*>) {
 
     }
-}//Log.d("testing", params["ad_id"])
+}//Log.d("testing", params["u_id"])

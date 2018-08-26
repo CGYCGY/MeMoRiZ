@@ -12,7 +12,6 @@ import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import cgy.memoriz.fragment.StudentMainMenu
 import cgy.memoriz.others.hideKeyboard
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -75,7 +74,8 @@ class CreateReport : MainActivityBaseFragment(),AdapterView.OnItemSelectedListen
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
                         if (obj.getString("message") == "Report added successfully") {
-                            switchFragment(StudentMainMenu())
+                            getBaseActivity()!!.onBackPressed()
+//                            switchFragment(StudentMainMenu())
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -88,7 +88,7 @@ class CreateReport : MainActivityBaseFragment(),AdapterView.OnItemSelectedListen
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["ad_email"] = SharedPref.userEmail
+                params["u_email"] = SharedPref.userEmail
                 params["sl"] = "Student"
                 params["rpt_title"] = view?.create_report_title?.text.toString()
                 params["rpt_type"] = typeSelected.toString()

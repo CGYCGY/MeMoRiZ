@@ -1,4 +1,4 @@
-package cgy.memoriz.fragment.report
+package cgy.memoriz.fragment.lecturer
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -12,46 +12,46 @@ import cgy.memoriz.R
 import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
-import cgy.memoriz.adapter.ReportAdapter
-import cgy.memoriz.adapter.ReportAdapterInterface
-import cgy.memoriz.data.ReportData
+import cgy.memoriz.adapter.QuizSetAdapter
+import cgy.memoriz.adapter.QuizSetAdapterInterface
+import cgy.memoriz.data.SetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_view_report.view.*
+import kotlinx.android.synthetic.main.fragment_lecturer_quizset.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class ViewReport : MainActivityBaseFragment(),ReportAdapterInterface {
-    private lateinit var reportAdapter: ReportAdapter
+class LecturerQuizSet : MainActivityBaseFragment(),QuizSetAdapterInterface {
+    private lateinit var recycleAdapter: QuizSetAdapter
     private lateinit var recycleView: RecyclerView
 
     private var textGet : String ?= null
 
-    fun newInstance(text : String) : ViewReport {
+    fun newInstance(text : String) : LecturerQuizSet {
         val args = Bundle()
         args.putString("value1", text)
-        val fragment = ViewReport()
+        val fragment = LecturerQuizSet()
         fragment.arguments = args
         return fragment
     }
 
-    override fun onClick(report: ReportData) {
-        Log.d("CLICKED HERE YOUR DATA", report.title)
-//        switchFragment(StudentQSolverDetail().newInstance(question))
+    override fun onClick(quiz: SetData) {
+        Log.d("CLICKED HERE YOUR DATA", quiz.name)
+        switchFragment(LecturerQuiz().newInstance(quiz))
     }
 
-    override fun onLongClick(report: ReportData) {
-        Log.d("LONG CLICKED! YOUR DATA", report.title)
+    override fun onLongClick(quiz: SetData) {
+        Log.d("LONG CLICKED! YOUR DATA", quiz.name)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_view_report, container, false)
-        recycleView = view.report
+        val view = inflater.inflate(R.layout.fragment_lecturer_quizset, container, false)
+        recycleView = view.lecturer_quiz_set
         /*
          * Get the data from previous fragment
          */
@@ -60,27 +60,31 @@ class ViewReport : MainActivityBaseFragment(),ReportAdapterInterface {
             textGet = bundle.getString("value1")
             setTitle("$textGet")
         }else {
-            setTitle("View Report")
+            setTitle("Quiz Set List")
         }
 
-        loadReportList()
+        loadQuizList()
+
+        view.createQuizSetBtn.setOnClickListener {
+            switchFragment(CreateQuizSet())
+        }
 
         return view
     }
 
-    private fun setRecycleView(reportList: ArrayList<ReportData>) {
+    private fun setRecycleView(quizList: ArrayList<SetData>) {
         try {
-            reportAdapter = ReportAdapter(context!!, reportList, this)
+            recycleAdapter = QuizSetAdapter(context!!, quizList, this)
             val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
             recycleView.layoutManager = recycleLayout
-            recycleView.adapter = reportAdapter
+            recycleView.adapter = recycleAdapter
         } catch (e: NullPointerException) {
-            Log.d("Report Adapter error:", e.toString())
+            Log.d("QHelper Adapter error:", e.toString())
         }
     }
 
-    private fun loadReportList() {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetReport,
+    private fun loadQuizList() {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetSet,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
@@ -103,7 +107,10 @@ class ViewReport : MainActivityBaseFragment(),ReportAdapterInterface {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
+
                 params["u_email"] = SharedPref.userEmail
+                params["set_type"] = "Quiz"
+
                 return params
             }
         }
@@ -111,16 +118,13 @@ class ViewReport : MainActivityBaseFragment(),ReportAdapterInterface {
     }
 
     private fun jsonToArrayList(obj : JSONArray) {
-        val list = ArrayList<ReportData>()
+        val list = ArrayList<SetData>()
 
         for (i in 0 until obj.length())
-            list.add(ReportData(
-                    obj.getJSONObject(i).getInt("rpt_id"),
-                    obj.getJSONObject(i).getString("rpt_title"),
-                    obj.getJSONObject(i).getString("rpt_type"),
-                    obj.getJSONObject(i).getString("rpt_body"),
-                    obj.getJSONObject(i).getString("rpt_datetime"),
-                    obj.getJSONObject(i).getString("rpt_stat")))
+            list.add(SetData(
+                    obj.getJSONObject(i).getInt("set_id"),
+                    obj.getJSONObject(i).getString("set_name"),
+                    obj.getJSONObject(i).getInt("set_size")))
 
         setRecycleView(list)
     }

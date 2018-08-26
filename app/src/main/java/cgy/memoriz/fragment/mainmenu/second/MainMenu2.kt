@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
+import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.fragment.StudentMainMenu
+import cgy.memoriz.fragment.lecturer.LecturerQuizSet
 import cgy.memoriz.fragment.report.CreateReport
 import cgy.memoriz.fragment.report.ViewReport
 import cgy.memoriz.fragment.student.StudentQHelper
 import cgy.memoriz.fragment.student.StudentQSolver
-import kotlinx.android.synthetic.main.fragment_student_mainmenu2.view.*
+import kotlinx.android.synthetic.main.fragment_base_mainmenu2.view.*
 
 class MainMenu2 : MainActivityBaseFragment() {
 
@@ -34,7 +36,7 @@ class MainMenu2 : MainActivityBaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_student_mainmenu2, container, false)
+        val view = inflater.inflate(R.layout.fragment_base_mainmenu2, container, false)
         /*
          * Get the data from previous fragment
          */
@@ -49,39 +51,63 @@ class MainMenu2 : MainActivityBaseFragment() {
         }
 
         if (textGet == "Question") {
-            view.studentQHelperBtn.text = getString(R.string.QHelper)
-            view.studentQSolverBtn.text = getString(R.string.QSolver)
+            view.mainMenuBtn1.text = getString(R.string.QHelper)
+            view.mainMenuBtn2.text = getString(R.string.QSolver)
 
-            view.studentQHelperBtn.setOnClickListener {
+            view.mainMenuBtn1.setOnClickListener {
                 switchFragment(StudentQHelper())
             }
 
-            view.studentQSolverBtn.setOnClickListener {
+            view.mainMenuBtn2.setOnClickListener {
                 switchFragment(StudentQSolver())
             }
         }
         else if (textGet == "Classroom") {
-            view.studentQHelperBtn.text = getString(R.string.Quiz)
-            view.studentQSolverBtn.text = getString(R.string.Slides)
+            view.mainMenuBtn1.text = getString(R.string.Quiz)
+            view.mainMenuBtn2.text = getString(R.string.Slides)
 
-            view.studentQHelperBtn.setOnClickListener {
+            view.mainMenuBtn1.setOnClickListener {
                 switchFragment(StudentMainMenu())
             }
 
-            view.studentQSolverBtn.setOnClickListener {
+            view.mainMenuBtn2.setOnClickListener {
                 switchFragment(StudentMainMenu())
             }
         }
         else if (textGet == "Report") {
-            view.studentQHelperBtn.text = getString(R.string.CReport)
-            view.studentQSolverBtn.text = getString(R.string.VReport)
+            view.mainMenuBtn1.text = getString(R.string.CReport)
+            view.mainMenuBtn2.text = getString(R.string.VReport)
 
-            view.studentQHelperBtn.setOnClickListener {
+            view.mainMenuBtn1.setOnClickListener {
                 switchFragment(CreateReport())
             }
 
-            view.studentQSolverBtn.setOnClickListener {
+            view.mainMenuBtn2.setOnClickListener {
                 switchFragment(ViewReport())
+            }
+        }
+        else if (textGet == "Class Manager") {
+            view.mainMenuBtn1.text = getString(R.string.SMManager)
+            view.mainMenuBtn2.text = getString(R.string.SManger)
+
+            view.mainMenuBtn1.setOnClickListener {
+                switchFragment(MainMenu2().newInstance(getString(R.string.SMManager)))
+            }
+
+            view.mainMenuBtn2.setOnClickListener {
+                switchFragment(LecturerMainMenu())
+            }
+        }
+        else if (textGet == "Study Material Manager") {
+            view.mainMenuBtn1.text = getString(R.string.MQuiz)
+            view.mainMenuBtn2.text = getString(R.string.MSlide)
+
+            view.mainMenuBtn1.setOnClickListener {
+                switchFragment(LecturerQuizSet())
+            }
+
+            view.mainMenuBtn2.setOnClickListener {
+                switchFragment(StudentMainMenu())
             }
         }
 

@@ -21,4 +21,8 @@
     <string name="Slides">Slides</string>
     <string name="CReport">Create Report</string>
     <string name="VReport">View Report</string>
+    <string name="SMManager">Study Material Manager</string>
+    <string name="SManger">Student Manager</string>
+    <string name="MQuiz">Manage Quiz</string>
+    <string name="MSlide">Manage Slide</string>
 </resources>

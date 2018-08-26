@@ -1,4 +1,4 @@
-package cgy.memoriz.fragment.report
+package cgy.memoriz.fragment.lecturer
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,78 +9,84 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
-import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
-import cgy.memoriz.adapter.ReportAdapter
-import cgy.memoriz.adapter.ReportAdapterInterface
-import cgy.memoriz.data.ReportData
+import cgy.memoriz.adapter.QuizAdapter
+import cgy.memoriz.adapter.QuizAdapterInterface
+import cgy.memoriz.data.QuizData
+import cgy.memoriz.data.SetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_view_report.view.*
+import kotlinx.android.synthetic.main.base_list_quiz_set.view.*
+import kotlinx.android.synthetic.main.fragment_lecturer_quiz.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class ViewReport : MainActivityBaseFragment(),ReportAdapterInterface {
-    private lateinit var reportAdapter: ReportAdapter
+class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
+    private lateinit var recycleAdapter: QuizAdapter
     private lateinit var recycleView: RecyclerView
 
-    private var textGet : String ?= null
-
-    fun newInstance(text : String) : ViewReport {
+    fun newInstance(quiz: SetData): LecturerQuiz{
         val args = Bundle()
-        args.putString("value1", text)
-        val fragment = ViewReport()
+        args.putSerializable("quiz", quiz)
+        val fragment = LecturerQuiz()
         fragment.arguments = args
         return fragment
     }
 
-    override fun onClick(report: ReportData) {
-        Log.d("CLICKED HERE YOUR DATA", report.title)
-//        switchFragment(StudentQSolverDetail().newInstance(question))
+    override fun onClick(quiz: QuizData) {
+        Log.d("CLICKED HERE YOUR DATA", quiz.question)
     }
 
-    override fun onLongClick(report: ReportData) {
-        Log.d("LONG CLICKED! YOUR DATA", report.title)
+    override fun onLongClick(quiz: QuizData) {
+        Log.d("LONG CLICKED! YOUR DATA", quiz.question)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_view_report, container, false)
-        recycleView = view.report
+        val view = inflater.inflate(R.layout.fragment_lecturer_quiz, container, false)
+        recycleView = view.quiz_list
         /*
          * Get the data from previous fragment
          */
         val bundle = arguments
         if (bundle != null) {
-            textGet = bundle.getString("value1")
-            setTitle("$textGet")
-        }else {
-            setTitle("View Report")
-        }
+            val quiz : SetData = bundle.getSerializable("quiz") as SetData
 
-        loadReportList()
+            view.quiz_set_name.text = quiz.name
+            view.quiz_set_size.text = quiz.size.toString()
+
+            setTitle("Quiz Answer List")
+
+            loadAnswerList(quiz)
+
+            view.addQuizBtn.setOnClickListener{
+                switchFragment(AddQuiz().newInstance(quiz))
+            }
+        }else {
+            Log.e("missing QuizData", "LecturerQuiz got error!")
+        }
 
         return view
     }
 
-    private fun setRecycleView(reportList: ArrayList<ReportData>) {
+    private fun setRecycleView(quizList: ArrayList<QuizData>) {
         try {
-            reportAdapter = ReportAdapter(context!!, reportList, this)
+            recycleAdapter = QuizAdapter(context!!, quizList, this)
             val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
             recycleView.layoutManager = recycleLayout
-            recycleView.adapter = reportAdapter
+            recycleView.adapter = recycleAdapter
         } catch (e: NullPointerException) {
-            Log.d("Report Adapter error:", e.toString())
+            Log.d("Quiz Adapter error:", e.toString())
         }
     }
 
-    private fun loadReportList() {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetReport,
+    private fun loadAnswerList(quiz: SetData) {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetQuiz,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
@@ -103,7 +109,10 @@ class ViewReport : MainActivityBaseFragment(),ReportAdapterInterface {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["u_email"] = SharedPref.userEmail
+
+                Log.d("quiz set id", quiz.id.toString())
+                params["set_id"] = quiz.id.toString()
+
                 return params
             }
         }
@@ -111,16 +120,13 @@ class ViewReport : MainActivityBaseFragment(),ReportAdapterInterface {
     }
 
     private fun jsonToArrayList(obj : JSONArray) {
-        val list = ArrayList<ReportData>()
+        val list = ArrayList<QuizData>()
 
         for (i in 0 until obj.length())
-            list.add(ReportData(
-                    obj.getJSONObject(i).getInt("rpt_id"),
-                    obj.getJSONObject(i).getString("rpt_title"),
-                    obj.getJSONObject(i).getString("rpt_type"),
-                    obj.getJSONObject(i).getString("rpt_body"),
-                    obj.getJSONObject(i).getString("rpt_datetime"),
-                    obj.getJSONObject(i).getString("rpt_stat")))
+            list.add(QuizData(
+                    obj.getJSONObject(i).getInt("qz_id"),
+                    obj.getJSONObject(i).getString("qz_qstn"),
+                    obj.getJSONObject(i).getString("qz_ans")))
 
         setRecycleView(list)
     }

@@ -68,9 +68,6 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
 
                         if (obj.getString("message") == "Question updated successfully") {
                             super.getBaseActivity()!!.onBackPressed()
-//                            val intent = Intent(context, MainMenuActivity::class.java)
-//                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                            startActivity(intent)
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()

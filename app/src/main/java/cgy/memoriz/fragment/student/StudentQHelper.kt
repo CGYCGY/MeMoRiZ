@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import cgy.memoriz.*
+import cgy.memoriz.R
+import cgy.memoriz.SharedPref
+import cgy.memoriz.URLEndpoint
+import cgy.memoriz.VolleySingleton
 import cgy.memoriz.adapter.QHelperAdapter
 import cgy.memoriz.adapter.QHelperAdapterInterface
 import cgy.memoriz.data.QuestionData
@@ -104,7 +107,7 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["ad_email"] = SharedPref.userEmail
+                params["u_email"] = SharedPref.userEmail
                 return params
             }
         }

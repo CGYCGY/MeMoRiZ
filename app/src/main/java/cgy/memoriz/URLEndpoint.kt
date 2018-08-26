@@ -12,4 +12,8 @@ object URLEndpoint {
     val urlInsertAnswer = urlRoot + "insert_answer"
     val urlInsertReport = urlRoot + "insert_report"
     val urlGetReport = urlRoot + "get_report"
+    val urlInsertSet = urlRoot + "insert_set"
+    val urlGetSet = urlRoot + "get_set"
+    val urlInsertQuiz = urlRoot + "insert_quiz"
+    val urlGetQuiz = urlRoot + "get_quiz"
 }

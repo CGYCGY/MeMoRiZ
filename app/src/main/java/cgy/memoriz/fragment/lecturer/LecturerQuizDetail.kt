@@ -1,81 +1,74 @@
-package cgy.memoriz.fragment.student
+package cgy.memoriz.fragment.lecturer
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
-import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
-import cgy.memoriz.data.QuestionData
+import cgy.memoriz.data.QuizData
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import cgy.memoriz.others.hideKeyboard
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.base_list_qsolver.view.*
-import kotlinx.android.synthetic.main.fragment_submit_answer.view.*
+import kotlinx.android.synthetic.main.fragment_quiz_detail.view.*
 import org.json.JSONException
 import org.json.JSONObject
 
-class SubmitAnswer : MainActivityBaseFragment() {
-    private var textGet : String ?= null
+class LecturerQuizDetail : MainActivityBaseFragment() {
 
-    fun newInstance(question: QuestionData): SubmitAnswer{
+    fun newInstance(quiz: QuizData): LecturerQuizDetail{
         val args = Bundle()
-        args.putSerializable("question detail", question)
-        val fragment = SubmitAnswer()
+        args.putSerializable("quiz detail", quiz)
+        val fragment = LecturerQuizDetail()
         fragment.arguments = args
         return fragment
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_submit_answer, container, false)
+        val view = inflater.inflate(R.layout.fragment_quiz_detail, container, false)
         /*
          * Get the data from previous fragment
          */
         val bundle = arguments
         if (bundle != null) {
-            val question: QuestionData = bundle.getSerializable("question detail") as QuestionData
+            val quiz : QuizData = bundle.getSerializable("quiz detail") as QuizData
 
-            view.qsolver_title.text = question.title
-            view.qsolver_body.text = question.body
-            view.qsolver_owner.text = question.owner
-            view.qsolver_datetime.text = question.datetime
-            view.qsolver_condition.text = question.condition
+            view.edit_quiz_question.text = Editable.Factory.getInstance().newEditable(quiz.question)
+            view.edit_quiz_answer.text = Editable.Factory.getInstance().newEditable(quiz.answer)
 
-            setTitle("Question Answer")
+            setTitle("Quiz Editor")
 
-            view.sa_submitBtn.setOnClickListener {
-                if (view.sa_answer_body.text.isNotBlank()) {
-                    insertAnswer(question)
-                    view.hideKeyboard()
-                }
+            view.updateQuizBtn.setOnClickListener {
+                update(quiz)
             }
-        } else {
-            Log.e("missing QuestionData", "SubmitAnswer got error!")
 
+        }else {
+            Log.e("missing QuizData", "LecturerQuizDetail got error!")
         }
 
         return view
     }
 
-    private fun insertAnswer(question: QuestionData) {
-//      start the StringRequest to get message from php after POST data to the database
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlInsertAnswer,
+    private fun update(quiz: QuizData) {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateQuestion,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
-                        if (obj.getString("message") == "Answer added successfully") {
-                            super.getBaseActivity()?.onBackPressed()
+                        if (obj.getString("message") == "Quiz updated successfully") {
+                            super.getBaseActivity()!!.onBackPressed()
+//                            val intent = Intent(context, MainMenuActivity::class.java)
+//                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                            startActivity(intent)
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -88,9 +81,9 @@ class SubmitAnswer : MainActivityBaseFragment() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["qstn_id"] = question.id.toString()
-                params["u_email"] = SharedPref.userEmail
-                params["ans_body"] = view?.sa_answer_body?.text.toString()
+                params["qz_id"] = quiz.id.toString()
+                params["qz_qstn"] = view?.edit_quiz_question?.text.toString()
+                params["qz_ans"] = view?.edit_quiz_answer?.text.toString()
 
                 return params
             }

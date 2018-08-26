@@ -10,7 +10,6 @@ import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import cgy.memoriz.fragment.StudentMainMenu
 import cgy.memoriz.others.hideKeyboard
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -66,7 +65,8 @@ class CreateQuestion : MainActivityBaseFragment() {
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
                         if (obj.getString("message") == "Question added successfully") {
-                            switchFragment(StudentMainMenu())
+                            getBaseActivity()!!.onBackPressed()
+//                            switchFragment(StudentMainMenu())
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -79,7 +79,7 @@ class CreateQuestion : MainActivityBaseFragment() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["ad_email"] = SharedPref.userEmail
+                params["u_email"] = SharedPref.userEmail
                 params["qstn_title"] = view?.cq_question_title?.text.toString()
                 params["qstn_body"] = view?.cq_question_body?.text.toString()
                 params["qstn_cond"] = "Waiting for answer"
