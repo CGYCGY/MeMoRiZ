@@ -63,7 +63,7 @@ class StudentQSolverDetail : MainActivityBaseFragment(), QSolverAnswerAdapterInt
             view.qsolver_datetime.text = question.datetime
             view.qsolver_condition.text = question.condition
 
-            setTitle("Question Answer")
+            setTitle("Question Answer List")
 
             loadAnswerList(question)
 

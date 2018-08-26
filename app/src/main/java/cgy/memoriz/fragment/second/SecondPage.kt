@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
+import cgy.memoriz.SharedPref
+import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.fragment.StudentMainMenu
 import kotlinx.android.synthetic.main.fragment_second_page.view.*
@@ -48,7 +50,10 @@ class SecondPage : MainActivityBaseFragment() {
         }
 
         view.secondBtn.setOnClickListener {
-            switchFragment(StudentMainMenu())
+            if (SharedPref.userType == "Student")
+                switchFragment(StudentMainMenu())
+            else if (SharedPref.userType == "Lecturer")
+                switchFragment(LecturerMainMenu())
         }
         return view
     }

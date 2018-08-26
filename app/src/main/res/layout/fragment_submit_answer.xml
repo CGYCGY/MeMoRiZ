@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:layout_margin="15dp"
         android:ems="10"
-        android:hint="Question body"
+        android:hint="Answer body"
         android:inputType="textMultiLine"
         android:textSize="24sp"
         android:lines="4"
