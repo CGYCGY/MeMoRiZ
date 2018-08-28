@@ -169,4 +169,17 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
             progressDialog.dismiss()
         }
     }
+
+    fun switchFragmentWithNonBackStack(fragment:Fragment){
+        try {
+            val fragmentManager = getSupportFragmentManager()
+            fragmentManager.popBackStackImmediate()
+            replaceContainerFragment(fragment)
+        } catch (e: Exception) {
+            if (Log.isLoggable(LOG_TAG, Log.ERROR)) {
+                Log.e(LOG_TAG, "fragment=[$fragment]", e)
+            }
+        }
+    }
+
 }

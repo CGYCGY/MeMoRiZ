@@ -113,4 +113,15 @@ open class MainActivityBaseFragment : Fragment() {
         }
         return null
     }
+
+    protected fun switchFragmentWithNonBackStack(fragment : MainActivityBaseFragment){
+        try {
+            getBaseActivity()!!.switchFragmentWithNonBackStack(fragment)
+        } catch (e: Exception) {
+            if (Log.isLoggable(LOG_TAG, Log.ERROR)) {
+                Log.e(LOG_TAG, "fragment=[$fragment]", e)
+            }
+        }
+    }
+
 }
