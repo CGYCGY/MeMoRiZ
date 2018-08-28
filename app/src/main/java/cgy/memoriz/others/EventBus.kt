@@ -39,7 +39,6 @@ open class EventBus {
                     Log.e(LOG_TAG, "post, event=[$event]", e)
                 }
             }
-
         }
     }
 

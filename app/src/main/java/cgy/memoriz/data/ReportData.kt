@@ -22,3 +22,9 @@ open class ReportData : Serializable {
         this.status = status
     }
 }
+
+/**
+ * TO-DO
+ *
+ * create check ban status function
+ */

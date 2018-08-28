@@ -7,19 +7,31 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import cgy.memoriz.R
+import cgy.memoriz.SharedPref
+import cgy.memoriz.URLEndpoint
+import cgy.memoriz.VolleySingleton
 import cgy.memoriz.adapter.UserAdapter
 import cgy.memoriz.adapter.UserAdapterInterface
 import cgy.memoriz.data.UserData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.EventBus
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.fragment_show_available_user.view.*
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 
 class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface {
 
     private lateinit var recycleView: RecyclerView
     private lateinit var recycleAdapter: UserAdapter
+    private val studentList = ArrayList<UserData>()
+    private val lecturerList = ArrayList<UserData>()
 
     private var firebase = FirebaseChat()
 
@@ -30,29 +42,24 @@ class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface {
         setTitle("Available User")
         recycleView = view.rv_user
 
-        /*Get all your user in your database .*/
-        val listStudent = ArrayList<UserData>()
-        listStudent.add(UserData(1, "ALI", "student"))
-        listStudent.add(UserData(2, "ABU", "student"))
-        listStudent.add(UserData(3, "AHMAD", "student"))
+        studentList.clear()
+        lecturerList.clear()
 
-        val listLecturer= ArrayList<UserData>()
-        listLecturer.add(UserData(4, "Akow", "Lecturer"))
-        listLecturer.add(UserData(5, "Abeng", "Lecturer"))
+        loadUserList()
 
         view.btn_student.setOnClickListener{
-            setRecycleView(listStudent)
+            setRecycleView(studentList)
         }
 
         view.btn_lecturer.setOnClickListener{
-            setRecycleView(listLecturer)
+            setRecycleView(lecturerList)
         }
         /*The group chat  i use firebase store,  so no need use your mysql database to store. */
         view.btn_classroom.setOnClickListener{
             firebase.getAvailableGroupChat()
         }
 
-        setRecycleView(listLecturer)
+        setRecycleView(lecturerList)
         return view
     }
 
@@ -75,13 +82,55 @@ class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface {
             val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
             recycleView.layoutManager = recycleLayout
             recycleView.adapter = recycleAdapter
-        } catch (e: NullPointerException) {
-            Log.d("History Adapter error:", e.toString())
+        } catch (e : NullPointerException) {
+            Log.d("ShowAvailableUser error", e.toString())
         }
     }
 
     @Subscribe
     fun RespondFromFirebase(arrayList: ArrayList<UserData>){
         setRecycleView(arrayList)
+    }
+
+    private fun loadUserList() {
+        val stringRequest = object : StringRequest(Request.Method.GET, URLEndpoint.urlGetUserList,
+                Response.Listener<String> { response ->
+                    try {
+//                      get the feedback message from the php and show it on the app by using Toast
+                        val obj = JSONObject(response)
+
+                        val tableIsBlank = obj.getString("table").isBlank()
+                        Log.d("table blank mou", tableIsBlank.toString())
+                        if (tableIsBlank) {
+                            Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
+                            jsonToArrayList(obj.getJSONArray("table"))
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
+                Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
+
+        }
+        VolleySingleton.instance?.addToRequestQueue(stringRequest)
+    }
+
+    private fun jsonToArrayList(obj : JSONArray) {
+
+        for (i in 0 until obj.length())
+            if (obj.getJSONObject(i).getString("u_type") == "Student" && obj.getJSONObject(i).getString("u_email") != SharedPref.userEmail) {
+                studentList.add(UserData(
+                        obj.getJSONObject(i).getString("u_email"),
+                        obj.getJSONObject(i).getString("u_name"),
+                        obj.getJSONObject(i).getString("u_type")))
+            }
+            else if (obj.getJSONObject(i).getString("u_type") == "Lecturer" && obj.getJSONObject(i).getString("u_email") != SharedPref.userEmail) {
+                lecturerList.add(UserData(
+                        obj.getJSONObject(i).getString("u_email"),
+                        obj.getJSONObject(i).getString("u_name"),
+                        obj.getJSONObject(i).getString("u_type")))
+            }
     }
 }

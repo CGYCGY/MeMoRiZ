@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
+import cgy.memoriz.SharedPref
 import cgy.memoriz.adapter.ChatRoomAdapter
 import cgy.memoriz.data.ChatHistoryData
 import cgy.memoriz.data.MessageData
@@ -59,15 +60,15 @@ class ChatRoom : MainActivityBaseFragment() {
             if (bundle.containsKey("new_user")) {
                 receiver = bundle.getSerializable("new_user") as UserData
                 receiverName = receiver!!.name.toString()
-                receiverID = receiver!!.id.toString()
-                firebase.checkExistingChatKey("sender_id", receiverID)
+                receiverID = receiver!!.email.toString()
+                firebase.checkExistingChatKey(SharedPref.userEmail, receiverID)
             } else {
                 chatHistory = bundle.getSerializable("chat") as ChatHistoryData
-                receiverID = chatHistory!!.receiverID!!
-                receiverName = chatHistory!!.receiverName!!
+                receiverID = chatHistory!!.receiverID
+                receiverName = chatHistory!!.receiverName
                 chatKey = chatHistory!!.chatKey
             }
-            setTitle(receiverName!!)
+            setTitle(receiverName)
         }
         view.btn_send.setOnClickListener {
             sendMessage()
@@ -94,8 +95,8 @@ class ChatRoom : MainActivityBaseFragment() {
         if (TextUtils.isEmpty(messageToSend)) {
             return
         } else {
-            firebase.saveChatHistory("sender_id","sender_name",
-                    receiverID,receiverName!!, messageToSend, chatKey)
+            firebase.saveChatHistory(SharedPref.userEmail,SharedPref.userName,
+                    receiverID,receiverName, messageToSend, chatKey)
             view!!.et_message.setText("")
         }
     }

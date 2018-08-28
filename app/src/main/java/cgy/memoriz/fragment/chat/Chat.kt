@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import cgy.memoriz.R
+import cgy.memoriz.SharedPref
 import cgy.memoriz.adapter.ChatHistoryAdapter
 import cgy.memoriz.adapter.ChatHistoryInterface
 import cgy.memoriz.data.ChatHistoryData
@@ -34,14 +36,21 @@ class Chat : MainActivityBaseFragment(), ChatHistoryInterface {
          * Eg: view.btn_add_group.visibility=GONE
          */
         showProgressDialog()
-        firebaseChat.getChatHistory("sender_id")
+        firebaseChat.getChatHistory(SharedPref.userEmail)
 
         view.btn_add.setOnClickListener {
             switchFragment(ShowAvailableUser())
         }
-        view.btn_add_group.setOnClickListener {
-            switchFragment(AddGroupFragment())
+
+        if (SharedPref.userType == "Lecturer") {
+            view.btn_add_group.setOnClickListener {
+                switchFragment(AddGroupFragment())
+            }
         }
+        else {
+            view.btn_add_group.visibility = GONE
+        }
+
 
         return view
     }

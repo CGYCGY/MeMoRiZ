@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import cgy.memoriz.R
+import cgy.memoriz.SharedPref
 import cgy.memoriz.data.MessageData
 import kotlinx.android.synthetic.main.chat_room.view.*
 
@@ -35,7 +36,7 @@ class ChatRoomAdapter : RecyclerView.Adapter<ChatRoomAdapter.ViewHolder> {
         holder.tv_chat_box.text = data.message
         holder.tv_time.text=data.time
         /*Use share preference here , to get sender id , or else u can pass sender id th constructor*/
-        if(data.senderID == "sender_id"){
+        if(data.senderID == SharedPref.userEmail){
             holder.tv_chat_box.gravity= Gravity.END
             holder.ll_main.gravity=Gravity.END
             holder.ll_chat.setBackgroundResource(R.drawable.chat_box_bg_right)
@@ -54,9 +55,9 @@ class ChatRoomAdapter : RecyclerView.Adapter<ChatRoomAdapter.ViewHolder> {
 
         init {
             tv_chat_box = itemView.tv_chat_box
-            tv_time =itemView.tv_time
-            ll_main=itemView.ll_main
-            ll_chat=itemView.ll_chat
+            tv_time = itemView.tv_time
+            ll_main = itemView.ll_main
+            ll_chat = itemView.ll_chat
         }
     }
 }

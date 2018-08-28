@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
+import cgy.memoriz.SharedPref
 import cgy.memoriz.data.UserData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.EventBus
@@ -26,7 +27,7 @@ class AddGroupFragment : MainActivityBaseFragment() {
             if(!TextUtils.isEmpty(view.et_name.text.toString())){
                 /*If want dialog(yes/no) for user to confirm whether want create group
                  , can just use dialog factory call createTwoButtonDialog.*/
-                firebase.saveGroupChat(view.et_name.text.toString(),"sender_id")
+                firebase.saveGroupChat(view.et_name.text.toString(), SharedPref.userEmail)
                 showToastMessage("Successfully create group.")
             }
         }

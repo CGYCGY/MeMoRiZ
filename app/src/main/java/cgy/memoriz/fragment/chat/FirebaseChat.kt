@@ -52,13 +52,13 @@ class FirebaseChat {
 
     /*Check for existing chat key if the user want add people from the list and it selected people whose chat before,
      it will show previous conversation if it exist*/
-    fun checkExistingChatKey(senderId: String, receiverId: String) {
-        val db = FirebaseDatabase.getInstance().getReference("ChatHistory").child(senderId).child(receiverId)
+    fun checkExistingChatKey(senderID : String, receiverID : String) {
+        val db = FirebaseDatabase.getInstance().getReference("ChatHistory").child(senderID).child(receiverID)
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val existingKey = p0.getValue(ChatHistoryData::class.java)
                 if (existingKey?.chatKey != null) {
-                    EventBus().post(existingKey.chatKey.toString())
+                    EventBus().post(existingKey.chatKey)
                 }
             }
 
@@ -69,25 +69,25 @@ class FirebaseChat {
         })
     }
 
-    fun saveChatHistory(senderId: String,senderName: String, receiverId: String,receiverName:String,
-                        msg: String, chatKey: String?) {
-        val db = FirebaseDatabase.getInstance().getReference("ChatHistory").child(senderId).child(receiverId)
-        val db1 = FirebaseDatabase.getInstance().getReference("ChatHistory").child(receiverId).child(senderId)
+    fun saveChatHistory(senderID : String, senderName : String, receiverID : String, receiverName : String,
+                        msg : String, chatKey : String?) {
+        val db = FirebaseDatabase.getInstance().getReference("ChatHistory").child(senderID).child(receiverID)
+        val db1 = FirebaseDatabase.getInstance().getReference("ChatHistory").child(receiverID).child(senderID)
         /*Chat key not null mean chat before.
          *Chat key null mean did not chat before between the sender and receiver.  */
         if (chatKey != null) {
-            val detailDb = FirebaseDatabase.getInstance().getReference("ChatDetailHistory").child(chatKey)
-            val messageID = detailDb.push().key
-            saveChatDetails(chatKey, MessageData(messageID!!, senderName, msg, getCurrentTime(), senderId), true)
+            val detailDB = FirebaseDatabase.getInstance().getReference("ChatDetailHistory").child(chatKey)
+            val messageID = detailDB.push().key
+            saveChatDetails(chatKey, MessageData(messageID!!, senderName, msg, getCurrentTime(), senderID), true)
         } else {
-            val detailDb = FirebaseDatabase.getInstance().getReference("ChatDetailHistory")
-            val chatKey = detailDb.push().key
-            val messageID = detailDb.push().key
+            val detailDB = FirebaseDatabase.getInstance().getReference("ChatDetailHistory")
+            val chatKey = detailDB.push().key
+            val messageID = detailDB.push().key
             /*Save recent chat to both sender and receiver*/
-            db.setValue(ChatHistoryData(chatKey!!, receiverId, receiverName))
-            db1.setValue(ChatHistoryData(chatKey!!, senderId, senderName))
+            db.setValue(ChatHistoryData(chatKey!!, receiverID, receiverName))
+            db1.setValue(ChatHistoryData(chatKey!!, senderID, senderName))
             /*-----------------------------------------------------------*/
-            saveChatDetails(chatKey, MessageData(messageID!!, senderName, msg, getCurrentTime(), senderId), false)
+            saveChatDetails(chatKey, MessageData(messageID!!, senderName, msg, getCurrentTime(), senderID), false)
         }
     }
 

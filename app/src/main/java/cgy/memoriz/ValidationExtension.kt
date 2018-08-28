@@ -58,7 +58,7 @@ fun String.isOnlyLetterOrDigit() : Boolean {
 
     if (this.isNotEmpty()) {
         for (i in this.indices) {
-            if (!this[i].isLetterOrDigit()) checker = false
+            if (!this[i].isLetterOrDigit() && this[i] != ' ') checker = false
         }
     }
     return checker
