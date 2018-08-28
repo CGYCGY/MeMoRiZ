@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/create_report_title"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Question title"
+        android:inputType="textMultiLine"
+        android:textSize="36sp"
+        android:lines="2"
+        android:minLines="1"
+        android:maxLines="2"/>
+
+    <Spinner
+        android:id="@+id/create_report_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:textSize="24sp"
+        android:spinnerMode="dropdown"/>
+
+    <EditText
+        android:id="@+id/create_report_body"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:ems="10"
+        android:hint="Question body"
+        android:inputType="textMultiLine"
+        android:textSize="24sp"
+        android:lines="4"
+        android:minLines="1"
+        android:maxLines="4"/>
+
+    <Button
+        android:id="@+id/createReportBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Create" />
+
+</LinearLayout>

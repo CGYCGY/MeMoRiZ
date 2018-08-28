@@ -16,7 +16,7 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
-fun EditText.validate(rule: Array<(String) -> Boolean>, errorMessage: Array<String>, sharedPref: sharedPref, num : Int) {
+fun EditText.validate(rule: Array<(String) -> Boolean>, errorMessage: Array<String>, sharedPref: SharedPref, num : Int) {
     this.afterTextChanged {
         loop@ for (i in rule.indices) {
             if (!rule[i](it)) {
@@ -77,7 +77,7 @@ fun String.isPassMix(): Boolean {
     return checker[0] && checker[1] && checker[2]
 }
 
-fun recordErrorCount(num : Int, bool : Boolean, sharedPref: sharedPref) {
+fun recordErrorCount(num : Int, bool : Boolean, sharedPref: SharedPref) {
     if (num == 1) {
         sharedPref.registerError1 = bool
     }
@@ -89,6 +89,6 @@ fun recordErrorCount(num : Int, bool : Boolean, sharedPref: sharedPref) {
     }
 }
 
-fun checkErrorExist(sharedPref: sharedPref) : Boolean {
+fun checkErrorExist(sharedPref: SharedPref) : Boolean {
     return (sharedPref.registerError1 && sharedPref.registerError2 && sharedPref.registerError3)
 }

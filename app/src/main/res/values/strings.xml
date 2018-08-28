@@ -13,4 +13,16 @@
 
     <string name="register">Register</string>
     <string name="username">User Name</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="QHelper">Question Helper</string>
+    <string name="QSolver">Question Solver</string>
+    <string name="Quiz">Quiz</string>
+    <string name="Slides">Slides</string>
+    <string name="CReport">Create Report</string>
+    <string name="VReport">View Report</string>
+    <string name="SMManager">Study Material Manager</string>
+    <string name="SManger">Student Manager</string>
+    <string name="MQuiz">Manage Quiz</string>
+    <string name="MSlide">Manage Slide</string>
 </resources>

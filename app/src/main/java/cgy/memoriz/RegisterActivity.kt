@@ -1,9 +1,12 @@
 package cgy.memoriz
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -13,24 +16,32 @@ import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONException
 import org.json.JSONObject
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private var typeSelected : String ?= null
+    private val type = arrayOf("Student", "Lecturer")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        sharedPref.init(this)
+        SharedPref.init(this)
+
+        register_type!!.onItemSelectedListener = this
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, type)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        register_type!!.adapter = arrayAdapter
 
         register_userName.validate(arrayOf({ s -> s.isOnlyLetterOrDigit()}, { s -> s.isLengthAtLeast(6)}),
-                arrayOf("Username only accept letter and digit", "Username must be at least 6 character"), sharedPref, 1)
+                arrayOf("Username only accept letter and digit", "Username must be at least 6 character"), SharedPref, 1)
         register_userPass.validate(arrayOf({ s -> s.isLengthAtLeast(6)},{ s -> s.isPassMix()}),
-                arrayOf("Password must be at least 6 character", "Password must contain number, uppercase and lowercase letter"), sharedPref, 2)
+                arrayOf("Password must be at least 6 character", "Password must contain number, uppercase and lowercase letter"), SharedPref, 2)
         register_userEmail.validate(arrayOf({ s -> s.isEmailValid()}),
-                arrayOf("Valid email address required"), sharedPref, 3)
+                arrayOf("Valid email address required"), SharedPref, 3)
 
 //      set what happen after user click the register button
         register_registerBtn.setOnClickListener {
-            Log.d("check error exist", checkErrorExist(sharedPref).toString())
-            if (checkErrorExist(sharedPref)) register()
+            Log.d("check error exist", checkErrorExist(SharedPref).toString())
+            if (checkErrorExist(SharedPref)) register()
         }
     }
 
@@ -57,17 +68,22 @@ class RegisterActivity : AppCompatActivity() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-//                params["ad_id"] = register_userID.text.toString()
-                params["ad_pass"] = register_userPass.text.toString().encryptPass()
-
-//                test = "DJpGiO0XE9pz3bwmIixr6cOFVaw4kMj6Uhhmroc5ayDMYK8="
-//                test.decryptPass()
-
-                params["ad_name"] = register_userName.text.toString()
-                params["ad_email"] = register_userEmail.text.toString()
+//                params["u_id"] = register_userID.text.toString()
+                params["u_type"] = typeSelected.toString()
+                params["u_pass"] = register_userPass.text.toString().encryptPass()
+                params["u_name"] = register_userName.text.toString()
+                params["u_email"] = register_userEmail.text.toString()
                 return params
             }
         }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
-}//Log.d("testing", params["ad_id"])
+
+    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+        typeSelected = type[position]
+    }
+
+    override fun onNothingSelected(adapterView: AdapterView<*>) {
+
+    }
+}//Log.d("testing", params["u_id"])

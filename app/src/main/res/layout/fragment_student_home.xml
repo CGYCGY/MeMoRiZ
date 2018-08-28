@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.StudentMainMenu">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="6">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Profile"
+            android:id="@+id/studentProfileBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Flashcard"
+            android:id="@+id/studentFlashcardBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Question"
+            android:id="@+id/studentQuestionBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Report"
+            android:id="@+id/studentReportBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Classroom"
+            android:id="@+id/studentClassBtn" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Students Hall"
+            android:id="@+id/studentStudentsHallBtn"/>
+
+    </LinearLayout>
+
+</FrameLayout>

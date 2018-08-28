@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp">
+
+    <EditText
+        android:id="@+id/qhelper_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:lines="2"
+        android:text="title"
+        android:textSize="36sp" />
+
+    <EditText
+        android:id="@+id/qhelper_detail_body"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:text="body"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/qhelper_detail_datetime"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:text="datetime created"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/qhelper_detail_condition"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:text="condition"
+        android:textSize="24sp"/>
+
+    <Button
+        android:id="@+id/updateQuestionBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Update Question" />
+
+</LinearLayout>
