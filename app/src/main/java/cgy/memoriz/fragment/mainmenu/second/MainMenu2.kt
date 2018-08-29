@@ -110,6 +110,18 @@ class MainMenu2 : MainActivityBaseFragment() {
                 switchFragment(StudentMainMenu())
             }
         }
+        else if (textGet == getString(R.string.SManger)) {
+            view.mainMenuBtn1.text = getString(R.string.SSProgress)
+            view.mainMenuBtn2.text = getString(R.string.Class)
+
+            view.mainMenuBtn1.setOnClickListener {
+                switchFragment(MainMenu2().newInstance(getString(R.string.SMManager)))
+            }
+
+            view.mainMenuBtn2.setOnClickListener {
+                switchFragment(LecturerMainMenu())
+            }
+        }
 
         return view
     }

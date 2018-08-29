@@ -25,4 +25,6 @@
     <string name="SManger">Student Manager</string>
     <string name="MQuiz">Manage Quiz</string>
     <string name="MSlide">Manage Slide</string>
+    <string name="SSProgress">Student Study Progress</string>
+    <string name="Class">Class</string>
 </resources>
