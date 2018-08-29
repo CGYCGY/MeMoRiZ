@@ -1,6 +1,5 @@
 package cgy.memoriz.fragment.chat
 
-import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -34,13 +33,13 @@ class AddGroup : MainActivityBaseFragment() {
         return view
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
+    override fun onStart() {
+        super.onStart()
         EventBus().registerOnBus(this)
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onStop() {
+        super.onStop()
         EventBus().unregisterFromBus(this)
     }
 
