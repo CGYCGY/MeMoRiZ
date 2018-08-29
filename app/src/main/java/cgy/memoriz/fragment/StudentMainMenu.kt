@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.SharedPref
+import cgy.memoriz.fragment.chat.Chat
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
 import cgy.memoriz.fragment.second.SecondPage
 import kotlinx.android.synthetic.main.fragment_student_home.view.*
@@ -51,9 +52,8 @@ class StudentMainMenu : MainActivityBaseFragment() {
         }
 
         view.studentStudentsHallBtn.setOnClickListener {
-            switchFragment(SecondPage())
+            switchFragment(Chat())
         }
-
 
         return view
     }
