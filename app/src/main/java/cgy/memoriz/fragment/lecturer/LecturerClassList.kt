@@ -67,7 +67,7 @@ class LecturerClassList : MainActivityBaseFragment(), ClassListAdapterInterface 
         loadClassList()
 
         view.createClassBtn.setOnClickListener {
-//            switchFragment(CreateQuestion())
+            switchFragment(CreateClass())
         }
 
         return view

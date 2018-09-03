@@ -112,14 +112,14 @@ class MainMenu2 : MainActivityBaseFragment() {
             }
         }
         else if (textGet == "Study Material Manager") {
-            val classInfo : ClassData = bundle!!.getSerializable("class") as ClassData
+            val classInfo : ClassData = bundle!!.getSerializable("class info") as ClassData
             //ltr pass guo qu
 
             view.mainMenuBtn1.text = getString(R.string.MQuiz)
             view.mainMenuBtn2.text = getString(R.string.MSlide)
 
             view.mainMenuBtn1.setOnClickListener {
-                switchFragment(LecturerQuizSet())
+                switchFragment(LecturerQuizSet().newInstance(classInfo))
             }
 
             view.mainMenuBtn2.setOnClickListener {
