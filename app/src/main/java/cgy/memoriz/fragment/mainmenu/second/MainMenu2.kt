@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
+import cgy.memoriz.data.ClassData
 import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.fragment.StudentMainMenu
+import cgy.memoriz.fragment.chat.Chat
+import cgy.memoriz.fragment.lecturer.LecturerClassList
 import cgy.memoriz.fragment.lecturer.LecturerQuizSet
 import cgy.memoriz.fragment.report.CreateReport
 import cgy.memoriz.fragment.report.ViewReport
@@ -29,6 +32,15 @@ class MainMenu2 : MainActivityBaseFragment() {
     fun newInstance(): MainMenu2{
         val args = Bundle()
         args.putSerializable("transfer data with this", "nothing")
+        val fragment = MainMenu2()
+        fragment.arguments = args
+        return fragment
+    }
+
+    fun newInstance(classInfo : ClassData, text : String): MainMenu2{
+        val args = Bundle()
+        args.putSerializable("class info", classInfo)
+        args.putString("value1", text)
         val fragment = MainMenu2()
         fragment.arguments = args
         return fragment
@@ -91,14 +103,18 @@ class MainMenu2 : MainActivityBaseFragment() {
             view.mainMenuBtn2.text = getString(R.string.SManger)
 
             view.mainMenuBtn1.setOnClickListener {
-                switchFragment(MainMenu2().newInstance(getString(R.string.SMManager)))
+                switchFragment(LecturerClassList())
+//                switchFragment(MainMenu2().newInstance(getString(R.string.SMManager)))
             }
 
             view.mainMenuBtn2.setOnClickListener {
-                switchFragment(LecturerMainMenu())
+                switchFragment(MainMenu2().newInstance(getString(R.string.SManger)))
             }
         }
         else if (textGet == "Study Material Manager") {
+            val classInfo : ClassData = bundle!!.getSerializable("class") as ClassData
+            //ltr pass guo qu
+
             view.mainMenuBtn1.text = getString(R.string.MQuiz)
             view.mainMenuBtn2.text = getString(R.string.MSlide)
 
@@ -112,14 +128,14 @@ class MainMenu2 : MainActivityBaseFragment() {
         }
         else if (textGet == getString(R.string.SManger)) {
             view.mainMenuBtn1.text = getString(R.string.SSProgress)
-            view.mainMenuBtn2.text = getString(R.string.Class)
+            view.mainMenuBtn2.text = getString(R.string.Chat)
 
             view.mainMenuBtn1.setOnClickListener {
-                switchFragment(MainMenu2().newInstance(getString(R.string.SMManager)))
+                switchFragment(LecturerMainMenu())
             }
 
             view.mainMenuBtn2.setOnClickListener {
-                switchFragment(LecturerMainMenu())
+                switchFragment(Chat())
             }
         }
 

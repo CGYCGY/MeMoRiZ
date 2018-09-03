@@ -26,5 +26,6 @@
     <string name="MQuiz">Manage Quiz</string>
     <string name="MSlide">Manage Slide</string>
     <string name="SSProgress">Student Study Progress</string>
-    <string name="Class">Class</string>
+    <string name="CGChat">Class Group Chat</string>
+    <string name="Chat">Chat</string>
 </resources>

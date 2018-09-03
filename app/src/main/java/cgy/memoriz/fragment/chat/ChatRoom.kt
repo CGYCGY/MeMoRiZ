@@ -62,7 +62,8 @@ class ChatRoom : MainActivityBaseFragment() {
                 receiverName = receiver!!.name.toString()
                 receiverID = receiver!!.email.toString()
                 firebase.checkExistingChatKey(SharedPref.userEmail, receiverID)
-            } else {
+            }
+            else {
                 chatHistory = bundle.getSerializable("chat") as ChatHistoryData
                 receiverID = chatHistory!!.receiverID
                 receiverName = chatHistory!!.receiverName

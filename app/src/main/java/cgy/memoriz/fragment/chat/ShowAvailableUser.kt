@@ -67,6 +67,7 @@ class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface {
         switchFragment(ChatRoom().newInstance(user))
     }
 
+
     override fun onStart() {
         super.onStart()
         EventBus().registerOnBus(this)

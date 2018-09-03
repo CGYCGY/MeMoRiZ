@@ -19,4 +19,9 @@ open class UserData : Serializable {
         this.name = name
         this.type = type
     }
+
+    constructor(email: String?, name: String?) {
+        this.email = email
+        this.name = name
+    }
 }

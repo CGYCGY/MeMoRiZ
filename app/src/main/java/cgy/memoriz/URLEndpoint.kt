@@ -17,4 +17,5 @@ object URLEndpoint {
     val urlInsertQuiz = urlRoot + "insert_quiz"
     val urlGetQuiz = urlRoot + "get_quiz"
     val urlGetUserList = urlRoot + "get_user_list"
+    val urlGetClassList = urlRoot + "get_class_list"
 }

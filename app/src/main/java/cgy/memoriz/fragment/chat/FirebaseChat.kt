@@ -22,7 +22,7 @@ class FirebaseChat {
         /*For group chat , the sender ID perform no function.*/
         db.setValue(ChatHistoryData(chatKey, senderId, groupName))
         groupDb.child(chatKey).setValue(GroupChatData(chatKey, groupName))
-        EventBus().post(GroupData(chatKey, groupName))
+        EventBus().post(UserData(chatKey, groupName))
     }
 
     /*Get created Group from Firebase.*/
@@ -39,7 +39,7 @@ class FirebaseChat {
                     /* Not sure whether your User class got how many attribute,
                      * I think can reeuse it, those other parameter just put  left it empty.
                      * I currently need group id and group name -> change to User class.*/
-                    arrayContainer.add(UserData(history.groupID!!.toInt(), history.groupName!!, ""))
+                    arrayContainer.add(UserData(history.groupID!!, history.groupName!!))
                 }
                 EventBus().post(arrayContainer)
             }
