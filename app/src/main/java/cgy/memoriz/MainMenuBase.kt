@@ -70,7 +70,7 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else if (!SharedPref.arrow) {
-            dialogFactory.createTwoButtonDialog(this, "ALERT!", "Are you sure want to quit the application?",
+            dialogFactory.createTwoButtonDialog(this, "ALERT!", "Do you want to proceed to Log Out??",
                     DialogInterface.OnClickListener { dialog, which -> finish() }).show()
         } else {
             super.onBackPressed()
@@ -127,26 +127,26 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     fun changeToolbarIconToBackArrow() {
         SharedPref.arrow = true
-        animateIcon(0, 1, 600);
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        animateIcon(0, 1, 600)
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
     fun changeToolbarIconToMenu() {
         SharedPref.arrow = false
-        animateIcon(1, 0, 600);
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        animateIcon(1, 0, 600)
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
     fun animateIcon(start: Int, end: Int, duration: Int) {
         if (toggle != null) {
-            val anim = ValueAnimator.ofFloat(start.toFloat(), end.toFloat());
+            val anim = ValueAnimator.ofFloat(start.toFloat(), end.toFloat())
             anim.addUpdateListener { animation ->
-                val slideOffset = animation?.animatedValue as Float;
-                toggle!!.onDrawerSlide(drawer_layout, slideOffset);
+                val slideOffset = animation?.animatedValue as Float
+                toggle!!.onDrawerSlide(drawer_layout, slideOffset)
             };
-            anim.interpolator = DecelerateInterpolator();
-            anim.duration = duration.toLong();
-            anim.start();
+            anim.interpolator = DecelerateInterpolator()
+            anim.duration = duration.toLong()
+            anim.start()
         }
     }
 
@@ -156,8 +156,8 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     fun showProgressDialog() {
         if (progressDialog != null) {
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+            progressDialog.setCancelable(false)
             progressDialog.isIndeterminate = true
             progressDialog.setMessage("Loading...")
             progressDialog.show();

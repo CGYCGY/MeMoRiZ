@@ -37,7 +37,7 @@ class ClassListAdapter : RecyclerView.Adapter<ClassListAdapter.ViewHolder> {
         val data = classList[position]
         holder.owner.text = data.owner
         holder.name.text = data.name
-        holder.size.text = "Class Size: "+data.size.toString()
+        holder.size.text = "Class Size: " + data.size.toString()
 
         holder.itemView?.setOnClickListener(View.OnClickListener {
             classListView.onClick(data)

@@ -19,4 +19,7 @@ object URLEndpoint {
     val urlGetUserList = urlRoot + "get_user_list"
     val urlGetClassList = urlRoot + "get_class_list"
     val urlInsertClass = urlRoot + "insert_class"
+    val urlJoinedClassList = urlRoot + "joined_class_list"
+    val urlNotJoinedClassList = urlRoot + "not_joined_class_list"
+    val urlInsertClassmember = urlRoot + "insert_classmember"
 }

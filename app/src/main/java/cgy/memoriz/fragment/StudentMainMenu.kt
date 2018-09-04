@@ -9,6 +9,7 @@ import cgy.memoriz.SharedPref
 import cgy.memoriz.fragment.chat.Chat
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
 import cgy.memoriz.fragment.second.SecondPage
+import cgy.memoriz.fragment.student.StudentClassList
 import kotlinx.android.synthetic.main.fragment_student_home.view.*
 
 /*Every fragment extend MainActivityBaseFragment() so that can use the function implemented.
@@ -48,7 +49,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
         }
 
         view.studentClassBtn.setOnClickListener {
-            switchFragment(MainMenu2().newInstance(view.studentClassBtn.text.toString()))
+            switchFragment(StudentClassList())
         }
 
         view.studentStudentsHallBtn.setOnClickListener {
