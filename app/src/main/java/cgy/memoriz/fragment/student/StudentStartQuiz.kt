@@ -1,6 +1,7 @@
 package cgy.memoriz.fragment.student
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -26,6 +27,8 @@ import kotlinx.android.synthetic.main.fragment_student_quiz_mcq.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+
+
 
 class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
     private lateinit var recycleAdapter: QuizMcqAdapter
@@ -69,12 +72,12 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
         val bundle = arguments
         if (bundle != null) {
             quizSetInfo = bundle.getSerializable("quiz set info") as SetData
-            setTitle("Quiz Set List")
-        }else {
-            setTitle("Quiz Set List")
         }
+        setTitle("Quiz Set List")
 
         loadQuizList()
+//        countDown((list.size * 90).toLong())
+        countDown((3).toLong())
 
         view.quizSubmitBtn.setOnClickListener {
             if (checkAllAnswered()) {
@@ -177,5 +180,22 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
                 return false
         }
         return true
+    }
+
+    private fun countDown(getTime : Long) {
+        val startTime = getTime * 1000
+
+        object : CountDownTimer(startTime, 1000) {
+
+            override fun onTick(millisUntilFinished : Long) {
+                val timeLeft = "seconds remaining: " + millisUntilFinished / 1000 + "Seconds Left"
+                view!!.quiz_timer.text = timeLeft
+            }
+
+            override fun onFinish() {
+                view!!.quiz_timer.text = getString(R.string.TimerEnd)
+                Toast.makeText(context, "Wait me implement", Toast.LENGTH_LONG).show()
+            }
+        }.start()
     }
 }

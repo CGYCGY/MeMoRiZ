@@ -46,13 +46,13 @@ class QuizMcqAdapter : RecyclerView.Adapter<QuizMcqAdapter.ViewHolder> {
         holder.choice4.text = data.choices[3]
 
         holder.choices.setOnCheckedChangeListener { group, checkedId ->
-            // This will get the radiobutton that has changed in its check state
+            // Get the specific radio button and get its state
             val checkedRadioButton = group.findViewById<View>(checkedId) as RadioButton
-            // This puts the value (true/false) into the variable
+            // set the button checker state on here
             val isChecked = checkedRadioButton.isChecked
             // If the radiobutton that has changed in check state is now checked...
             if (isChecked) {
-                // Changes the textview's text to "Checked: example radiobutton text"
+                // if one of the button checked, what will happen
                 quizView.onCheck(data, checkedRadioButton.text.toString())
             }
         }

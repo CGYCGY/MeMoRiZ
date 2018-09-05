@@ -28,4 +28,5 @@
     <string name="SSProgress">Student Study Progress</string>
     <string name="CGChat">Class Group Chat</string>
     <string name="Chat">Chat</string>
+    <string name="TimerEnd">Times Up!</string>
 </resources>
