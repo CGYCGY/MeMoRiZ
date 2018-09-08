@@ -109,7 +109,7 @@ class SubmitQuiz : MainActivityBaseFragment() {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
 
-                        Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
+                        Log.d("quiz result record", obj.getString("message"))
 
 //                        switchFragment(StudentQuizResult().newInstance(quizList, setID, quizResultID))
                         switchFragment(StudentQuizResult().newInstance(quizList))
@@ -132,36 +132,7 @@ class SubmitQuiz : MainActivityBaseFragment() {
         }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
-
-//    private fun saveQuizResultRecord(quizResultID : Int, quizID : Int, choice : Int) {
-//        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlInsertQuizResultRecord,
-//                Response.Listener<String> { response ->
-//                    try {
-////                      get the feedback message from the php and show it on the app by using Toast
-//                        val obj = JSONObject(response)
-//
-//                        Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
-//                    } catch (e: JSONException) {
-//                        e.printStackTrace()
-//                    }
-//                },
-//                Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
-//
-//            @Throws(AuthFailureError::class)
-//            override fun getParams(): Map<String, String> {
-//                val params = HashMap<String, String>()
-//
-//                params["qr_id"] = quizResultID.toString()
-//                params["qz_id"] = quizID.toString()
-//                params["qrr_choice"] = choice.toString()
-//
-//                return params
-//            }
-//        }
-//        VolleySingleton.instance?.addToRequestQueue(stringRequest)
-//    }
-
-    private fun jsonToArrayList(obj : JSONArray) : Int {
+  private fun jsonToArrayList(obj : JSONArray) : Int {
         return obj.getJSONObject(0).getInt("qr_id")
     }
 

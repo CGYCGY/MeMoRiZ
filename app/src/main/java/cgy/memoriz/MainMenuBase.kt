@@ -182,4 +182,14 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    fun setToolbarGone() {
+        toggle!!.isDrawerIndicatorEnabled=false
+        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+    }
+
+    fun setToolbarVisible() {
+        toggle!!.isDrawerIndicatorEnabled=true
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
 }

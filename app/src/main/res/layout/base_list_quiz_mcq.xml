@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/quiz_mcq_base">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="15dp"
@@ -29,6 +29,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
+            android:layout_below="@+id/qm_question_no"
             android:text="Quiz Question"
             android:textSize="36sp"
             android:lines="2"
@@ -39,7 +40,8 @@
             android:id="@+id/qm_choices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp">
+            android:layout_margin="15dp"
+            android:layout_below="@+id/qm_question" >
 
             <RadioButton
                 android:id="@+id/qm_choice1"
@@ -72,6 +74,6 @@
         </RadioGroup>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

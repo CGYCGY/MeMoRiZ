@@ -34,6 +34,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
     private lateinit var quizSetInfo : SetData
 
     private val list = ArrayList<QuizData>()
+    private var stopCountDown = false
 
     fun newInstance(text : String) : StudentStartQuiz {
         val args = Bundle()
@@ -67,6 +68,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_student_quiz_mcq, container, false)
         recycleView = view.quiz_mcq_list
+        getBaseActivity()?.setToolbarGone()
         /*
          * Get the data from previous fragment
          */
@@ -78,12 +80,14 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
 
         loadQuizList()
 //        countDown((list.size * 90).toLong())
-        countDown((3).toLong())
+        countDown((20).toLong())
 
         view.quizSubmitBtn.setOnClickListener {
             if (checkAllAnswered()) {
-                Toast.makeText(context, "Wait me implement", Toast.LENGTH_LONG).show()
-                switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
+                if (stopCountDown) {
+                    switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
+                }
+                else stopCountDown = true
             }
             else Toast.makeText(context, "Please answer all question before you submit", Toast.LENGTH_LONG).show()
         }
@@ -95,6 +99,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
         try {
             recycleAdapter = QuizMcqAdapter(context!!, quizList, this)
             val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+            recycleView.setItemViewCacheSize(quizList.size)
             recycleView.layoutManager = recycleLayout
             recycleView.adapter = recycleAdapter
         } catch (e: NullPointerException) {
@@ -190,8 +195,14 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
         object : CountDownTimer(startTime, 1000) {
 
             override fun onTick(millisUntilFinished : Long) {
-                val timeLeft = "seconds remaining: " + millisUntilFinished / 1000 + "Seconds Left"
-                view!!.quiz_timer.text = timeLeft
+                if (!stopCountDown) {
+                    val timeLeft = "seconds remaining: " + millisUntilFinished / 1000 + "Seconds Left"
+                    view!!.quiz_timer.text = timeLeft
+                }
+                else {
+                    cancel()
+                    switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
+                }
             }
 
             override fun onFinish() {

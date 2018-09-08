@@ -123,5 +123,4 @@ open class MainActivityBaseFragment : Fragment() {
             }
         }
     }
-
 }

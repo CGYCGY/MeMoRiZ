@@ -43,6 +43,7 @@ class StudentQuizResult : MainActivityBaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_student_quiz_mcq, container, false)
         recycleView = view.quiz_mcq_list
+        getBaseActivity()?.setToolbarGone()
 
         val bundle = arguments
         if (bundle != null) {
@@ -79,48 +80,6 @@ class StudentQuizResult : MainActivityBaseFragment() {
             Log.d("Quiz MCQ Adapter error:", e.toString())
         }
     }
-
-    //rmb setup
-//    private fun jsonToArrayList(obj : JSONArray) {
-//        val answerList = ArrayList<String>()
-//        val tempList = ArrayList<String>()
-//
-//        for (i in 0 until obj.length()) {
-//            list.add(QuizData(
-//                    obj.getJSONObject(i).getInt("qz_id"),
-//                    obj.getJSONObject(i).getString("qz_qstn"),
-//                    obj.getJSONObject(i).getString("qz_ans"),
-//                    obj.getJSONObject(i).getString("qz_ans")))
-//
-//            answerList.add(obj.getJSONObject(i).getString("qz_ans"))
-//        }
-//
-//        for (i in 0 until list.size) {
-//            if (list[i].choices.size < 3) {
-//                tempList.clear()
-//                tempList.addAll(answerList)
-//                tempList.filterString(list[i].answer!!)
-//                tempList.shuffleString()
-//
-//                Log.d("answer", list[i].answer)
-//                for (j in 0 until tempList.size) {
-//                    Log.d("tempList got", tempList[j])
-//                }
-//
-//                Log.d("templist de size", tempList.size.toString())
-//
-//                list[i].choices.add(tempList[0])
-//                list[i].choices.add(tempList[1])
-//                list[i].choices.add(tempList[2])
-//
-//                Log.d("templist de size", tempList.size.toString())
-//
-//                list[i].choices.shuffleString()
-//            }
-//        }
-//
-//        setRecycleView(list)
-//    }
 
     private fun getMark() : Int {
         var mark = 0
