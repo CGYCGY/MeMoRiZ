@@ -22,4 +22,6 @@ object URLEndpoint {
     val urlJoinedClassList = urlRoot + "joined_class_list"
     val urlNotJoinedClassList = urlRoot + "not_joined_class_list"
     val urlInsertClassmember = urlRoot + "insert_classmember"
+    val urlInsertQuizResult = urlRoot + "insert_quiz_result"
+    val urlInsertQuizResultRecord = urlRoot + "insert_quiz_result_record"
 }

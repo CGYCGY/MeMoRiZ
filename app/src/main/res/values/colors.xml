@@ -13,4 +13,6 @@
     <color name="silver">#C0C0C0</color>
     <color name="grey">#808080</color>
     <color name="grey.background.dark">#8A8A8D</color>
+    <drawable name="lightGreen">#2ad338</drawable>
+    <drawable name="lightRed">#fa2e43</drawable>
 </resources>

@@ -28,8 +28,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-
-
 class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
     private lateinit var recycleAdapter: QuizMcqAdapter
     private lateinit var recycleView: RecyclerView
@@ -56,7 +54,10 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
     override fun onCheck(quiz: QuizData, answer: String) {
         for (i in 0 until list.size) {
             if (list[i].id == quiz.id) {
-                list[i].studentSelection = answer
+                for (j in 0 until list[i].choices.size) {
+                    if (list[i].choices[j] == answer)
+                        list[i].studentSelection = j
+                }
                 break
             }
         }
@@ -73,7 +74,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
         if (bundle != null) {
             quizSetInfo = bundle.getSerializable("quiz set info") as SetData
         }
-        setTitle("Quiz Set List")
+        setTitle(quizSetInfo.name!!)
 
         loadQuizList()
 //        countDown((list.size * 90).toLong())
@@ -82,6 +83,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
         view.quizSubmitBtn.setOnClickListener {
             if (checkAllAnswered()) {
                 Toast.makeText(context, "Wait me implement", Toast.LENGTH_LONG).show()
+                switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
             }
             else Toast.makeText(context, "Please answer all question before you submit", Toast.LENGTH_LONG).show()
         }
@@ -96,7 +98,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
             recycleView.layoutManager = recycleLayout
             recycleView.adapter = recycleAdapter
         } catch (e: NullPointerException) {
-            Log.d("QHelper Adapter error:", e.toString())
+            Log.d("Quiz MCQ Adapter error:", e.toString())
         }
     }
 
@@ -156,16 +158,16 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
 
                 Log.d("answer", list[i].answer)
                 for (j in 0 until tempList.size) {
-                    Log.d("tempList got", tempList[j])
+//                    Log.d("tempList got", tempList[j])
                 }
 
-                Log.d("templist de size", tempList.size.toString())
+//                Log.d("templist de size", tempList.size.toString())
 
                 list[i].choices.add(tempList[0])
                 list[i].choices.add(tempList[1])
                 list[i].choices.add(tempList[2])
 
-                Log.d("templist de size", tempList.size.toString())
+//                Log.d("templist de size", tempList.size.toString())
 
                 list[i].choices.shuffleString()
             }
@@ -176,7 +178,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
 
     private fun checkAllAnswered() : Boolean {
         for (i in 0 until list.size) {
-            if (list[i].studentSelection.isNullOrBlank())
+            if (list[i].studentSelection < 0 || list[i].studentSelection > 4)
                 return false
         }
         return true

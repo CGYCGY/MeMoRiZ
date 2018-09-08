@@ -4,8 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
     android:id="@+id/quiz_mcq_base">
 
     <LinearLayout
@@ -18,14 +16,10 @@
         <TextView
             android:id="@+id/qm_question_no"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="15dp"
             android:text="1"
-            android:textSize="36sp"
-            android:lines="2"
-            android:minLines="1"
-            android:maxLines="2"/>
+            android:textSize="36sp"/>
 
         <TextView
             android:id="@+id/qm_question"
