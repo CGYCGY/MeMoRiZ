@@ -76,7 +76,7 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-            //          pack the registration info to POSt it
+            //          pack the registration info to POST it
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()

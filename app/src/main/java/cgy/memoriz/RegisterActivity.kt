@@ -64,7 +64,7 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-//          pack the registration info to POSt it
+//          pack the registration info to POST it
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()

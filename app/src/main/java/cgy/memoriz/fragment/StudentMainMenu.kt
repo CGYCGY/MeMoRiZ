@@ -10,6 +10,7 @@ import cgy.memoriz.fragment.chat.Chat
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
 import cgy.memoriz.fragment.second.SecondPage
 import cgy.memoriz.fragment.student.StudentClassList
+import cgy.memoriz.share.profile.ShowProfile
 import kotlinx.android.synthetic.main.fragment_student_home.view.*
 
 /*Every fragment extend MainActivityBaseFragment() so that can use the function implemented.
@@ -32,7 +33,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
         view.studentProfileBtn.setOnClickListener {
             //switchFragment(SecondPage().newInstance("Data to transfer"))
             // transfer object use below.
-            switchFragment(SecondPage())
+            switchFragment(ShowProfile())
 //            switchFragment(SecondPage().newInstance())
         }
 

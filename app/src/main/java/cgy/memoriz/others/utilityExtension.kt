@@ -3,6 +3,8 @@ package cgy.memoriz.others
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -40,4 +42,11 @@ fun ArrayList<String>.filterString(s : String) : ArrayList<String> {
     }
 
     return this
+}
+
+fun getFormattedTime(format : String) {
+//    val currentTime = LocalDateTime.now()
+//
+//    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+//    val formatted = currentTime.format(formatter)
 }
