@@ -35,7 +35,7 @@ import java.io.*
 import java.util.*
 
 
-class EditProfile : MainActivityBaseFragment() {
+class EditProfilePicture : MainActivityBaseFragment() {
     private lateinit var spDialog : Dialog
     private lateinit var encodedImage : String
     private lateinit var userChosenTask : String
@@ -48,14 +48,14 @@ class EditProfile : MainActivityBaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile_edit, container, false)
 
-        setTitle("Edit Profile")
+        setTitle("Edit Profile Picture")
 
         spDialog = SpotsDialog.Builder()
                 .setContext(context)
                 .setMessage("Uploading...")
                 .build()
 
-        view.profile_photo.setOnTouchListener { _, motionEvent ->
+        view.profile_photo_edit.setOnTouchListener { _, motionEvent ->
             selectImage()
             false
         }
@@ -82,7 +82,7 @@ class EditProfile : MainActivityBaseFragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
-            Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (userChosenTask.equals("Take Photo"))
                     cameraIntent()
                 else if (userChosenTask.equals("Choose from Library"))
@@ -124,7 +124,7 @@ class EditProfile : MainActivityBaseFragment() {
             e.printStackTrace()
         }
 
-        view!!.profile_photo!!.setImageBitmap(thumbnail)
+        view!!.profile_photo_edit!!.setImageBitmap(thumbnail)
     }
 
     private fun onSelectFromGalleryResult(data: Intent?) {
@@ -137,7 +137,7 @@ class EditProfile : MainActivityBaseFragment() {
 
         }
 
-        view!!.profile_photo!!.setImageBitmap(thumbnail)
+        view!!.profile_photo_edit!!.setImageBitmap(thumbnail)
     }
 
     private fun updateProfile(image: String) {

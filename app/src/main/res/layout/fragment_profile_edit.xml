@@ -5,18 +5,16 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/profile_photo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="-60dp"
-        android:elevation="5dp"
-        android:scaleType="centerCrop"
-        android:src="@android:drawable/ic_menu_camera"
-        android:contentDescription="Profile Photo" />
-        <!--android:clickable="true"-->
-        <!--android:focusable="true"/>-->
+    android:id="@+id/profile_photo_edit"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    android:layout_marginTop="-60dp"
+    android:elevation="5dp"
+    android:scaleType="centerCrop"
+    android:src="@android:drawable/ic_menu_camera"
+    android:contentDescription="Profile Photo" />
 
     <Button
         android:id="@+id/saveProfileBtn"

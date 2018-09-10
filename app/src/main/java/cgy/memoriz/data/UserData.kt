@@ -3,12 +3,15 @@ package cgy.memoriz.data
 import java.io.Serializable
 
 open class UserData : Serializable {
-    var id: Int? = null
+    var id : Int? = null
     var email : String? = null
-    var name: String? = null
-    var type: String? = null
+    var name : String? = null
+    var type : String? = null
+    var address : String? = ""
+    var experience : String? = ""
+    var picture : String? = ""
 
-    constructor(id: Int?, name: String?, type: String?) {
+    constructor(id: Int?, name : String?, type: String?) {
         this.id = id
         this.name = name
         this.type = type

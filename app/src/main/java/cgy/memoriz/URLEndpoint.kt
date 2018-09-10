@@ -2,7 +2,7 @@ package cgy.memoriz
 
 object URLEndpoint {
     private val urlRoot = "http://192.168.0.166/linkdbAPI/v1/?op="
-//    private val urlBase = "http://192.168.0.166/linkdbAPI/"
+    private val urlBase = "http://192.168.0.166/linkdbAPI/"
     val urlRegister = urlRoot + "register"
     val urlLogin = urlRoot + "login"
     val urlInsertQuestion = urlRoot + "insert_question"
@@ -26,4 +26,7 @@ object URLEndpoint {
     val urlInsertQuizResult = urlRoot + "insert_quiz_result"
     val urlInsertQuizResultRecord = urlRoot + "insert_quiz_result_record"
     val urlUploadImage =  urlRoot + "upload_profile_photo"
+    val urlGetUserProfile =  urlRoot + "get_user_profile"
+
+    val urlLoadImage = urlBase + "image/"
 }

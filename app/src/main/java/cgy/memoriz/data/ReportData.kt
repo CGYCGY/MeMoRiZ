@@ -27,5 +27,6 @@ open class ReportData : Serializable {
  * TO-DO
  *
  * create check ban status function
+ * temp use u_exp as u_pic
  *
  */
