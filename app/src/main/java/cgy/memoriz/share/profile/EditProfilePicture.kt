@@ -3,10 +3,10 @@ package cgy.memoriz.share.profile
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment.getExternalStorageDirectory
 import android.provider.MediaStore
@@ -15,6 +15,8 @@ import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
@@ -22,13 +24,15 @@ import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.SDialog
+import cgy.memoriz.others.rotate
 import cgy.memoriz.upload.Utility
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import dmax.dialog.SpotsDialog
-import kotlinx.android.synthetic.main.fragment_profile_edit.view.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile_photo_edit.view.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
@@ -36,7 +40,7 @@ import java.util.*
 
 
 class EditProfilePicture : MainActivityBaseFragment() {
-    private lateinit var spDialog : Dialog
+    private lateinit var uploadingDialog : SDialog
     private lateinit var encodedImage : String
     private lateinit var userChosenTask : String
 
@@ -44,37 +48,72 @@ class EditProfilePicture : MainActivityBaseFragment() {
     private val selectFile = 1
     var thumbnail : Bitmap? = null
 
+    fun newInstance(file: File): EditProfilePicture{
+        val args = Bundle()
+        args.putSerializable("file", file)
+        val fragment = EditProfilePicture()
+        fragment.arguments = args
+        return fragment
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_profile_edit, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile_photo_edit, container, false)
 
         setTitle("Edit Profile Picture")
 
-        spDialog = SpotsDialog.Builder()
-                .setContext(context)
-                .setMessage("Uploading...")
-                .build()
+        uploadingDialog = SDialog("Uploading...", context!!)
 
-        view.profile_photo_edit.setOnTouchListener { _, motionEvent ->
+        val bundle = arguments
+        if (bundle != null) {
+            val file = bundle.getSerializable("file") as File
+            val loadingDialog = SDialog("Uploading...", context!!)
+
+            if (file.exists()) {
+                val uri = Uri.fromFile(file)
+
+                loadingDialog.showDialog()
+
+                //load image from phone storage
+                Picasso.get()
+                        .load(uri)
+                        .into(view!!.profile_edit_photo)
+
+                loadingDialog.hideDialog()
+            }
+        }
+
+        view.profile_edit_photo.setOnTouchListener { _, motionEvent ->
             selectImage()
             false
         }
 
-        view.saveProfileBtn.setOnClickListener {
-//            switchFragment(StudentQSolver())
+        view.saveProfilePhotoBtn.setOnClickListener {
 
-            val image = getStringImage(this.thumbnail!!)
-
-            val imageObject = JSONObject()
-            try {
-                imageObject.put("size", "1000")
-                imageObject.put("type", "image/jpeg")
-                imageObject.put("data", image)
-            } catch (e: JSONException) {
-                e.printStackTrace()
+            if (thumbnail == null) {
+                Toast.makeText(context, "No changes detected", Toast.LENGTH_LONG).show()
             }
+            else {
+                val image = getStringImage(this.thumbnail!!)
 
-            updateProfile(imageObject.toString())
+                val imageObject = JSONObject()
+                try {
+                    imageObject.put("size", "1000")
+                    imageObject.put("type", "image/jpeg")
+                    imageObject.put("data", image)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+                updateProfile(imageObject.toString())
+            }
+        }
+
+        view!!.rotateProfilePhotoBtn.visibility = GONE
+
+        view.rotateProfilePhotoBtn.setOnClickListener {
+            thumbnail = thumbnail!!.rotate(90.toFloat())
+            view.profile_edit_photo.setImageBitmap(thumbnail)
         }
 
         return view
@@ -124,7 +163,8 @@ class EditProfilePicture : MainActivityBaseFragment() {
             e.printStackTrace()
         }
 
-        view!!.profile_photo_edit!!.setImageBitmap(thumbnail)
+        view!!.rotateProfilePhotoBtn.visibility = VISIBLE
+        view!!.profile_edit_photo!!.setImageBitmap(thumbnail)
     }
 
     private fun onSelectFromGalleryResult(data: Intent?) {
@@ -137,16 +177,17 @@ class EditProfilePicture : MainActivityBaseFragment() {
 
         }
 
-        view!!.profile_photo_edit!!.setImageBitmap(thumbnail)
+        view!!.rotateProfilePhotoBtn.visibility = VISIBLE
+        view!!.profile_edit_photo!!.setImageBitmap(thumbnail)
     }
 
     private fun updateProfile(image: String) {
-        showDialog()
+        uploadingDialog.showDialog()
 
         val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUploadImage,
                 Response.Listener<String> { response ->
                     try {
-                        hideDialog()
+                        uploadingDialog.hideDialog()
 //                      get the feedback message from the php and show it on the app by using Toast
                         Log.d("response", response)
                         val obj = JSONObject(response)
@@ -228,17 +269,5 @@ class EditProfilePicture : MainActivityBaseFragment() {
     private fun cameraIntent() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, requestCamera)
-    }
-
-
-
-    private fun showDialog() {
-        if (!spDialog.isShowing)
-            spDialog.show()
-    }
-
-    private fun hideDialog() {
-        if (spDialog.isShowing)
-            spDialog.dismiss()
     }
 }

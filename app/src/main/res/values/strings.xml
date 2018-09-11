@@ -30,4 +30,6 @@
     <string name="Chat">Chat</string>
     <string name="TimerEnd">Times Up!</string>
     <string name="QuizResultBtn">Return to quiz list</string>
+    <string name="EduLevel">Education Level:</string>
+    <string name="TeachExp">Teaching Experience:</string>
 </resources>

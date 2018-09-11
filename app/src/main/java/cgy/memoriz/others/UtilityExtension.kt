@@ -1,6 +1,8 @@
 package cgy.memoriz.others
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import java.util.*
@@ -40,4 +42,9 @@ fun ArrayList<String>.filterString(s : String) : ArrayList<String> {
     }
 
     return this
+}
+
+fun Bitmap.rotate(degrees: Float): Bitmap {
+    val matrix = Matrix().apply { postRotate(degrees) }
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }

@@ -7,9 +7,9 @@ open class UserData : Serializable {
     var email : String? = null
     var name : String? = null
     var type : String? = null
-    var address : String? = ""
-    var experience : String? = ""
-    var picture : String? = ""
+    var address : String? = null
+    var experience : String? = null
+    var picture : String? = null
 
     constructor(id: Int?, name : String?, type: String?) {
         this.id = id

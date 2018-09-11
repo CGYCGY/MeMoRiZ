@@ -3,7 +3,9 @@ package cgy.memoriz.share.profile
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.content.PermissionChecker
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
 import cgy.memoriz.data.UserData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.JExtension
 import cgy.memoriz.others.SDialog
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -26,29 +29,39 @@ import kotlinx.android.synthetic.main.fragment_profile_show.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import java.util.*
 
 
 class ShowProfile : MainActivityBaseFragment() {
     private lateinit var spDialog : SDialog
+    private lateinit var file : File
+    private lateinit var user : UserData
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile_show, container, false)
 
         spDialog = SDialog("Loading...", context!!)
+        file = File("not exist")
 
         setTitle("Profile")
         loadUserProfile()
 
         view.changeProfilePictureBtn.setOnClickListener {
-            switchFragment(EditProfilePicture())
+            switchFragment(EditProfilePicture().newInstance(file))
         }
-        view.changeProfileDetailBtn.setOnClickListener {
 
+        view.changeProfileDetailBtn.setOnClickListener {
+            switchFragment(EditProfile().newInstance(user))
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadUserProfile()
     }
 
     private fun loadUserProfile() {
@@ -87,9 +100,29 @@ class ShowProfile : MainActivityBaseFragment() {
         val userProfile = UserData(SharedPref.userEmail, SharedPref.userName)
 
         for (i in 0 until obj.length()) {
-            userProfile.address = obj.getJSONObject(i).getString("u_place")
-            userProfile.experience = obj.getJSONObject(i).getString("u_exp")
-            userProfile.picture = obj.getJSONObject(i).getString("u_pic")
+            userProfile.name = obj.getJSONObject(i).getString("u_name")
+            SharedPref.userName = userProfile.name.toString()
+
+            if (obj.getJSONObject(i).getString("u_place") == "null") {
+                userProfile.address = ""
+            }
+            else {
+                userProfile.address = obj.getJSONObject(i).getString("u_place")
+            }
+
+            if (obj.getJSONObject(i).getString("u_exp") == "null") {
+                userProfile.experience = ""
+            }
+            else {
+                userProfile.experience = obj.getJSONObject(i).getString("u_exp")
+            }
+
+            if (obj.getJSONObject(i).getString("u_pic") == "null") {
+                userProfile.picture = ""
+            }
+            else {
+                userProfile.picture = obj.getJSONObject(i).getString("u_pic")
+            }
         }
         return userProfile
     }
@@ -99,27 +132,56 @@ class ShowProfile : MainActivityBaseFragment() {
                 PermissionChecker.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
 
-        spDialog.showDialog()
-        Picasso.get()
-                .load(url)
-                .into(view!!.profile_photo_show)
-        spDialog.hideDialog()
+        file = File(Environment.getExternalStorageDirectory().path + "/" + imageName)
 
-        //save to phone storage
-//        Picasso.get()
-//                .load(url)
-//                .into(JExtension.getTarget(imageName))
+        if (file.exists()) {
+            val uri = Uri.fromFile(file)
+
+            spDialog.showDialog()
+
+            //load image from phone storage
+            Picasso.get()
+                    .load(uri)
+                    .into(view!!.profile_show_photo)
+
+            spDialog.hideDialog()
+        }
+        else {
+            spDialog.showDialog()
+
+            //get image from server and show it out
+            Picasso.get()
+                    .load(url)
+                    .into(view!!.profile_show_photo)
+
+            spDialog.hideDialog()
+
+            //save to phone storage
+            Picasso.get()
+                    .load(url)
+                    .into(JExtension.getTarget(imageName))
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupUserProfile(userProfile: UserData) {
-        view!!.profile_name_show.text = "Name: " + SharedPref.userName
-        view!!.profile_email_show.text = "Email: " + SharedPref.userEmail
-        view!!.profile_exp_show.text = "Education Level: " + userProfile.experience
-        view!!.profile_place_show.text = "Address: " + userProfile.address
+        view!!.profile_show_name.text = "Name: " + SharedPref.userName
+        view!!.profile_show_email.text = "Email: " + SharedPref.userEmail
+        view!!.profile_show_place.text = "Address: " + userProfile.address
 
-        val location = URLEndpoint.urlLoadImage + userProfile.picture!!.substring(9, userProfile.picture!!.length)
-        val imageName = "MeMoRiZ/Profile/" + userProfile.picture!!.substring(9, userProfile.picture!!.length)
-        downloadProfilePic(location, imageName)
+        if (SharedPref.userType == "Student") {
+            view!!.profile_show_exp.text = getString(R.string.EduLevel) + userProfile.experience
+        }
+        else {
+            view!!.profile_show_exp.text = getString(R.string.TeachExp) + userProfile.experience
+        }
+
+        if (userProfile.picture !== "") {
+            val location = URLEndpoint.urlLoadImage + userProfile.picture!!.substring(9, userProfile.picture!!.length)
+            val imageName = "MeMoRiZ/Profile/" + userProfile.picture!!.substring(9, userProfile.picture!!.length)
+            downloadProfilePic(location, imageName)
+        }
+
+        user = userProfile
     }
 }

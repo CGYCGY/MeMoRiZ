@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.SharedPref
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
-import cgy.memoriz.fragment.second.SecondPage
 import cgy.memoriz.fragment.student.StudentQSolver
+import cgy.memoriz.share.profile.ShowProfile
 import kotlinx.android.synthetic.main.fragment_lecturer_home.view.*
 
 class LecturerMainMenu : MainActivityBaseFragment() {
@@ -23,7 +23,7 @@ class LecturerMainMenu : MainActivityBaseFragment() {
         setTitle("LecturerMainMenu")
 
         view.lecturerProfileBtn.setOnClickListener {
-            switchFragment(SecondPage())
+            switchFragment(ShowProfile())
         }
 
         view.lecturerCManagerBtn.setOnClickListener {

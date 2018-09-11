@@ -27,6 +27,7 @@ object URLEndpoint {
     val urlInsertQuizResultRecord = urlRoot + "insert_quiz_result_record"
     val urlUploadImage =  urlRoot + "upload_profile_photo"
     val urlGetUserProfile =  urlRoot + "get_user_profile"
+    val urlUpdateUserProfile =  urlRoot + "update_user_profile"
 
     val urlLoadImage = urlBase + "image/"
 }
