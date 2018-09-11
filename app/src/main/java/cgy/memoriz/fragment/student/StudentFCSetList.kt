@@ -12,46 +12,46 @@ import cgy.memoriz.R
 import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
-import cgy.memoriz.adapter.QHelperAdapter
-import cgy.memoriz.adapter.QHelperAdapterInterface
-import cgy.memoriz.data.QuestionData
+import cgy.memoriz.adapter.FCSetAdapter
+import cgy.memoriz.adapter.FCSetAdapterInterface
+import cgy.memoriz.data.FCSetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_student_qhelper.view.*
+import kotlinx.android.synthetic.main.fragment_student_flashcardset.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
-    private lateinit var recycleAdapter: QHelperAdapter
+class StudentFCSetList : MainActivityBaseFragment(), FCSetAdapterInterface {
+    private lateinit var recycleAdapter: FCSetAdapter
     private lateinit var recycleView: RecyclerView
 
     private var textGet : String ?= null
 
-    fun newInstance(text : String) : StudentQHelper {
+    fun newInstance(text : String) : StudentFCSetList {
         val args = Bundle()
         args.putString("value1", text)
-        val fragment = StudentQHelper()
+        val fragment = StudentFCSetList()
         fragment.arguments = args
         return fragment
     }
 
-    override fun onClick(question: QuestionData) {
-        Log.d("CLICKED HERE YOUR DATA", question.title)
-        switchFragment(StudentQHelperDetail().newInstance(question))
+    override fun onClick(fcSetInfo : FCSetData) {
+        Log.d("CLICKED HERE YOUR DATA", fcSetInfo.name)
+        switchFragment(StudentFlashcard().newInstance(fcSetInfo))
     }
 
-    override fun onLongClick(question: QuestionData) {
-        Log.d("LONG CLICKED! YOUR DATA", question.title)
+    override fun onLongClick(fcSetInfo : FCSetData) {
+        Log.d("LONG CLICKED! YOUR DATA", fcSetInfo.name)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_student_qhelper, container, false)
-        recycleView = view.qHelper
+        val view = inflater.inflate(R.layout.fragment_student_flashcardset, container, false)
+        recycleView = view.student_fcset
         /*
          * Get the data from previous fragment
          */
@@ -60,31 +60,31 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
             textGet = bundle.getString("value1")
             setTitle("$textGet")
         }else {
-            setTitle("Question Helper")
+            setTitle("Flashcard Set List")
         }
 
-        loadQuestionList()
+        loadFCSetList()
 
-        view.createQuestionBtn.setOnClickListener {
-            switchFragment(CreateQuestion())
+        view.createFCSetBtn.setOnClickListener {
+            switchFragment(CreateFCSet())
         }
 
         return view
     }
 
-    private fun setRecycleView(questionList: ArrayList<QuestionData>) {
+    private fun setRecycleView(fcSetList: ArrayList<FCSetData>) {
         try {
-            recycleAdapter = QHelperAdapter(context!!, questionList, this)
+            recycleAdapter = FCSetAdapter(context!!, fcSetList, this)
             val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
             recycleView.layoutManager = recycleLayout
             recycleView.adapter = recycleAdapter
         } catch (e: NullPointerException) {
-            Log.d("QHelper Adapter error:", e.toString())
+            Log.d("FCSet Adapter error:", e.toString())
         }
     }
 
-    private fun loadQuestionList() {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetQuestionHelper,
+    private fun loadFCSetList() {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetFCSet,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
@@ -115,15 +115,13 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
     }
 
     private fun jsonToArrayList(obj : JSONArray) {
-        val list = ArrayList<QuestionData>()
+        val list = ArrayList<FCSetData>()
 
         for (i in 0 until obj.length())
-            list.add(QuestionData(
-                    obj.getJSONObject(i).getInt("qstn_id"),
-                    obj.getJSONObject(i).getString("qstn_title"),
-                    obj.getJSONObject(i).getString("qstn_body"),
-                    obj.getJSONObject(i).getString("qstn_datetime"),
-                    obj.getJSONObject(i).getString("qstn_cond")))
+            list.add(FCSetData(
+                    obj.getJSONObject(i).getInt("fcs_id"),
+                    obj.getJSONObject(i).getString("fcs_name"),
+                    obj.getJSONObject(i).getInt("fcs_size")))
 
         setRecycleView(list)
     }

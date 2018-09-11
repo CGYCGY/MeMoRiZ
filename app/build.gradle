@@ -48,6 +48,8 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.1.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

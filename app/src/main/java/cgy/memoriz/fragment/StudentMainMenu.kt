@@ -8,8 +8,8 @@ import cgy.memoriz.R
 import cgy.memoriz.SharedPref
 import cgy.memoriz.fragment.chat.Chat
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
-import cgy.memoriz.fragment.second.SecondPage
 import cgy.memoriz.fragment.student.StudentClassList
+import cgy.memoriz.fragment.student.StudentFCSetList
 import cgy.memoriz.share.profile.ShowProfile
 import kotlinx.android.synthetic.main.fragment_student_home.view.*
 
@@ -38,7 +38,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
         }
 
         view.studentFlashcardBtn.setOnClickListener {
-            switchFragment(SecondPage())
+            switchFragment(StudentFCSetList())
         }
 
         view.studentQuestionBtn.setOnClickListener {
