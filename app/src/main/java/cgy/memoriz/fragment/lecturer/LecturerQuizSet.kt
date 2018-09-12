@@ -74,7 +74,7 @@ class LecturerQuizSet : MainActivityBaseFragment(),QuizSetAdapterInterface {
         loadQuizList()
 
         view.createQuizSetBtn.setOnClickListener {
-            switchFragment(CreateQuizSet())
+            switchFragment(CreateQuizSet().newInstance(classInfo))
         }
 
         return view

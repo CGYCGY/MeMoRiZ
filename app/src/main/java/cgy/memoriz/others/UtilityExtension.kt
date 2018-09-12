@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import cgy.memoriz.data.FlashcardData
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,6 +40,21 @@ fun ArrayList<String>.filterString(s : String) : ArrayList<String> {
 
     for (i in 0 until same.size) {
         this.removeAt(same[i])
+    }
+
+    return this
+}
+
+fun ArrayList<FlashcardData>.shuffleFlashcard(): ArrayList<FlashcardData> {
+    val rng = Random()
+
+    for (index in 0 until this.size) {
+        val randomIndex = rng.nextInt(this.size)
+
+        // Swap with the random position
+        val temp = this[index]
+        this[index] = this[randomIndex]
+        this[randomIndex] = temp
     }
 
     return this

@@ -1,15 +1,18 @@
 package cgy.memoriz.fragment.student
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
+import cgy.memoriz.adapter.FlashcardAdapter
+import cgy.memoriz.adapter.FlashcardAdapterInterface
 import cgy.memoriz.data.FCSetData
 import cgy.memoriz.data.FlashcardData
 import cgy.memoriz.fragment.MainActivityBaseFragment
@@ -17,106 +20,83 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_student_fc_back.view.*
-import kotlinx.android.synthetic.main.fragment_student_fc_front.view.*
-import kotlinx.android.synthetic.main.fragment_student_flashcard.view.*
+import kotlinx.android.synthetic.main.base_list_flashcardset.view.*
+import kotlinx.android.synthetic.main.fragment_fcset_detail.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class StudentFlashcard : MainActivityBaseFragment() {
-    private var fcSet = FCSetData()
-    private var currentPosition = 0
+class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface {
+    private lateinit var recycleAdapter: FlashcardAdapter
+    private lateinit var recycleView: RecyclerView
 
-    fun newInstance(fcSetInfo: FCSetData): StudentFlashcard{
+    private var fcSetInfo = FCSetData()
+
+    fun newInstance(fcSetInfo : FCSetData): StudentFCSetDetail{
         val args = Bundle()
         args.putSerializable("flashcard set detail", fcSetInfo)
-        val fragment = StudentFlashcard()
+        val fragment = StudentFCSetDetail()
         fragment.arguments = args
         return fragment
     }
 
+    override fun onClick(flashcard : FlashcardData) {
+        Log.d("CLICKED HERE YOUR DATA", flashcard.card1)
+    }
+
+    override fun onLongClick(flashcard : FlashcardData) {
+        Log.d("LONG CLICKED! YOUR DATA", flashcard.card1)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_student_flashcard, container, false)
+        val view = inflater.inflate(R.layout.fragment_fcset_detail, container, false)
+        recycleView = view.fcsSetDetail
         /*
          * Get the data from previous fragment
          */
         val bundle = arguments
         if (bundle != null) {
-            val fcSet : FCSetData = bundle.getSerializable("flashcard set detail") as FCSetData
-//            this.fcSet = fcSet
+            val fcSetInfo : FCSetData = bundle.getSerializable("flashcard set detail") as FCSetData
+            val fcCount = "Flashcard Count: " + fcSetInfo.size.toString()
+            this.fcSetInfo = fcSetInfo
 
-            loadFlashcardList(fcSet)
+            view.fcset_name.text = fcSetInfo.name
+            view.fcset_size.text = fcCount
 
-            setTitle(fcSet.name.toString())
+            setTitle("Flashcard List")
+
+            loadFlashcardList(fcSetInfo)
+
+            view.addFlashcardBtn.setOnClickListener{
+                switchFragment(CreateFlashcard().newInstance(fcSetInfo.id.toString()))
+            }
+            view.viewFlashcardBtn.setOnClickListener{
+                switchFragment(StudentFlashcard().newInstance(fcSetInfo))
+            }
         }else {
-            Log.e("error", "missing flashcard set")
-            setTitle("Flashcard")
+            Log.e("missing FCSet Data", "StudentFCSetDetail got error!")
         }
-
-        view.fc_image1.visibility = GONE
-        view.fc_image2.visibility = GONE
-        view.previousFCBtn.visibility = INVISIBLE
-        view.fc_back.visibility = GONE
-
-        view.fc_front.setOnClickListener {
-            if (view.fc_back.visibility == GONE)
-                view.fc_back.visibility = VISIBLE
-
-            view.flashcard.flipTheView()
-        }
-
-        view.fc_back.setOnClickListener {
-            view.flashcard.flipTheView()
-        }
-
-        view.previousFCBtn.setOnClickListener {
-            currentPosition -= 1
-            Log.d("current position", currentPosition.toString())
-            startFlashcard()
-        }
-
-        view.nextFCBtn.setOnClickListener {
-            currentPosition += 1
-            Log.d("current position", currentPosition.toString())
-            startFlashcard()
-
-        }
-
-//        view.flashcard.setOnFlipListener { easyFlipView, newCurrentSide ->
-//            Toast.makeText(context, "Flip Completed! New Side is: " + newCurrentSide, Toast.LENGTH_LONG).show()
-//        }
 
         return view
     }
 
-    private fun startFlashcard() {
+    override fun onResume() {
+        super.onResume()
 
-        if (currentPosition == 0) {
-            view!!.previousFCBtn.visibility = INVISIBLE
-            view!!.nextFCBtn.visibility = VISIBLE
-        }
-        else if (currentPosition == fcSet.fcList.size-1) {
-            view!!.previousFCBtn.visibility = VISIBLE
-            view!!.nextFCBtn.visibility = INVISIBLE
-        }
-        else {
-            view!!.previousFCBtn.visibility = VISIBLE
-            view!!.nextFCBtn.visibility = VISIBLE
-        }
-
-        setupFlashcard(fcSet.fcList[currentPosition])
+        val fcCount = "Flashcard Count: " + fcSetInfo.size.toString()
+        view!!.fcset_size.text = fcCount
+        loadFlashcardList(fcSetInfo)
     }
 
-    private fun setupFlashcard(flashcard : FlashcardData) {
-
-        if (flashcard.selection == "1010") {
-            view!!.fc_image1.visibility = GONE
-            view!!.fc_image2.visibility = GONE
-
-            view!!.fc_card1.text = flashcard.card1
-            view!!.fc_card2.text = flashcard.card2
+    private fun setRecycleView(flashcardList: ArrayList<FlashcardData>) {
+        try {
+            recycleAdapter = FlashcardAdapter(context!!, flashcardList, this)
+            val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+            recycleView.layoutManager = recycleLayout
+            recycleView.adapter = recycleAdapter
+        } catch (e: NullPointerException) {
+            Log.d("Flashcard Adapter error", e.toString())
         }
     }
 
@@ -187,8 +167,6 @@ class StudentFlashcard : MainActivityBaseFragment() {
                     card2))
         }
 
-        fcSet.fcList = list
-//        fcSet.fcList.shuffleFlashcard()
-        startFlashcard()
+        setRecycleView(list)
     }
 }

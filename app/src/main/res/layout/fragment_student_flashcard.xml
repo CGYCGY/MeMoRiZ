@@ -21,4 +21,29 @@
         <include layout="@layout/fragment_student_fc_front"/>
 
     </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/previousFCBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_weight="1"
+            android:text="Previous Card" />
+
+        <Button
+            android:id="@+id/nextFCBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1"
+            android:text="Next Card"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

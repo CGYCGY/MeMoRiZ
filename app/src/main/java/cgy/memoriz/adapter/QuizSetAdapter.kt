@@ -38,14 +38,14 @@ class QuizSetAdapter : RecyclerView.Adapter<QuizSetAdapter.ViewHolder> {
         holder.name.text = data.name
         holder.size.text = data.size.toString()
 
-        holder.itemView?.setOnClickListener(View.OnClickListener {
+        holder.itemView?.setOnClickListener {
             quizSetView.onClick(data)
-        })
+        }
 
-        holder.itemView?.setOnLongClickListener(View.OnLongClickListener {
+        holder.itemView?.setOnLongClickListener {
             quizSetView.onLongClick(data)
             true
-        })
+        }
     }
 
     override fun getItemCount(): Int {

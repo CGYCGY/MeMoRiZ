@@ -41,7 +41,7 @@ class StudentFCSetList : MainActivityBaseFragment(), FCSetAdapterInterface {
 
     override fun onClick(fcSetInfo : FCSetData) {
         Log.d("CLICKED HERE YOUR DATA", fcSetInfo.name)
-        switchFragment(StudentFlashcard().newInstance(fcSetInfo))
+        switchFragment(StudentFCSetDetail().newInstance(fcSetInfo))
     }
 
     override fun onLongClick(fcSetInfo : FCSetData) {

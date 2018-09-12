@@ -1,4 +1,4 @@
-package cgy.memoriz.fragment.lecturer
+package cgy.memoriz.fragment.student
 
 import android.os.Bundle
 import android.util.Log
@@ -9,48 +9,45 @@ import android.widget.Toast
 import cgy.memoriz.R
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
-import cgy.memoriz.data.ClassData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.hideKeyboard
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_create_set.view.*
+import kotlinx.android.synthetic.main.fragment_create_flashcard.view.*
 import org.json.JSONException
 import org.json.JSONObject
 
-class CreateQuizSet : MainActivityBaseFragment() {
-    private lateinit var classInfo : ClassData
+class CreateFlashcard : MainActivityBaseFragment() {
 
-    fun newInstance(classInfo: ClassData): CreateQuizSet {
+    fun newInstance(text : String) : CreateFlashcard {
         val args = Bundle()
-        args.putSerializable("class info", classInfo)
-        val fragment = CreateQuizSet()
+        args.putString("id", text)
+        val fragment = CreateFlashcard()
         fragment.arguments = args
         return fragment
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_create_set, container, false)
+        val view = inflater.inflate(R.layout.fragment_create_flashcard, container, false)
         /*
          * Get the data from previous fragment
          */
+        var fcsID = ""
         val bundle = arguments
         if (bundle != null) {
-            classInfo = bundle.getSerializable("class info") as ClassData
+            fcsID = bundle.getString("id")
+
+            setTitle("Add New Flashcard")
         }else {
-            Log.e("error", "missing bundle data")
+            Log.e("error", "bundle data missing")
         }
 
-        setTitle("Create Quiz Set")
-
-        view.set_name.hint = "Quiz Set Name"
-
-        view.createSetBtn.setOnClickListener {
-            if (view.set_name.text.isNotBlank()) {
-                create(classInfo.id!!)
+        view.createFlashcardBtn.setOnClickListener {
+            if (view.create_flashcard_card1.text.isNotBlank() && view.create_flashcard_card2.text.isNotBlank()) {
+                create(fcsID)
                 view.hideKeyboard()
             }
         }
@@ -58,17 +55,19 @@ class CreateQuizSet : MainActivityBaseFragment() {
         return view
     }
 
-    private fun create(classID : Int) {
+    private fun create(fcsID : String) {
 //      start the StringRequest to get message from php after POST data to the database
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlInsertSet,
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlInsertFlashcard,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
-                        if (obj.getString("message") == "Set created successfully") getBaseActivity()!!.onBackPressed()
-
+                        if (obj.getString("message") == "Flashcard added successfully") {
+                            getBaseActivity()!!.onBackPressed()
+//                            switchFragment(StudentMainMenu())
+                        }
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -80,9 +79,10 @@ class CreateQuizSet : MainActivityBaseFragment() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["cls_id"] = classID.toString()
-                params["set_name"] = view?.set_name?.text.toString()
-                params["set_type"] = "Quiz"
+                params["fcs_id"] = fcsID
+                params["fc_selection"] = "1010"
+                params["card1"] = view?.create_flashcard_card1?.text.toString()
+                params["card2"] = view?.create_flashcard_card2?.text.toString()
 
                 return params
             }
