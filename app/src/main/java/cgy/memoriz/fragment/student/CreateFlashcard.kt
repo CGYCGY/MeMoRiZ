@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
@@ -21,9 +22,19 @@ import org.json.JSONObject
 
 class CreateFlashcard : MainActivityBaseFragment() {
 
-    fun newInstance(text : String) : CreateFlashcard {
+//    private lateinit var uploadingDialog : SDialog
+//    private lateinit var encodedImage : String
+//    private lateinit var userChosenTask : String
+//
+//    private val requestCamera = 0
+//    private val selectFile = 1
+//    var thumbnail1 : Bitmap? = null
+//    var thumbnail2 : Bitmap? = null
+
+    fun newInstance(id : String, mode : String) : CreateFlashcard {
         val args = Bundle()
-        args.putString("id", text)
+        args.putString("id", id)
+        args.putString("mode", mode)
         val fragment = CreateFlashcard()
         fragment.arguments = args
         return fragment
@@ -36,24 +47,95 @@ class CreateFlashcard : MainActivityBaseFragment() {
          * Get the data from previous fragment
          */
         var fcsID = ""
+        var fcdMode = ""
         val bundle = arguments
         if (bundle != null) {
             fcsID = bundle.getString("id")
+            fcdMode = bundle.getString("mode")
 
             setTitle("Add New Flashcard")
         }else {
             Log.e("error", "bundle data missing")
         }
 
+        modeSwitcher(fcdMode)
+
+//        view.create_flashcard_image1.setOnTouchListener { _, _ ->
+//            selectImage(1)
+//            false
+//        }
+
         view.createFlashcardBtn.setOnClickListener {
-            if (view.create_flashcard_card1.text.isNotBlank() && view.create_flashcard_card2.text.isNotBlank()) {
-                create(fcsID)
-                view.hideKeyboard()
+            if (fcdMode == "1010") {
+                if (view.create_flashcard_card1.text.isNotBlank() && view.create_flashcard_card2.text.isNotBlank())
+                    create(fcsID)
             }
+//            else if (fcdMode == "0101") {
+//                if (view.create_flashcard_image1.text.isNotBlank() && view.create_flashcard_image2.text.isNotBlank())
+//                    create(fcsID)
+//            }
+//            else if (fcdMode == "0110") {
+//                if (view.create_flashcard_image1.text.isNotBlank() && view.create_flashcard_card2.text.isNotBlank())
+//                    create(fcsID)
+//            }
+//            else if (fcdMode == "1001") {
+//                if (view.create_flashcard_card1.text.isNotBlank() && view.create_flashcard_image2.text.isNotBlank())
+//                    create(fcsID)
+//            }
+
+            view.hideKeyboard()
         }
 
         return view
     }
+
+    private fun modeSwitcher(fcdMode : String) {
+        if (fcdMode == "1010") {
+            view!!.create_flashcard_image1.visibility = GONE
+            view!!.create_flashcard_image2.visibility = GONE
+        }
+        else if (fcdMode == "0101") {
+            view!!.create_flashcard_card1.visibility = GONE
+            view!!.create_flashcard_card2.visibility = GONE
+        }
+        else if (fcdMode == "0110") {
+            view!!.create_flashcard_card1.visibility = GONE
+            view!!.create_flashcard_image2.visibility = GONE
+        }
+        else if (fcdMode == "1001") {
+            view!!.create_flashcard_image1.visibility = GONE
+            view!!.create_flashcard_card2.visibility = GONE
+        }
+    }
+
+//    private fun selectImage(num : Int) {
+//        val items = arrayOf<CharSequence>("Take Photo", "Choose from Library", "Cancel")
+//
+//        val builder = AlertDialog.Builder(context)
+//        builder.setTitle("Add Photo!")
+//        builder.setItems(items) { dialog, item ->
+//            val result = Utility.checkPermission(context!!)
+//
+//            if (items[item] == "Take Photo") {
+//                userChosenTask = "Take Photo"
+//
+//                if (PermissionChecker.checkSelfPermission(context!!, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+//                    requestPermissions(arrayOf(Manifest.permission.CAMERA), requestCamera)
+//                else
+//                    cameraIntent()
+//            }
+//            else if (items[item] == "Choose from Library") {
+//                userChosenTask = "Choose from Library"
+//                if (result)
+//                    galleryIntent()
+//
+//            }
+//            else if (items[item] == "Cancel") {
+//                dialog.dismiss()
+//            }
+//        }
+//        builder.show()
+//    }
 
     private fun create(fcsID : String) {
 //      start the StringRequest to get message from php after POST data to the database

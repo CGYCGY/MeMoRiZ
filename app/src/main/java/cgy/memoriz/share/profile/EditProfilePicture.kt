@@ -83,7 +83,7 @@ class EditProfilePicture : MainActivityBaseFragment() {
             }
         }
 
-        view.profile_edit_photo.setOnTouchListener { _, motionEvent ->
+        view.profile_edit_photo.setOnTouchListener { _, _ ->
             selectImage()
             false
         }

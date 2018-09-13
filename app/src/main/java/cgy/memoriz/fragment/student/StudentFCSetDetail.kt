@@ -69,7 +69,8 @@ class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface
             loadFlashcardList(fcSetInfo)
 
             view.addFlashcardBtn.setOnClickListener{
-                switchFragment(CreateFlashcard().newInstance(fcSetInfo.id.toString()))
+//                switchFragment(CreateFlashcardMode().newInstance(fcSetInfo.id.toString()))
+                switchFragment(CreateFlashcard().newInstance(fcSetInfo.id.toString(), "1010"))
             }
             view.viewFlashcardBtn.setOnClickListener{
                 switchFragment(StudentFlashcard().newInstance(fcSetInfo))
