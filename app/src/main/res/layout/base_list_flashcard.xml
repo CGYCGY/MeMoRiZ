@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/layout_roundcorner_type2">
 
         <TextView
             android:id="@+id/flashcard_card1"

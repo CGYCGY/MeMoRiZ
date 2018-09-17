@@ -12,7 +12,8 @@
         android:layout_height="0dp"
         android:layout_margin="15dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/layout_roundcorner_type2">
 
         <TextView
             android:id="@+id/fcset_name"
