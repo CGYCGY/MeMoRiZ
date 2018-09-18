@@ -33,13 +33,13 @@ class FirebaseChat {
                 /*Changing arraylist of GroupChat to arraylist of User.
                  *So , can using same adapter to set up recycle view.
                  */
-                val arrayContainer = ArrayList<UserData>()
+                val arrayContainer = ArrayList<GroupChatData>()
                 for (ds in p0.children) {
                     val history = ds.getValue(GroupChatData::class.java)!!
                     /* Not sure whether your User class got how many attribute,
                      * I think can reeuse it, those other parameter just put  left it empty.
                      * I currently need group id and group name -> change to User class.*/
-                    arrayContainer.add(UserData(history.groupID!!, history.groupName!!))
+                    arrayContainer.add(history)
                 }
                 EventBus().post(arrayContainer)
             }

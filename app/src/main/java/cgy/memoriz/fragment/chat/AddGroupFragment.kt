@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.SharedPref
-import cgy.memoriz.data.UserData
+import cgy.memoriz.data.GroupChatData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.EventBus
 import com.squareup.otto.Subscribe
@@ -44,9 +44,9 @@ class AddGroupFragment : MainActivityBaseFragment() {
     }
 
     @Subscribe
-    fun RespondFromFirebase(user: UserData) {
+    fun RespondFromFirebase(group: GroupChatData) {
         //Pop back this fragment before move to next fragment.
-        switchFragmentWithNonBackStack(ChatRoom().newInstance(user))
+        switchFragmentWithNonBackStack(ChatRoom().newInstance(group))
     }
 
 }
