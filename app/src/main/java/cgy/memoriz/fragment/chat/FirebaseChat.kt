@@ -70,7 +70,7 @@ class FirebaseChat {
     }
 
     fun saveChatHistory(senderID : String, senderName : String, receiverID : String, receiverName : String,
-                        msg : String, chatKey : String?) {
+                        msg : String, chatKey : String?, groupChatKey : String?) {
         val db = FirebaseDatabase.getInstance().getReference("ChatHistory").child(senderID).child(receiverID)
         val db1 = FirebaseDatabase.getInstance().getReference("ChatHistory").child(receiverID).child(senderID)
         /*Chat key not null mean chat before.
@@ -81,7 +81,13 @@ class FirebaseChat {
             saveChatDetails(chatKey, MessageData(messageID!!, senderName, msg, getCurrentTime(), senderID), true)
         } else {
             val detailDB = FirebaseDatabase.getInstance().getReference("ChatDetailHistory")
-            val chatKey = detailDB.push().key
+            var chatKey : String? = null
+            if (groupChatKey != null) {
+                chatKey = groupChatKey
+            }
+            else {
+                chatKey = detailDB.push().key
+            }
             val messageID = detailDB.push().key
             /*Save recent chat to both sender and receiver*/
             db.setValue(ChatHistoryData(chatKey!!, receiverID, receiverName))

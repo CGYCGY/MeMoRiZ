@@ -30,6 +30,7 @@ class   ChatRoom : MainActivityBaseFragment() {
     private var chatHistory : ChatHistoryData? = null
     private val firebase = FirebaseChat()
     private var chatKey : String? = null
+    private var groupChatKey : String? = null
 
     fun newInstance(user: UserData): ChatRoom {
         val args = Bundle()
@@ -73,6 +74,7 @@ class   ChatRoom : MainActivityBaseFragment() {
                 groupChat = bundle.getSerializable("group") as GroupChatData
                 receiverName = groupChat!!.groupName.toString()
                 receiverID = groupChat!!.groupID.toString()
+                groupChatKey = receiverID
                 firebase.checkExistingChatKey(SharedPref.userEmail, receiverID)
             }
             else {
@@ -108,8 +110,8 @@ class   ChatRoom : MainActivityBaseFragment() {
         if (TextUtils.isEmpty(messageToSend)) {
             return
         } else {
-            firebase.saveChatHistory(SharedPref.userEmail,SharedPref.userName,
-                    receiverID,receiverName, messageToSend, chatKey)
+            firebase.saveChatHistory(SharedPref.userEmail, SharedPref.userName,
+                    receiverID, receiverName, messageToSend, chatKey, groupChatKey)
             view!!.et_message.setText("")
         }
     }
