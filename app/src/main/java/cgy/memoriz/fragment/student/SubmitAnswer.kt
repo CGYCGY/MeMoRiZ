@@ -91,6 +91,7 @@ class SubmitAnswer : MainActivityBaseFragment() {
                 params["qstn_id"] = question.id.toString()
                 params["u_email"] = SharedPref.userEmail
                 params["ans_body"] = view?.sa_answer_body?.text.toString()
+                params["qstn_cond"] = "Answer being verify"
 
                 return params
             }

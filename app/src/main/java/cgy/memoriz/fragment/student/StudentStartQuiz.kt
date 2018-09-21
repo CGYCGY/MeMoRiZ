@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
+import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
 import cgy.memoriz.adapter.QuizMcqAdapter
@@ -79,12 +80,11 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
         setTitle(quizSetInfo.name!!)
 
         loadQuizList()
-//        countDown((list.size * 90).toLong())
-        countDown((20).toLong())
 
         view.quizSubmitBtn.setOnClickListener {
             if (checkAllAnswered()) {
                 if (stopCountDown) {
+                    SharedPref.back = false
                     switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
                 }
                 else stopCountDown = true
@@ -121,6 +121,9 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
                         } else {
                             Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
                             jsonToArrayList(obj.getJSONArray("table"))
+
+                            countDown((list.size * 90).toLong())
+//                            countDown((20).toLong())
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -191,6 +194,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
 
     private fun countDown(getTime : Long) {
         val startTime = getTime * 1000
+        SharedPref.back = true
 
         object : CountDownTimer(startTime, 1000) {
 
@@ -201,6 +205,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
                 }
                 else {
                     cancel()
+                    SharedPref.back = false
                     switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
                 }
             }

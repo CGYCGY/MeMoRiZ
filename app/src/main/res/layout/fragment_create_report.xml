@@ -21,15 +21,12 @@
         android:minLines="1"
         android:maxLines="2"/>
 
-    <Spinner
+    <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/create_report_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="15dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:textSize="24sp"
-        android:spinnerMode="dropdown"/>
+        android:textSize="24sp"/>
 
     <EditText
         android:id="@+id/create_report_body"

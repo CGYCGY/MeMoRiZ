@@ -21,6 +21,7 @@ object URLEndpoint {
     val urlInsertQuiz = urlRoot + "insert_quiz"
     val urlGetQuiz = urlRoot + "get_quiz"
     val urlUpdateQuiz = urlRoot + "update_quiz"
+    val urlDeleteQuiz = urlRoot + "delete_quiz"
     val urlGetUserList = urlRoot + "get_user_list"
     val urlGetClassList = urlRoot + "get_class_list"
     val urlInsertClass = urlRoot + "insert_class"
@@ -36,6 +37,7 @@ object URLEndpoint {
     val urlGetFCSet = urlRoot + "get_flashcardset"
     val urlInsertFlashcard = urlRoot + "insert_flashcard"
     val urlUpdateFlashcard = urlRoot + "update_flashcard"
+    val urlDeleteFlashcard = urlRoot + "delete_flashcard"
     val urlGetFlashcard = urlRoot + "get_flashcard"
 
     val urlLoadImage = urlBase + "image/"

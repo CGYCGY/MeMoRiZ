@@ -58,7 +58,10 @@ class CreateFlashcard : MainActivityBaseFragment() {
             Log.e("error", "bundle data missing")
         }
 
-        modeSwitcher(fcdMode)
+//        modeSwitcher(fcdMode)
+
+        view.create_flashcard_image1.visibility = GONE
+        view.create_flashcard_image2.visibility = GONE
 
 //        view.create_flashcard_image1.setOnTouchListener { _, _ ->
 //            selectImage(1)

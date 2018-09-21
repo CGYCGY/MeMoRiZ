@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         SharedPref.init(this)
+        SharedPref.back = false
 
 //        login_type!!.onItemSelectedListener = this
 //        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, type)

@@ -1,6 +1,7 @@
 package cgy.memoriz.fragment.student
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +21,12 @@ import kotlinx.android.synthetic.main.fragment_qhelper_detail.view.*
 import org.json.JSONException
 import org.json.JSONObject
 
+
+
 class StudentQHelperDetail : MainActivityBaseFragment() {
+    private var typeSelected : String ?= null
+
+    val type = arrayListOf("Waiting for answer", "Answer being verify", "Solved")
 
     fun newInstance(question: QuestionData): StudentQHelperDetail{
         val args = Bundle()
@@ -40,10 +46,33 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
         if (bundle != null) {
             val question : QuestionData = bundle.getSerializable("question detail") as QuestionData
 
+            typeSelected = question.condition
+
+            for (x in 1 until type.size) {
+                if (type[x] == question.condition) {
+                    type[0] = type[x].also { type[x] = type[0] }
+                }
+            }
+
             view.qhelper_detail_title.text = Editable.Factory.getInstance().newEditable(question.title)
             view.qhelper_detail_body.text = Editable.Factory.getInstance().newEditable(question.body)
             view.qhelper_detail_datetime.text = Editable.Factory.getInstance().newEditable(question.datetime)
-            view.qhelper_detail_condition.text = Editable.Factory.getInstance().newEditable(question.condition)
+            //view.qhelper_detail_condition.text = Editable.Factory.getInstance().newEditable(question.condition)
+
+//            view.qhelper_detail_condition!!.onItemSelectedListener = this
+//            val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, type)
+//            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+//            view.qhelper_detail_condition!!.adapter = arrayAdapter
+
+            view.qhelper_detail_condition.setItems(type)
+            view.qhelper_detail_condition.setOnItemSelectedListener { view, position, id, item ->
+                Snackbar.make(view, "$item is selected", Snackbar.LENGTH_LONG).show()
+                typeSelected = type[position]
+            }
+
+            view.qhelper_detail_condition.setOnNothingSelectedListener {
+                typeSelected = question.condition
+            }
 
             setTitle("Question Editor")
 
@@ -57,6 +86,14 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
 
         return view
     }
+
+//    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+//        typeSelected = type[position]
+//    }
+//
+//    override fun onNothingSelected(adapterView: AdapterView<*>) {
+//        typeSelected = type[0]
+//    }
 
     private fun update(question: QuestionData) {
         val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateQuestion,
@@ -83,6 +120,7 @@ class StudentQHelperDetail : MainActivityBaseFragment() {
                 params["qstn_id"] = question.id.toString()
                 params["qstn_title"] = view?.qhelper_detail_title?.text.toString()
                 params["qstn_body"] = view?.qhelper_detail_body?.text.toString()
+                params["qstn_cond"] = typeSelected.toString()
 
                 return params
             }

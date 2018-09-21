@@ -27,7 +27,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ClassROOM"
+            android:text="Study Group"
             android:layout_weight="1"
             android:id="@+id/btn_classroom"/>
 

@@ -42,6 +42,7 @@ class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface
 
     override fun onClick(flashcard : FlashcardData) {
         Log.d("CLICKED HERE YOUR DATA", flashcard.card1)
+        switchFragment(StudentFlashcardDetail().newInstance(flashcard, fcSetInfo.id!!))
     }
 
     override fun onLongClick(flashcard : FlashcardData) {

@@ -72,6 +72,8 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
         } else if (!SharedPref.arrow) {
             dialogFactory.createTwoButtonDialog(this, "ALERT!", "Do you want to proceed to Log Out??",
                     DialogInterface.OnClickListener { dialog, which -> finish() }).show()
+        } else if (SharedPref.back) {
+            Toast.makeText(this, "Back function is disabled here", Toast.LENGTH_LONG).show()
         } else {
             super.onBackPressed()
         }

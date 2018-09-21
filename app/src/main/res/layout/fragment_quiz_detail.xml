@@ -34,4 +34,11 @@
         android:layout_margin="15dp"
         android:text="Update Quiz" />
 
+    <Button
+        android:id="@+id/deleteQuizBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Delete Quiz" />
+
 </LinearLayout>

@@ -32,4 +32,6 @@
     <string name="QuizResultBtn">Return to quiz list</string>
     <string name="EduLevel">Education Level:</string>
     <string name="TeachExp">Teaching Experience:</string>
+    <string name="updateFC">Update Flashcard</string>
+    <string name="deleteFC">Delete Flashcard</string>
 </resources>

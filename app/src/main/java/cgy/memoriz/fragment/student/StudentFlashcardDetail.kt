@@ -1,4 +1,4 @@
-package cgy.memoriz.fragment.lecturer
+package cgy.memoriz.fragment.student
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,7 +11,7 @@ import android.widget.Toast
 import cgy.memoriz.R
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
-import cgy.memoriz.data.QuizData
+import cgy.memoriz.data.FlashcardData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.DialogFactory
 import cgy.memoriz.others.hideKeyboard
@@ -23,15 +23,15 @@ import kotlinx.android.synthetic.main.fragment_quiz_detail.view.*
 import org.json.JSONException
 import org.json.JSONObject
 
-class LecturerQuizDetail : MainActivityBaseFragment() {
+class StudentFlashcardDetail : MainActivityBaseFragment() {
 
     private var dialogFactory = DialogFactory()
 
-    fun newInstance(quiz: QuizData, setID: Int): LecturerQuizDetail{
+    fun newInstance(flashcard : FlashcardData, setID: Int): StudentFlashcardDetail{
         val args = Bundle()
-        args.putSerializable("quiz detail", quiz)
-        args.putInt("set id", setID)
-        val fragment = LecturerQuizDetail()
+        args.putSerializable("flashcard detail", flashcard)
+        args.putInt("flashcard id", setID)
+        val fragment = StudentFlashcardDetail()
         fragment.arguments = args
         return fragment
     }
@@ -44,40 +44,42 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
          */
         val bundle = arguments
         if (bundle != null) {
-            val quiz : QuizData = bundle.getSerializable("quiz detail") as QuizData
-            val setID= bundle.getInt("set id")
+            val flashcard : FlashcardData = bundle.getSerializable("flashcard detail") as FlashcardData
+            val setID= bundle.getInt("flashcard id")
 
-            view.edit_quiz_question.text = Editable.Factory.getInstance().newEditable(quiz.question)
-            view.edit_quiz_answer.text = Editable.Factory.getInstance().newEditable(quiz.answer)
+            view.edit_quiz_question.text = Editable.Factory.getInstance().newEditable(flashcard.card1)
+            view.edit_quiz_answer.text = Editable.Factory.getInstance().newEditable(flashcard.card1)
+            view.updateQuizBtn.text = getString(R.string.updateFC)
+            view.deleteQuizBtn.text = getString(R.string.deleteFC)
 
-            setTitle("Quiz Editor")
+            setTitle("Flashcard Editor")
 
             view.updateQuizBtn.setOnClickListener {
                 view.hideKeyboard()
-                update(quiz)
+                update(flashcard)
             }
 
             view.deleteQuizBtn.setOnClickListener {
-                dialogFactory.createTwoButtonDialog(context!!, "ALERT!", "Do you want to delete this quiz question?",
-                        DialogInterface.OnClickListener { dialog, which -> delete(quiz, setID) }).show()
+                dialogFactory.createTwoButtonDialog(context!!, "ALERT!", "Do you want to delete this flashcard?",
+                        DialogInterface.OnClickListener { dialog, which -> delete(flashcard, setID) }).show()
             }
 
         }else {
-            Log.e("missing QuizData", "LecturerQuizDetail got error!")
+            Log.e("missing FC Data", "StudentFlashcardDetail got error!")
         }
 
         return view
     }
 
-    private fun update(quiz: QuizData) {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateQuiz,
+    private fun update(flashcard: FlashcardData) {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateFlashcard,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
-                        if (obj.getString("message") == "Quiz updated successfully") {
+                        if (obj.getString("message") == "Flashcard updated successfully") {
                             super.getBaseActivity()!!.onBackPressed()
 //                            val intent = Intent(context, MainMenuActivity::class.java)
 //                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -94,9 +96,10 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["qz_id"] = quiz.id.toString()
-                params["qz_qstn"] = view?.edit_quiz_question?.text.toString()
-                params["qz_ans"] = view?.edit_quiz_answer?.text.toString()
+                params["fc_id"] = flashcard.id.toString()
+                params["fc_selection"] = "1010"
+                params["card1"] = view?.edit_quiz_question?.text.toString()
+                params["card2"] = view?.edit_quiz_answer?.text.toString()
 
                 return params
             }
@@ -104,15 +107,15 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
 
-    private fun delete(quiz: QuizData, setID: Int) {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlDeleteQuiz,
+    private fun delete(flashcard: FlashcardData, setID: Int) {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlDeleteFlashcard,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
                         val obj = JSONObject(response)
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
-                        if (obj.getString("message") == "Quiz removed successfully") {
+                        if (obj.getString("message") == "Flashcard removed successfully") {
                             super.getBaseActivity()!!.onBackPressed()
 //                            val intent = Intent(context, MainMenuActivity::class.java)
 //                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -129,8 +132,8 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["qz_id"] = quiz.id.toString()
-                params["set_id"] = setID.toString()
+                params["fc_id"] = flashcard.id.toString()
+                params["fcs_id"] = setID.toString()
 
                 return params
             }

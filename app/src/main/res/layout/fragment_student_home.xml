@@ -64,7 +64,7 @@
             android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
             android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
             android:layout_weight="1"
-            android:text="Classroom"
+            android:text="Class"
             android:id="@+id/studentClassBtn" />
 
         <Button
@@ -75,7 +75,7 @@
             android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
             android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
             android:layout_weight="1"
-            android:text="Students Hall"
+            android:text="Chat"
             android:id="@+id/studentStudentsHallBtn"/>
 
     </LinearLayout>

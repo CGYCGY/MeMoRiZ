@@ -42,6 +42,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
 
     override fun onClick(quiz: QuizData) {
         Log.d("CLICKED HERE YOUR DATA", quiz.question)
+        switchFragment(LecturerQuizDetail().newInstance(quiz, this.quiz.id!!))
     }
 
     override fun onLongClick(quiz: QuizData) {
@@ -64,7 +65,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
 
             setTitle("Quiz Answer List")
 
-            loadAnswerList(quiz)
+            loadQuizList(quiz)
 
             view.addQuizBtn.setOnClickListener{
                 switchFragment(AddQuiz().newInstance(quiz))
@@ -79,7 +80,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
     override fun onResume() {
         super.onResume()
 
-        loadAnswerList(quiz)
+        loadQuizList(quiz)
     }
 
     private fun setRecycleView(quizList: ArrayList<QuizData>) {
@@ -93,7 +94,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
         }
     }
 
-    private fun loadAnswerList(quiz: SetData) {
+    private fun loadQuizList(quiz: SetData) {
         val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetQuiz,
                 Response.Listener<String> { response ->
                     try {
