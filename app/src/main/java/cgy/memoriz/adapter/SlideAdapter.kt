@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cgy.memoriz.R
 import cgy.memoriz.data.SlideData
-import kotlinx.android.synthetic.main.base_list_lec_slide.view.*
+import kotlinx.android.synthetic.main.base_list_slide.view.*
 
 class SlideAdapter : RecyclerView.Adapter<SlideAdapter.ViewHolder> {
 
@@ -27,7 +27,7 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.ViewHolder> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.base_list_lec_slide, parent, false)
+                .inflate(R.layout.base_list_slide, parent, false)
         val holder = ViewHolder(view)
         return holder
     }

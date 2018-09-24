@@ -112,7 +112,7 @@ class SubmitQuiz : MainActivityBaseFragment() {
                         Log.d("quiz result record", obj.getString("message"))
 
 //                        switchFragment(StudentQuizResult().newInstance(quizList, setID, quizResultID))
-                        switchFragment(StudentQuizResult().newInstance(quizList))
+                        switchFragmentWithNonBackStack(StudentQuizResult().newInstance(quizList))
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }

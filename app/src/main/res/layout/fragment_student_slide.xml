@@ -1,27 +1,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <com.wajahatkarim3.easyflipview.EasyFlipView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:flipOnTouch="true"
-        app:flipEnabled="true"
-        app:flipDuration="1000"
-        app:flipFrom="right"
-        app:flipType="horizontal"
-        android:id="@+id/flashcard">
-
-        <!-- Back Layout Goes Here -->
-        <include layout="@layout/fragment_student_fc_back"/>
-
-        <!-- Front Layout Goes Here -->
-        <include layout="@layout/fragment_student_fc_front"/>
-
-    </com.wajahatkarim3.easyflipview.EasyFlipView>
+    <include layout="@layout/base_list_slide"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,12 +18,12 @@
             fbutton:shadowEnabled="true"
             fbutton:shadowHeight="5dp"
             fbutton:cornerRadius="15dp"
-            android:id="@+id/previousFCBtn"
+            android:id="@+id/previousSlideBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
             android:layout_weight="1"
-            android:text="Previous Card" />
+            android:text="Previous Slide" />
 
         <info.hoang8f.widget.FButton
             fbutton:fButtonColor="@color/fbutton_color_amethyst"
@@ -48,12 +31,12 @@
             fbutton:shadowEnabled="true"
             fbutton:shadowHeight="5dp"
             fbutton:cornerRadius="15dp"
-            android:id="@+id/nextFCBtn"
+            android:id="@+id/nextSlideBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_weight="1"
-            android:text="Next Card"/>
+            android:text="Next Slide"/>
 
     </LinearLayout>
 

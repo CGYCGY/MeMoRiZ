@@ -64,7 +64,7 @@ class StudentQuizResult : MainActivityBaseFragment() {
 
         view.quizSubmitBtn.text = getString(R.string.QuizResultBtn)
         view.quizSubmitBtn.setOnClickListener {
-            cleanAndSwitchFragment(StudentClassList())
+            getBaseActivity()!!.onBackPressed()
         }
 
         return view

@@ -85,7 +85,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
             if (checkAllAnswered()) {
                 if (stopCountDown) {
                     SharedPref.back = false
-                    switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
+                    switchFragmentWithNonBackStack(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
                 }
                 else stopCountDown = true
             }
@@ -206,7 +206,7 @@ class StudentStartQuiz : MainActivityBaseFragment(), QuizMcqAdapterInterface {
                 else {
                     cancel()
                     SharedPref.back = false
-                    switchFragment(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
+                    switchFragmentWithNonBackStack(SubmitQuiz().newInstance(list, quizSetInfo.id!!))
                 }
             }
 

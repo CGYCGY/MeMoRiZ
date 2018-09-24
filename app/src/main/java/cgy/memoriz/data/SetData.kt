@@ -9,6 +9,7 @@ open class SetData : Serializable {
     var type : String? = null
     var size : Int? = null
     lateinit var quizList : List<QuizData>
+    lateinit var slideList : List<SlideData>
 
     constructor()
 

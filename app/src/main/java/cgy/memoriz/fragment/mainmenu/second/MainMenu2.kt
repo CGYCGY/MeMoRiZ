@@ -17,6 +17,7 @@ import cgy.memoriz.fragment.report.ViewReport
 import cgy.memoriz.fragment.student.StudentQHelper
 import cgy.memoriz.fragment.student.StudentQSolver
 import cgy.memoriz.fragment.student.StudentQuizList
+import cgy.memoriz.fragment.student.StudentSlideSetList
 import kotlinx.android.synthetic.main.fragment_base_mainmenu2.view.*
 
 class MainMenu2 : MainActivityBaseFragment() {
@@ -79,14 +80,14 @@ class MainMenu2 : MainActivityBaseFragment() {
             view.mainMenuBtn1.text = getString(R.string.Quiz)
             view.mainMenuBtn2.text = getString(R.string.Slides)
 
+            val classInfo : ClassData = bundle!!.getSerializable("class info") as ClassData
+
             view.mainMenuBtn1.setOnClickListener {
-                val classInfo : ClassData = bundle!!.getSerializable("class info") as ClassData
                 switchFragment(StudentQuizList().newInstance(classInfo))
             }
 
             view.mainMenuBtn2.setOnClickListener {
-
-//                switchFragment(StudentSlideList())
+                switchFragment(StudentSlideSetList().newInstance(classInfo))
             }
         }
         else if (textGet == "Report") {

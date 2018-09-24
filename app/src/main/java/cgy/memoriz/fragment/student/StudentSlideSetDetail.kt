@@ -6,94 +6,96 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
-import cgy.memoriz.adapter.QuizSetAdapterInterface
-import cgy.memoriz.adapter.SlideSetAdapter
-import cgy.memoriz.data.ClassData
+import cgy.memoriz.adapter.SlideAdapter
+import cgy.memoriz.adapter.SlideAdapterInterface
 import cgy.memoriz.data.SetData
+import cgy.memoriz.data.SlideData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import kotlinx.android.synthetic.main.fragment_lecturer_quizset.view.*
-import kotlinx.android.synthetic.main.fragment_lecturer_slideset.view.*
+import kotlinx.android.synthetic.main.base_list_slide_set.view.*
+import kotlinx.android.synthetic.main.fragment_lecturer_slide.view.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class StudentSlideList : MainActivityBaseFragment(),QuizSetAdapterInterface {
-    private lateinit var recycleAdapter: SlideSetAdapter
+class StudentSlideSetDetail : MainActivityBaseFragment(), SlideAdapterInterface {
+    private lateinit var recycleAdapter: SlideAdapter
     private lateinit var recycleView: RecyclerView
 
-    private lateinit var classInfo : ClassData
+    private var set = SetData()
 
-    fun newInstance(text : String) : StudentSlideList {
+    fun newInstance(set: SetData): StudentSlideSetDetail{
         val args = Bundle()
-        args.putString("value1", text)
-        val fragment = StudentSlideList()
+        args.putSerializable("set", set)
+        val fragment = StudentSlideSetDetail()
         fragment.arguments = args
         return fragment
     }
 
-    fun newInstance(classInfo : ClassData): StudentSlideList{
-        val args = Bundle()
-        args.putSerializable("class info", classInfo)
-        val fragment = StudentSlideList()
-        fragment.arguments = args
-        return fragment
+    override fun onClick(slide : SlideData) {
+        Log.d("CLICKED HERE YOUR DATA", slide.id.toString())
     }
 
-    //reuse quiz set adapter interface
-    override fun onClick(quiz: SetData) {
-        Log.d("CLICKED HERE YOUR DATA", quiz.name)
-//        switchFragment(StudentStartQuiz().newInstance(quiz))
-    }
-
-    override fun onLongClick(quiz: SetData) {
-        Log.d("LONG CLICKED! YOUR DATA", quiz.name)
+    override fun onLongClick(slide : SlideData) {
+        Log.d("LONG CLICKED! YOUR DATA", slide.id.toString())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_lecturer_slideset, container, false)
-        recycleView = view.lecturer_slide_set
+        val view = inflater.inflate(R.layout.fragment_lecturer_slide, container, false)
+        recycleView = view.slide_list
         /*
          * Get the data from previous fragment
          */
         val bundle = arguments
         if (bundle != null) {
-            classInfo = bundle.getSerializable("class info") as ClassData
-            setTitle("Quiz Set List")
+            set  = bundle.getSerializable("set") as SetData
+
+            val slideSetSize = "Slide Set Size: " + set.size.toString()
+            view.slide_set_name.text = set.name
+            view.slide_set_size.text = slideSetSize
+
+            setTitle("Slide List")
+
+            loadSlideList(set)
+
+            view.addSlideBtn.text = "View Slide"
+            view.addSlideBtn.setOnClickListener {
+                switchFragment(StudentSlide().newInstance(set))
+            }
         }else {
-            setTitle("Quiz Set List")
+            Log.e("missing SlideData", "LecturerSlide got error!")
         }
-
-        loadQuizList()
-
-        view.createQuizSetBtn.visibility = GONE
 
         return view
     }
 
-    private fun setRecycleView(slideList: ArrayList<SetData>) {
+    override fun onResume() {
+        loadSlideList(set)
+        super.onResume()
+    }
+
+    private fun setRecycleView(slideList: ArrayList<SlideData>) {
         try {
-            recycleAdapter = SlideSetAdapter(context!!, slideList, this)
+            recycleAdapter = SlideAdapter(context!!, slideList, this)
             val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
             recycleView.layoutManager = recycleLayout
             recycleView.adapter = recycleAdapter
         } catch (e: NullPointerException) {
-            Log.d("Slide Set Adapter error", e.toString())
+            Log.d("Slide Adapter error:", e.toString())
         }
     }
 
-    private fun loadQuizList() {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetSet,
+    private fun loadSlideList(set: SetData) {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetSlide,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
@@ -117,8 +119,7 @@ class StudentSlideList : MainActivityBaseFragment(),QuizSetAdapterInterface {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["cls_id"] = classInfo.id.toString()
-                params["set_type"] = "Slide"
+                params["set_id"] = set.id.toString()
 
                 return params
             }
@@ -127,14 +128,19 @@ class StudentSlideList : MainActivityBaseFragment(),QuizSetAdapterInterface {
     }
 
     private fun jsonToArrayList(obj : JSONArray) {
-        val list = ArrayList<SetData>()
+        val list = ArrayList<SlideData>()
 
         for (i in 0 until obj.length())
-            list.add(SetData(
-                    obj.getJSONObject(i).getInt("set_id"),
-                    obj.getJSONObject(i).getString("set_name"),
-                    obj.getJSONObject(i).getInt("set_size")))
+            list.add(SlideData(
+                    obj.getJSONObject(i).getInt("sl_id"),
+                    obj.getJSONObject(i).getString("sl_cont")))
 
+        set.slideList = list
+        set.size = list.size
+
+        val slideSetSize = "Slide Set Size: " + set.size.toString()
+        view!!.slide_set_name.text = set.name
+        view!!.slide_set_size.text = slideSetSize
         setRecycleView(list)
     }
 }

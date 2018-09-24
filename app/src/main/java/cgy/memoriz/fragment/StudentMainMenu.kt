@@ -21,7 +21,6 @@ class StudentMainMenu : MainActivityBaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_student_home, container, false)
         SharedPref.init(context!!)
-        changeToolbarIconToMenu()
 
         /*changing toolbar title */
         setTitle("StudentMainMenu")
@@ -61,7 +60,6 @@ class StudentMainMenu : MainActivityBaseFragment() {
     }
 
     override fun onResume() {
-        super.onResume()
         /*
          *AppUiState is to handle onBackPress()
          * When you navigate away from your home page ,then the toolbar icon will switch to arrow.
@@ -69,6 +67,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
          */
         SharedPref.arrow = false
         updateToolbarIconState(SharedPref.arrow)
+        super.onResume()
     }
 
     override fun onPause() {

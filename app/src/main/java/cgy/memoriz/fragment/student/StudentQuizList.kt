@@ -60,6 +60,7 @@ class StudentQuizList : MainActivityBaseFragment(),QuizSetAdapterInterface {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lecturer_quizset, container, false)
+        getBaseActivity()?.setToolbarVisible()
         recycleView = view.lecturer_quiz_set
         /*
          * Get the data from previous fragment
