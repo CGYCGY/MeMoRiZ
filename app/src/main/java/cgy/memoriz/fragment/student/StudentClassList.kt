@@ -16,6 +16,7 @@ import cgy.memoriz.adapter.ClassListAdapter
 import cgy.memoriz.adapter.ClassListAdapterInterface
 import cgy.memoriz.data.ClassData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.fragment.mainmenu.second.MainMenu2
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -41,7 +42,7 @@ class StudentClassList : MainActivityBaseFragment(), ClassListAdapterInterface {
 
     override fun onClick(classInfo: ClassData) {
         Log.d("CLICKED HERE YOUR DATA", classInfo.name)
-        switchFragment(StudentQuizList().newInstance(classInfo))
+        switchFragment(MainMenu2().newInstance(classInfo, "Class"))
     }
 
     override fun onLongClick(classInfo: ClassData) {
@@ -51,6 +52,7 @@ class StudentClassList : MainActivityBaseFragment(), ClassListAdapterInterface {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_student_class, container, false)
+        getBaseActivity()?.setToolbarVisible()
         recycleView = view.student_class
         /*
          * Get the data from previous fragment

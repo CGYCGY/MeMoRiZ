@@ -84,11 +84,8 @@ class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface
     }
 
     override fun onResume() {
-        super.onResume()
-
-        val fcCount = "Flashcard Count: " + fcSetInfo.size.toString()
-        view!!.fcset_size.text = fcCount
         loadFlashcardList(fcSetInfo)
+        super.onResume()
     }
 
     private fun setRecycleView(flashcardList: ArrayList<FlashcardData>) {
@@ -169,6 +166,8 @@ class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface
                     card2))
         }
 
+        val fcCount = "Flashcard Count: " + list.size.toString()
+        view!!.fcset_size.text = fcCount
         setRecycleView(list)
     }
 }

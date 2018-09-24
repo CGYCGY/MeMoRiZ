@@ -86,7 +86,7 @@ class StudentQuizList : MainActivityBaseFragment(),QuizSetAdapterInterface {
             recycleView.layoutManager = recycleLayout
             recycleView.adapter = recycleAdapter
         } catch (e: NullPointerException) {
-            Log.d("QHelper Adapter error:", e.toString())
+            Log.d("Quiz Set Adapter error:", e.toString())
         }
     }
 

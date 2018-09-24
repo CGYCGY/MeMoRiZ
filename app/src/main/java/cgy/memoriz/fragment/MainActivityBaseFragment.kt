@@ -123,4 +123,14 @@ open class MainActivityBaseFragment : Fragment() {
             }
         }
     }
+
+    protected fun changeToolbarIconToMenu(){
+        try {
+            getBaseActivity()!!.changeToolbarIconToMenu()
+        } catch (e: Exception) {
+            if (Log.isLoggable(LOG_TAG, Log.ERROR)) {
+                Log.e(LOG_TAG, "menu icon error", e)
+            }
+        }
+    }
 }

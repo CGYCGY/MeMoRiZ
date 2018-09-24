@@ -21,7 +21,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_student_home, container, false)
         SharedPref.init(context!!)
-        SharedPref.arrow = false
+        changeToolbarIconToMenu()
 
         /*changing toolbar title */
         setTitle("StudentMainMenu")

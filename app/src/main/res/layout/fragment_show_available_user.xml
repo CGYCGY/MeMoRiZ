@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,21 +10,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lecturer"
             android:layout_weight="1"
             android:id="@+id/btn_lecturer"/>
 
-        <Button
+        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Student"
             android:layout_weight="1"
             android:id="@+id/btn_student"/>
 
-        <Button
+        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Study Group"

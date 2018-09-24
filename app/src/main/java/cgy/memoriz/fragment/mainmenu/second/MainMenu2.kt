@@ -8,14 +8,15 @@ import cgy.memoriz.R
 import cgy.memoriz.data.ClassData
 import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import cgy.memoriz.fragment.StudentMainMenu
 import cgy.memoriz.fragment.chat.Chat
 import cgy.memoriz.fragment.lecturer.LecturerClassList
 import cgy.memoriz.fragment.lecturer.LecturerQuizSet
+import cgy.memoriz.fragment.lecturer.LecturerSlideSet
 import cgy.memoriz.fragment.report.CreateReport
 import cgy.memoriz.fragment.report.ViewReport
 import cgy.memoriz.fragment.student.StudentQHelper
 import cgy.memoriz.fragment.student.StudentQSolver
+import cgy.memoriz.fragment.student.StudentQuizList
 import kotlinx.android.synthetic.main.fragment_base_mainmenu2.view.*
 
 class MainMenu2 : MainActivityBaseFragment() {
@@ -74,16 +75,18 @@ class MainMenu2 : MainActivityBaseFragment() {
                 switchFragment(StudentQSolver())
             }
         }
-        else if (textGet == "Classroom") {
+        else if (textGet == "Class") {
             view.mainMenuBtn1.text = getString(R.string.Quiz)
             view.mainMenuBtn2.text = getString(R.string.Slides)
 
             view.mainMenuBtn1.setOnClickListener {
-                switchFragment(StudentMainMenu())
+                val classInfo : ClassData = bundle!!.getSerializable("class info") as ClassData
+                switchFragment(StudentQuizList().newInstance(classInfo))
             }
 
             view.mainMenuBtn2.setOnClickListener {
-                switchFragment(StudentMainMenu())
+
+//                switchFragment(StudentSlideList())
             }
         }
         else if (textGet == "Report") {
@@ -123,7 +126,7 @@ class MainMenu2 : MainActivityBaseFragment() {
             }
 
             view.mainMenuBtn2.setOnClickListener {
-                switchFragment(StudentMainMenu())
+                switchFragment(LecturerSlideSet().newInstance(classInfo))
             }
         }
         else if (textGet == getString(R.string.SManger)) {

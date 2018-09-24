@@ -39,6 +39,10 @@ object URLEndpoint {
     val urlUpdateFlashcard = urlRoot + "update_flashcard"
     val urlDeleteFlashcard = urlRoot + "delete_flashcard"
     val urlGetFlashcard = urlRoot + "get_flashcard"
+    val urlGetSlide = urlRoot + "get_slide"
+    val urlInsertSlide = urlRoot + "insert_slide"
+    val urlUpdateSlide = urlRoot + "update_slide"
+    val urlDeleteSlide = urlRoot + "delete_slide"
 
     val urlLoadImage = urlBase + "image/"
 }
