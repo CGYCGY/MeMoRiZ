@@ -12,9 +12,11 @@ object SharedPref {
     private val registerErrorData3 = Pair("register error 3", false)
     private val uiStateData = Pair("ui state", false)
     private val arrowData = Pair("arrow", false)
+    private val backData = Pair("back", false)
     private val userNameData = Pair("user's name", "")
     private val userEmailData = Pair("user's email", "")
     private val userTypeData = Pair("user's type", "")
+    private val quizRecordData = Pair("quiz record", "")
 
     fun init(context: Context) {
         sharedPreferences = context.getSharedPreferences("memoriz", Context.MODE_PRIVATE)
@@ -63,6 +65,13 @@ object SharedPref {
             it.putBoolean(arrowData.first, value)
         }
 
+    var back: Boolean
+        get() = sharedPreferences.getBoolean(backData.first, backData.second)
+
+        set(value) = sharedPreferences.edit {
+            it.putBoolean(backData.first, value)
+        }
+
     var userName: String
         get() = sharedPreferences.getString(userNameData.first, userNameData.second)
 
@@ -78,6 +87,13 @@ object SharedPref {
         }
 
     var userType: String
+        get() = sharedPreferences.getString(userTypeData.first, userTypeData.second)
+
+        set(value) = sharedPreferences.edit {
+            it.putString(userTypeData.first, value)
+        }
+
+    var quizRecord: String
         get() = sharedPreferences.getString(userTypeData.first, userTypeData.second)
 
         set(value) = sharedPreferences.edit {

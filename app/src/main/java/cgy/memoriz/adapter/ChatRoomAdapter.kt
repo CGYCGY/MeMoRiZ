@@ -33,10 +33,12 @@ class ChatRoomAdapter : RecyclerView.Adapter<ChatRoomAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = message[position]
-        holder.tv_chat_box.text = data.message
+        val chat = "[" + data.name + "]\n" + data.message
+        holder.tv_chat_box.text = chat
         holder.tv_time.text=data.time
         /*Use share preference here , to get sender id , or else u can pass sender id th constructor*/
         if(data.senderID == SharedPref.userEmail){
+            holder.tv_chat_box.text = data.message
             holder.tv_chat_box.gravity= Gravity.END
             holder.ll_main.gravity=Gravity.END
             holder.ll_chat.setBackgroundResource(R.drawable.chat_box_bg_right)

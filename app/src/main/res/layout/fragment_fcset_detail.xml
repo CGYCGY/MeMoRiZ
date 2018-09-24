@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include layout="@layout/base_list_flashcardset" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fcsSetDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+            android:id="@+id/addFlashcardBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_weight="1"
+            android:text="Add Flashcard" />
+
+        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+            android:id="@+id/viewFlashcardBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1"
+            android:text="View Flashcard"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

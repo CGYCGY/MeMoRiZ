@@ -84,7 +84,7 @@ class StudentQHelper : MainActivityBaseFragment(),QHelperAdapterInterface {
     }
 
     private fun loadQuestionList() {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetQuestionnHelper,
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetQuestionHelper,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast

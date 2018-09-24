@@ -1,5 +1,6 @@
 package cgy.memoriz.fragment.lecturer
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -12,6 +13,8 @@ import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
 import cgy.memoriz.data.QuizData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
+import cgy.memoriz.others.hideKeyboard
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -22,9 +25,12 @@ import org.json.JSONObject
 
 class LecturerQuizDetail : MainActivityBaseFragment() {
 
-    fun newInstance(quiz: QuizData): LecturerQuizDetail{
+    private var dialogFactory = DialogFactory()
+
+    fun newInstance(quiz: QuizData, setID: Int): LecturerQuizDetail{
         val args = Bundle()
         args.putSerializable("quiz detail", quiz)
+        args.putInt("set id", setID)
         val fragment = LecturerQuizDetail()
         fragment.arguments = args
         return fragment
@@ -39,6 +45,7 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
         val bundle = arguments
         if (bundle != null) {
             val quiz : QuizData = bundle.getSerializable("quiz detail") as QuizData
+            val setID= bundle.getInt("set id")
 
             view.edit_quiz_question.text = Editable.Factory.getInstance().newEditable(quiz.question)
             view.edit_quiz_answer.text = Editable.Factory.getInstance().newEditable(quiz.answer)
@@ -46,7 +53,13 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
             setTitle("Quiz Editor")
 
             view.updateQuizBtn.setOnClickListener {
+                view.hideKeyboard()
                 update(quiz)
+            }
+
+            view.deleteQuizBtn.setOnClickListener {
+                dialogFactory.createTwoButtonDialog(context!!, "ALERT!", "Do you want to delete this quiz question?",
+                        DialogInterface.OnClickListener { dialog, which -> delete(quiz, setID) }).show()
             }
 
         }else {
@@ -57,7 +70,7 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
     }
 
     private fun update(quiz: QuizData) {
-        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateQuestion,
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlUpdateQuiz,
                 Response.Listener<String> { response ->
                     try {
 //                      get the feedback message from the php and show it on the app by using Toast
@@ -76,7 +89,7 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-            //          pack the registration info to POSt it
+            //          pack the registration info to POST it
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -84,6 +97,40 @@ class LecturerQuizDetail : MainActivityBaseFragment() {
                 params["qz_id"] = quiz.id.toString()
                 params["qz_qstn"] = view?.edit_quiz_question?.text.toString()
                 params["qz_ans"] = view?.edit_quiz_answer?.text.toString()
+
+                return params
+            }
+        }
+        VolleySingleton.instance?.addToRequestQueue(stringRequest)
+    }
+
+    private fun delete(quiz: QuizData, setID: Int) {
+        val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlDeleteQuiz,
+                Response.Listener<String> { response ->
+                    try {
+//                      get the feedback message from the php and show it on the app by using Toast
+                        val obj = JSONObject(response)
+                        Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
+
+                        if (obj.getString("message") == "Quiz removed successfully") {
+                            super.getBaseActivity()!!.onBackPressed()
+//                            val intent = Intent(context, MainMenuActivity::class.java)
+//                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                            startActivity(intent)
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
+                Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
+
+            //          pack the registration info to POST it
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+
+                params["qz_id"] = quiz.id.toString()
+                params["set_id"] = setID.toString()
 
                 return params
             }

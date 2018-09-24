@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/create_flashcard_card1"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Front of the Flashcard"
+            android:inputType="textMultiLine"
+            android:textSize="36sp"
+            android:lines="2"
+            android:minLines="1"
+            android:maxLines="4"/>
+
+        <EditText
+            android:id="@+id/create_flashcard_card2"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Back of the Flashcard"
+            android:inputType="textMultiLine"
+            android:textSize="36sp"
+            android:lines="2"
+            android:minLines="1"
+            android:maxLines="4"/>
+
+        <ImageView
+            android:id="@+id/create_flashcard_image1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="15dp"
+            android:layout_gravity="center"
+            android:elevation="5dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera"
+            android:contentDescription="Profile Photo" />
+
+        <ImageView
+            android:id="@+id/create_flashcard_image2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:elevation="5dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera"
+            android:contentDescription="Profile Photo" />
+
+    </LinearLayout>
+
+    <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        android:id="@+id/createFlashcardBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:text="Create" />
+
+</RelativeLayout>

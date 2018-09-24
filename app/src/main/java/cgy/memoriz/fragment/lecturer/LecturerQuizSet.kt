@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cgy.memoriz.R
-import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
 import cgy.memoriz.adapter.QuizSetAdapter
 import cgy.memoriz.adapter.QuizSetAdapterInterface
+import cgy.memoriz.data.ClassData
 import cgy.memoriz.data.SetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import com.android.volley.AuthFailureError
@@ -29,11 +29,19 @@ class LecturerQuizSet : MainActivityBaseFragment(),QuizSetAdapterInterface {
     private lateinit var recycleAdapter: QuizSetAdapter
     private lateinit var recycleView: RecyclerView
 
-    private var textGet : String ?= null
+    private lateinit var classInfo : ClassData
 
     fun newInstance(text : String) : LecturerQuizSet {
         val args = Bundle()
         args.putString("value1", text)
+        val fragment = LecturerQuizSet()
+        fragment.arguments = args
+        return fragment
+    }
+
+    fun newInstance(classInfo : ClassData): LecturerQuizSet{
+        val args = Bundle()
+        args.putSerializable("class info", classInfo)
         val fragment = LecturerQuizSet()
         fragment.arguments = args
         return fragment
@@ -57,8 +65,8 @@ class LecturerQuizSet : MainActivityBaseFragment(),QuizSetAdapterInterface {
          */
         val bundle = arguments
         if (bundle != null) {
-            textGet = bundle.getString("value1")
-            setTitle("$textGet")
+            classInfo = bundle.getSerializable("class info") as ClassData
+            setTitle("Quiz Set List")
         }else {
             setTitle("Quiz Set List")
         }
@@ -66,7 +74,7 @@ class LecturerQuizSet : MainActivityBaseFragment(),QuizSetAdapterInterface {
         loadQuizList()
 
         view.createQuizSetBtn.setOnClickListener {
-            switchFragment(CreateQuizSet())
+            switchFragment(CreateQuizSet().newInstance(classInfo))
         }
 
         return view
@@ -108,7 +116,7 @@ class LecturerQuizSet : MainActivityBaseFragment(),QuizSetAdapterInterface {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                params["u_email"] = SharedPref.userEmail
+                params["cls_id"] = classInfo.id.toString()
                 params["set_type"] = "Quiz"
 
                 return params

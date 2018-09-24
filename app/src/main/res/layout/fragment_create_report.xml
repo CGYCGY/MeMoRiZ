@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -21,15 +21,12 @@
         android:minLines="1"
         android:maxLines="2"/>
 
-    <Spinner
+    <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/create_report_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="15dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:textSize="24sp"
-        android:spinnerMode="dropdown"/>
+        android:textSize="24sp"/>
 
     <EditText
         android:id="@+id/create_report_body"
@@ -45,7 +42,7 @@
         android:minLines="1"
         android:maxLines="4"/>
 
-    <Button
+    <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
         android:id="@+id/createReportBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

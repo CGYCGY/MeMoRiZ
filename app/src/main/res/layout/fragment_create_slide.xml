@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/create_slide_content"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="content"
+        android:inputType="textMultiLine"
+        android:textSize="36sp"
+        android:minLines="1"
+        android:maxLines="6"/>
+
+    <info.hoang8f.widget.FButton
+        fbutton:fButtonColor="@color/fbutton_color_amethyst"
+        fbutton:shadowColor="@color/fbutton_color_wisteria"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        fbutton:cornerRadius="15dp"
+        android:id="@+id/createSlideBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Create" />
+
+</LinearLayout>

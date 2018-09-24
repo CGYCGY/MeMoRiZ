@@ -1,11 +1,10 @@
 package cgy.memoriz.fragment.report
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import cgy.memoriz.R
 import cgy.memoriz.SharedPref
@@ -21,11 +20,11 @@ import kotlinx.android.synthetic.main.fragment_create_report.view.*
 import org.json.JSONException
 import org.json.JSONObject
 
-class CreateReport : MainActivityBaseFragment(),AdapterView.OnItemSelectedListener {
+class CreateReport : MainActivityBaseFragment() {
 
     private var textGet : String ?= null
     private var typeSelected : String ?= null
-    private val type = arrayOf("Flashcard Section", "Question Section", "Class Section", "Students Hall Section", "Others")
+    private val type = arrayListOf("Flashcard Section", "Question Section", "Class Section", "Students Hall Section", "Others")
 
     fun newInstance(text : String) : CreateReport {
         val args = Bundle()
@@ -38,6 +37,8 @@ class CreateReport : MainActivityBaseFragment(),AdapterView.OnItemSelectedListen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_create_report, container, false)
+
+        typeSelected = type[0]
         /*
          * Get the data from previous fragment
          */
@@ -49,10 +50,15 @@ class CreateReport : MainActivityBaseFragment(),AdapterView.OnItemSelectedListen
             setTitle("Create Report")
         }
 
-        view.create_report_type!!.onItemSelectedListener = this
-        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, type)
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-        view.create_report_type!!.adapter = arrayAdapter
+        view.create_report_type.setItems(type)
+        view.create_report_type.setOnItemSelectedListener { view, position, id, item ->
+            Snackbar.make(view, "$item is selected", Snackbar.LENGTH_LONG).show()
+            typeSelected = type[position]
+        }
+
+        view.create_report_type.setOnNothingSelectedListener {
+            typeSelected = type[0]
+        }
 
         view.createReportBtn.setOnClickListener {
             if (view.create_report_title.text.isNotBlank() && !typeSelected.isNullOrBlank() && view.create_report_body.text.isNotBlank()) {
@@ -83,7 +89,7 @@ class CreateReport : MainActivityBaseFragment(),AdapterView.OnItemSelectedListen
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-            //          pack the registration info to POSt it
+            //          pack the registration info to POST it
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -98,13 +104,5 @@ class CreateReport : MainActivityBaseFragment(),AdapterView.OnItemSelectedListen
             }
         }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
-    }
-
-    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
-        typeSelected = type[position]
-    }
-
-    override fun onNothingSelected(adapterView: AdapterView<*>) {
-
     }
 }

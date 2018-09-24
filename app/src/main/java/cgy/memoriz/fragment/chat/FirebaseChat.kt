@@ -22,7 +22,7 @@ class FirebaseChat {
         /*For group chat , the sender ID perform no function.*/
         db.setValue(ChatHistoryData(chatKey, senderId, groupName))
         groupDb.child(chatKey).setValue(GroupChatData(chatKey, groupName))
-        EventBus().post(GroupData(chatKey, groupName))
+        EventBus().post(UserData(chatKey, groupName))
     }
 
     /*Get created Group from Firebase.*/
@@ -33,13 +33,13 @@ class FirebaseChat {
                 /*Changing arraylist of GroupChat to arraylist of User.
                  *So , can using same adapter to set up recycle view.
                  */
-                val arrayContainer = ArrayList<UserData>()
+                val arrayContainer = ArrayList<GroupChatData>()
                 for (ds in p0.children) {
                     val history = ds.getValue(GroupChatData::class.java)!!
                     /* Not sure whether your User class got how many attribute,
                      * I think can reeuse it, those other parameter just put  left it empty.
                      * I currently need group id and group name -> change to User class.*/
-                    arrayContainer.add(UserData(history.groupID!!.toInt(), history.groupName!!, ""))
+                    arrayContainer.add(history)
                 }
                 EventBus().post(arrayContainer)
             }
@@ -70,7 +70,7 @@ class FirebaseChat {
     }
 
     fun saveChatHistory(senderID : String, senderName : String, receiverID : String, receiverName : String,
-                        msg : String, chatKey : String?) {
+                        msg : String, chatKey : String?, groupChatKey : String?) {
         val db = FirebaseDatabase.getInstance().getReference("ChatHistory").child(senderID).child(receiverID)
         val db1 = FirebaseDatabase.getInstance().getReference("ChatHistory").child(receiverID).child(senderID)
         /*Chat key not null mean chat before.
@@ -81,7 +81,13 @@ class FirebaseChat {
             saveChatDetails(chatKey, MessageData(messageID!!, senderName, msg, getCurrentTime(), senderID), true)
         } else {
             val detailDB = FirebaseDatabase.getInstance().getReference("ChatDetailHistory")
-            val chatKey = detailDB.push().key
+            var chatKey : String? = null
+            if (groupChatKey != null) {
+                chatKey = groupChatKey
+            }
+            else {
+                chatKey = detailDB.push().key
+            }
             val messageID = detailDB.push().key
             /*Save recent chat to both sender and receiver*/
             db.setValue(ChatHistoryData(chatKey!!, receiverID, receiverName))

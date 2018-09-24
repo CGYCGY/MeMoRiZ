@@ -83,7 +83,7 @@ class SubmitAnswer : MainActivityBaseFragment() {
                 },
                 Response.ErrorListener { volleyError -> Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show() }) {
 
-            //          pack the registration info to POSt it
+            //          pack the registration info to POST it
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -91,6 +91,7 @@ class SubmitAnswer : MainActivityBaseFragment() {
                 params["qstn_id"] = question.id.toString()
                 params["u_email"] = SharedPref.userEmail
                 params["ans_body"] = view?.sa_answer_body?.text.toString()
+                params["qstn_cond"] = "Answer being verify"
 
                 return params
             }

@@ -12,16 +12,13 @@ import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.SharedPref
 import cgy.memoriz.adapter.ChatRoomAdapter
-import cgy.memoriz.data.ChatHistoryData
-import cgy.memoriz.data.MessageData
-import cgy.memoriz.data.MessageObject
-import cgy.memoriz.data.UserData
+import cgy.memoriz.data.*
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.EventBus
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.fragment_chat_room.view.*
 
-class ChatRoom : MainActivityBaseFragment() {
+class   ChatRoom : MainActivityBaseFragment() {
 
     private lateinit var recycleView : RecyclerView
     private lateinit var recycleAdapter : ChatRoomAdapter
@@ -29,13 +26,23 @@ class ChatRoom : MainActivityBaseFragment() {
     private lateinit var receiverName : String
 
     private var receiver : UserData? = null
+    private var groupChat : GroupChatData? = null
     private var chatHistory : ChatHistoryData? = null
     private val firebase = FirebaseChat()
     private var chatKey : String? = null
+    private var groupChatKey : String? = null
 
     fun newInstance(user: UserData): ChatRoom {
         val args = Bundle()
-        args.putSerializable("new_user", user)
+        args.putSerializable("new user", user)
+        val fragment = ChatRoom()
+        fragment.arguments = args
+        return fragment
+    }
+
+    fun newInstance(group: GroupChatData): ChatRoom {
+        val args = Bundle()
+        args.putSerializable("group", group)
         val fragment = ChatRoom()
         fragment.arguments = args
         return fragment
@@ -57,12 +64,20 @@ class ChatRoom : MainActivityBaseFragment() {
          *Or come from search user / group there . */
         val bundle = arguments
         if (bundle != null) {
-            if (bundle.containsKey("new_user")) {
-                receiver = bundle.getSerializable("new_user") as UserData
+            if (bundle.containsKey("new user")) {
+                receiver = bundle.getSerializable("new user") as UserData
                 receiverName = receiver!!.name.toString()
                 receiverID = receiver!!.email.toString()
                 firebase.checkExistingChatKey(SharedPref.userEmail, receiverID)
-            } else {
+            }
+            else if (bundle.containsKey("group")) {
+                groupChat = bundle.getSerializable("group") as GroupChatData
+                receiverName = groupChat!!.groupName.toString()
+                receiverID = groupChat!!.groupID.toString()
+                groupChatKey = receiverID
+                firebase.checkExistingChatKey(SharedPref.userEmail, receiverID)
+            }
+            else {
                 chatHistory = bundle.getSerializable("chat") as ChatHistoryData
                 receiverID = chatHistory!!.receiverID
                 receiverName = chatHistory!!.receiverName
@@ -95,8 +110,8 @@ class ChatRoom : MainActivityBaseFragment() {
         if (TextUtils.isEmpty(messageToSend)) {
             return
         } else {
-            firebase.saveChatHistory(SharedPref.userEmail,SharedPref.userName,
-                    receiverID,receiverName, messageToSend, chatKey)
+            firebase.saveChatHistory(SharedPref.userEmail, SharedPref.userName,
+                    receiverID, receiverName, messageToSend, chatKey, groupChatKey)
             view!!.et_message.setText("")
         }
     }

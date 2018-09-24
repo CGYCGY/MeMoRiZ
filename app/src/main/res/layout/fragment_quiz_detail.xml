@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,11 +28,28 @@
         android:text="answer"
         android:textSize="24sp" />
 
-    <Button
+    <info.hoang8f.widget.FButton
+        fbutton:fButtonColor="@color/fbutton_color_amethyst"
+        fbutton:shadowColor="@color/fbutton_color_wisteria"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        fbutton:cornerRadius="15dp"
         android:id="@+id/updateQuizBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:text="Update Quiz" />
+
+    <info.hoang8f.widget.FButton
+        fbutton:fButtonColor="@color/fbutton_color_amethyst"
+        fbutton:shadowColor="@color/fbutton_color_wisteria"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        fbutton:cornerRadius="15dp"
+        android:id="@+id/deleteQuizBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Delete Quiz" />
 
 </LinearLayout>

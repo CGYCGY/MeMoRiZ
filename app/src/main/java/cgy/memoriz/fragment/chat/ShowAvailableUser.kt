@@ -12,8 +12,11 @@ import cgy.memoriz.R
 import cgy.memoriz.SharedPref
 import cgy.memoriz.URLEndpoint
 import cgy.memoriz.VolleySingleton
+import cgy.memoriz.adapter.GroupAdapter
+import cgy.memoriz.adapter.GroupAdapterInterface
 import cgy.memoriz.adapter.UserAdapter
 import cgy.memoriz.adapter.UserAdapterInterface
+import cgy.memoriz.data.GroupChatData
 import cgy.memoriz.data.UserData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.EventBus
@@ -26,14 +29,19 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface {
+class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface, GroupAdapterInterface {
 
     private lateinit var recycleView: RecyclerView
     private lateinit var recycleAdapter: UserAdapter
+    private lateinit var groupAdapter: GroupAdapter
     private val studentList = ArrayList<UserData>()
     private val lecturerList = ArrayList<UserData>()
 
     private var firebase = FirebaseChat()
+
+    override fun onGroupClick(group: GroupChatData) {
+        switchFragment(ChatRoom().newInstance(group))
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -67,6 +75,7 @@ class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface {
         switchFragment(ChatRoom().newInstance(user))
     }
 
+
     override fun onStart() {
         super.onStart()
         EventBus().registerOnBus(this)
@@ -87,10 +96,26 @@ class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface {
         }
     }
 
-    @Subscribe
-    fun RespondFromFirebase(arrayList: ArrayList<UserData>){
-        setRecycleView(arrayList)
+    private fun setGroupRecycleView(data: ArrayList<GroupChatData>) {
+        try {
+            groupAdapter = GroupAdapter(context!!, data, this)
+            val recycleLayout = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+            recycleView.layoutManager = recycleLayout
+            recycleView.adapter = groupAdapter
+        } catch (e : NullPointerException) {
+            Log.d("ShowAvailableUser error", e.toString())
+        }
     }
+
+    @Subscribe
+    fun RespondFromFirebase(arrayList: ArrayList<GroupChatData>){
+        setGroupRecycleView(arrayList)
+    }
+
+//    @Subscribe
+//    fun RespondFromFirebase(arrayList: ArrayList<UserData>){
+//        setRecycleView(arrayList)
+//    }
 
     private fun loadUserList() {
         val stringRequest = object : StringRequest(Request.Method.GET, URLEndpoint.urlGetUserList,

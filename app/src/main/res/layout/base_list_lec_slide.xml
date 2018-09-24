@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slide_base"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/layout_roundcorner_type3"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/slide_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="Slide content" />
+
+</RelativeLayout>

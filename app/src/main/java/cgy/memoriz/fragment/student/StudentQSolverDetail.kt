@@ -69,10 +69,6 @@ class StudentQSolverDetail : MainActivityBaseFragment(), QSolverAnswerAdapterInt
 
             view.submitAnswerBtn.setOnClickListener{
                 switchFragment(SubmitAnswer().newInstance(question))
-                /**
-                 * TO-DO
-                 * create submit question
-                 */
             }
         }else {
             Log.e("missing QuestionData", "StudentQSolverDetail got error!")

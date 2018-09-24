@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        android:id="@+id/rotateProfilePhotoBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentTop="true"
+        android:text="Rotate Image" />
+
+    <ImageView
+    android:id="@+id/profile_edit_photo"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    android:layout_marginTop="-60dp"
+    android:elevation="5dp"
+    android:scaleType="centerCrop"
+    android:src="@android:drawable/ic_menu_camera"
+    android:contentDescription="Profile Photo" />
+
+    <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        android:id="@+id/saveProfilePhotoBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:text="Save Changes" />
+
+</RelativeLayout>

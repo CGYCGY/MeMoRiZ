@@ -30,6 +30,8 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
     private lateinit var recycleAdapter: QuizAdapter
     private lateinit var recycleView: RecyclerView
 
+    private var quiz = SetData()
+
     fun newInstance(quiz: SetData): LecturerQuiz{
         val args = Bundle()
         args.putSerializable("quiz", quiz)
@@ -40,6 +42,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
 
     override fun onClick(quiz: QuizData) {
         Log.d("CLICKED HERE YOUR DATA", quiz.question)
+        switchFragment(LecturerQuizDetail().newInstance(quiz, this.quiz.id!!))
     }
 
     override fun onLongClick(quiz: QuizData) {
@@ -55,14 +58,14 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
          */
         val bundle = arguments
         if (bundle != null) {
-            val quiz : SetData = bundle.getSerializable("quiz") as SetData
+            quiz  = bundle.getSerializable("quiz") as SetData
 
             view.quiz_set_name.text = quiz.name
             view.quiz_set_size.text = quiz.size.toString()
 
             setTitle("Quiz Answer List")
 
-            loadAnswerList(quiz)
+            loadQuizList(quiz)
 
             view.addQuizBtn.setOnClickListener{
                 switchFragment(AddQuiz().newInstance(quiz))
@@ -72,6 +75,12 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        loadQuizList(quiz)
     }
 
     private fun setRecycleView(quizList: ArrayList<QuizData>) {
@@ -85,7 +94,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
         }
     }
 
-    private fun loadAnswerList(quiz: SetData) {
+    private fun loadQuizList(quiz: SetData) {
         val stringRequest = object : StringRequest(Request.Method.POST, URLEndpoint.urlGetQuiz,
                 Response.Listener<String> { response ->
                     try {
@@ -100,6 +109,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
                             Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
                             jsonToArrayList(obj.getJSONArray("table"))
                         }
+                        view!!.quiz_set_size.text = quiz.size.toString()
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -110,7 +120,6 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
 
-                Log.d("quiz set id", quiz.id.toString())
                 params["set_id"] = quiz.id.toString()
 
                 return params
@@ -128,6 +137,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
                     obj.getJSONObject(i).getString("qz_qstn"),
                     obj.getJSONObject(i).getString("qz_ans")))
 
+        quiz.size = list.size
         setRecycleView(list)
     }
 }
