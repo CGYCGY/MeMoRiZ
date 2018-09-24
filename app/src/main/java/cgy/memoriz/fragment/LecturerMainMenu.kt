@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.SharedPref
+import cgy.memoriz.fragment.chat.Chat
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
 import cgy.memoriz.fragment.student.StudentQSolver
 import cgy.memoriz.share.profile.ShowProfile
@@ -28,6 +29,10 @@ class LecturerMainMenu : MainActivityBaseFragment() {
 
         view.lecturerCManagerBtn.setOnClickListener {
             switchFragment(MainMenu2().newInstance(view.lecturerCManagerBtn.text.toString()))
+        }
+
+        view.lecturerChatBtn.setOnClickListener {
+            switchFragment(Chat())
         }
 
         view.lecturerReportBtn.setOnClickListener {

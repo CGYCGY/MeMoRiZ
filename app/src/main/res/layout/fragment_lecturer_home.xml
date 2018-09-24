@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,9 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="4">
+        android:weightSum="5">
 
-        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        <info.hoang8f.widget.FButton
+            fbutton:fButtonColor="@color/fbutton_color_amethyst"
+            fbutton:shadowColor="@color/fbutton_color_wisteria"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
@@ -22,7 +28,12 @@
             android:text="Profile"
             android:id="@+id/lecturerProfileBtn" />
 
-        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        <info.hoang8f.widget.FButton
+            fbutton:fButtonColor="@color/fbutton_color_amethyst"
+            fbutton:shadowColor="@color/fbutton_color_wisteria"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
@@ -33,7 +44,28 @@
             android:text="Class Manager"
             android:id="@+id/lecturerCManagerBtn" />
 
-        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        <info.hoang8f.widget.FButton
+            fbutton:fButtonColor="@color/fbutton_color_amethyst"
+            fbutton:shadowColor="@color/fbutton_color_wisteria"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginRight="@dimen/student_main_menu_margin_horizontal"
+            android:layout_marginTop="@dimen/student_main_menu_margin_vertical"
+            android:layout_marginBottom="@dimen/student_main_menu_margin_vertical"
+            android:layout_weight="1"
+            android:text="Chat"
+            android:id="@+id/lecturerChatBtn" />
+
+        <info.hoang8f.widget.FButton
+            fbutton:fButtonColor="@color/fbutton_color_amethyst"
+            fbutton:shadowColor="@color/fbutton_color_wisteria"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"
@@ -44,7 +76,12 @@
             android:text="Report"
             android:id="@+id/lecturerReportBtn" />
 
-        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        <info.hoang8f.widget.FButton
+            fbutton:fButtonColor="@color/fbutton_color_amethyst"
+            fbutton:shadowColor="@color/fbutton_color_wisteria"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/student_main_menu_margin_horizontal"

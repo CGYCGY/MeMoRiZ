@@ -3,12 +3,12 @@ package cgy.memoriz.fragment.mainmenu.second
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.data.ClassData
 import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.MainActivityBaseFragment
-import cgy.memoriz.fragment.chat.Chat
 import cgy.memoriz.fragment.lecturer.LecturerClassList
 import cgy.memoriz.fragment.lecturer.LecturerQuizSet
 import cgy.memoriz.fragment.lecturer.LecturerSlideSet
@@ -104,16 +104,14 @@ class MainMenu2 : MainActivityBaseFragment() {
         }
         else if (textGet == "Class Manager") {
             view.mainMenuBtn1.text = getString(R.string.SMManager)
-            view.mainMenuBtn2.text = getString(R.string.SManger)
+//            view.mainMenuBtn2.text = getString(R.string.SManger)
 
             view.mainMenuBtn1.setOnClickListener {
                 switchFragment(LecturerClassList())
 //                switchFragment(MainMenu2().newInstance(getString(R.string.SMManager)))
             }
 
-            view.mainMenuBtn2.setOnClickListener {
-                switchFragment(MainMenu2().newInstance(getString(R.string.SManger)))
-            }
+            view.mainMenuBtn2.visibility = GONE
         }
         else if (textGet == "Study Material Manager") {
             val classInfo : ClassData = bundle!!.getSerializable("class info") as ClassData
@@ -132,15 +130,13 @@ class MainMenu2 : MainActivityBaseFragment() {
         }
         else if (textGet == getString(R.string.SManger)) {
             view.mainMenuBtn1.text = getString(R.string.SSProgress)
-            view.mainMenuBtn2.text = getString(R.string.Chat)
+//            view.mainMenuBtn2.text = getString(R.string.Chat)
 
             view.mainMenuBtn1.setOnClickListener {
                 switchFragment(LecturerMainMenu())
             }
 
-            view.mainMenuBtn2.setOnClickListener {
-                switchFragment(Chat())
-            }
+            view.mainMenuBtn2.visibility = GONE
         }
 
         return view
