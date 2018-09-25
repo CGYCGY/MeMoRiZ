@@ -6,41 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.SharedPref
-import cgy.memoriz.fragment.chat.Chat
-import cgy.memoriz.fragment.mainmenu.second.MainMenu2
-import cgy.memoriz.fragment.student.StudentQSolver
-import cgy.memoriz.share.profile.ShowProfile
-import kotlinx.android.synthetic.main.fragment_lecturer_home.view.*
+import cgy.memoriz.fragment.admin.AdminReport
+import cgy.memoriz.fragment.admin.AdminUAManager
+import kotlinx.android.synthetic.main.fragment_base_mainmenu2.view.*
 
-class LecturerMainMenu : MainActivityBaseFragment() {
+class AdminMainMenu : MainActivityBaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_lecturer_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_base_mainmenu2, container, false)
         SharedPref.init(context!!)
         SharedPref.arrow = false
 
         /*changing toolbar title */
-        setTitle("Lecturer Main Menu")
+        setTitle("Admin Main Menu")
 
-        view.lecturerProfileBtn.setOnClickListener {
-            switchFragment(ShowProfile())
+        view.mainMenuBtn1.text = getString(R.string.UAManager)
+        view.mainMenuBtn2.text = getString(R.string.ReportManager)
+
+        view.mainMenuBtn1.setOnClickListener {
+            switchFragment(AdminUAManager())
         }
 
-        view.lecturerCManagerBtn.setOnClickListener {
-            switchFragment(MainMenu2().newInstance(view.lecturerCManagerBtn.text.toString()))
-        }
-
-        view.lecturerChatBtn.setOnClickListener {
-            switchFragment(Chat())
-        }
-
-        view.lecturerReportBtn.setOnClickListener {
-            switchFragment(MainMenu2().newInstance(view.lecturerReportBtn.text.toString()))
-        }
-
-        view.lecturerQSolverBtn.setOnClickListener {
-            switchFragment(StudentQSolver())
+        view.mainMenuBtn2.setOnClickListener {
+            switchFragment(AdminReport())
         }
 
 

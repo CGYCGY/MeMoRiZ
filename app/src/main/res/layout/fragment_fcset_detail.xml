@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
@@ -24,7 +25,12 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
-        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        <info.hoang8f.widget.FButton
+            fbutton:fButtonColor="@color/fbutton_color_amethyst"
+            fbutton:shadowColor="@color/fbutton_color_wisteria"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="15dp"
             android:id="@+id/addFlashcardBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +38,12 @@
             android:layout_weight="1"
             android:text="Add Flashcard" />
 
-        <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+        <info.hoang8f.widget.FButton
+            fbutton:fButtonColor="@color/fbutton_color_amethyst"
+            fbutton:shadowColor="@color/fbutton_color_wisteria"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="15dp"
             android:id="@+id/viewFlashcardBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

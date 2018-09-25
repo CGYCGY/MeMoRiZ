@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="15dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/base_list_report" />
+
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/report_change_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
-        <include layout="@layout/base_list_qsolver" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/qSolverDetail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+        android:layout_margin="15dp"
+        android:textSize="24sp"/>
 
     <info.hoang8f.widget.FButton
         fbutton:fButtonColor="@color/fbutton_color_amethyst"
@@ -26,11 +21,9 @@
         fbutton:shadowEnabled="true"
         fbutton:shadowHeight="5dp"
         fbutton:cornerRadius="15dp"
-        android:id="@+id/submitAnswerBtn"
+        android:id="@+id/changeRSBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:layout_alignParentBottom="true"
-        android:text="Submit Answer" />
-
-</RelativeLayout>
+        android:text="Change Report Status" />
+</LinearLayout>

@@ -1,6 +1,7 @@
 package cgy.memoriz
 
 import android.os.Bundle
+import cgy.memoriz.fragment.AdminMainMenu
 import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.StudentMainMenu
 import cgy.memoriz.others.EventBus
@@ -23,6 +24,8 @@ class MainMenuActivity : MainMenuBase() {
             replaceContainerFragment(StudentMainMenu())
         else if (SharedPref.userType == "Lecturer")
             replaceContainerFragment(LecturerMainMenu())
+        else if (SharedPref.userType == "Admin")
+            replaceContainerFragment(AdminMainMenu())
     }
 }
 

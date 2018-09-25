@@ -34,4 +34,8 @@
     <string name="TeachExp">Teaching Experience:</string>
     <string name="updateFC">Update Flashcard</string>
     <string name="deleteFC">Delete Flashcard</string>
+    <string name="ReportManager">Report Manager</string>
+    <string name="UAManager">User Account Manager</string>
+    <string name="ChangePassword">Change Password</string>
+    <string name="ChangeBanStat">Change Ban Status</string>
 </resources>

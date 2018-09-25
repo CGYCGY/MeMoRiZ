@@ -7,8 +7,11 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import cgy.memoriz.R
 import cgy.memoriz.data.ClassData
+import cgy.memoriz.data.UserData
 import cgy.memoriz.fragment.LecturerMainMenu
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.fragment.admin.AdminChangeBanStatus
+import cgy.memoriz.fragment.admin.AdminChangePassword
 import cgy.memoriz.fragment.lecturer.LecturerClassList
 import cgy.memoriz.fragment.lecturer.LecturerQuizSet
 import cgy.memoriz.fragment.lecturer.LecturerSlideSet
@@ -42,6 +45,15 @@ class MainMenu2 : MainActivityBaseFragment() {
     fun newInstance(classInfo : ClassData, text : String): MainMenu2{
         val args = Bundle()
         args.putSerializable("class info", classInfo)
+        args.putString("value1", text)
+        val fragment = MainMenu2()
+        fragment.arguments = args
+        return fragment
+    }
+
+    fun newInstance(user : UserData, text : String): MainMenu2{
+        val args = Bundle()
+        args.putSerializable("user info", user)
         args.putString("value1", text)
         val fragment = MainMenu2()
         fragment.arguments = args
@@ -137,6 +149,21 @@ class MainMenu2 : MainActivityBaseFragment() {
             }
 
             view.mainMenuBtn2.visibility = GONE
+        }
+        else if (textGet == "User") {
+            val user : UserData = bundle!!.getSerializable("user info") as UserData
+            //ltr pass guo qu
+
+            view.mainMenuBtn1.text = getString(R.string.ChangePassword)
+            view.mainMenuBtn2.text = getString(R.string.ChangeBanStat)
+
+            view.mainMenuBtn1.setOnClickListener {
+                switchFragment(AdminChangePassword().newInstance(user))
+            }
+
+            view.mainMenuBtn2.setOnClickListener {
+                switchFragment(AdminChangeBanStatus().newInstance(user))
+            }
         }
 
         return view

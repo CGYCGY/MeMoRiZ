@@ -2,11 +2,11 @@ package cgy.memoriz
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -19,17 +19,22 @@ import org.json.JSONObject
 class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var typeSelected : String ?= null
-    private val type = arrayOf("Student", "Lecturer")
+    private val type = arrayListOf("Student", "Lecturer", "Admin")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         SharedPref.init(this)
 
-        register_type!!.onItemSelectedListener = this
-        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, type)
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-        register_type!!.adapter = arrayAdapter
+        register_type.setItems(type)
+        register_type.setOnItemSelectedListener { view, position, id, item ->
+            Snackbar.make(view, "$item is selected", Snackbar.LENGTH_LONG).show()
+            typeSelected = type[position]
+        }
+
+        register_type.setOnNothingSelectedListener {
+            typeSelected = type[0]
+        }
 
         register_userName.validate(arrayOf({ s -> s.isOnlyLetterOrDigit()}, { s -> s.isLengthAtLeast(6)}),
                 arrayOf("Username only accept letter and digit", "Username must be at least 6 character"), SharedPref, 1)

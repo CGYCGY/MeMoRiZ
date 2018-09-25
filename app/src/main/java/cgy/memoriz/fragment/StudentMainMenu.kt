@@ -23,7 +23,7 @@ class StudentMainMenu : MainActivityBaseFragment() {
         SharedPref.init(context!!)
 
         /*changing toolbar title */
-        setTitle("StudentMainMenu")
+        setTitle("Student Main Menu")
 
         /*
          * If dun want transfer data put it switchFragment(SecondPage())

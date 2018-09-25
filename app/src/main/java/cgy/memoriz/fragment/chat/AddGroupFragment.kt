@@ -10,6 +10,7 @@ import cgy.memoriz.SharedPref
 import cgy.memoriz.data.GroupChatData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.others.EventBus
+import cgy.memoriz.others.hideKeyboard
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.fragment_add_group.view.*
 
@@ -22,12 +23,16 @@ class AddGroupFragment : MainActivityBaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_add_group, container, false)
 
+        setTitle("Add Study Group")
+
         view.btn_next.setOnClickListener{
             if(!TextUtils.isEmpty(view.et_name.text.toString())){
                 /*If want dialog(yes/no) for user to confirm whether want create group
                  , can just use dialog factory call createTwoButtonDialog.*/
                 firebase.saveGroupChat(view.et_name.text.toString(), SharedPref.userEmail)
+                view.hideKeyboard()
                 showToastMessage("Successfully create group.")
+                getBaseActivity()!!.onBackPressed()
             }
         }
         return view
