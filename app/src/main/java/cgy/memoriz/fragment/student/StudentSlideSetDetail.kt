@@ -16,6 +16,7 @@ import cgy.memoriz.adapter.SlideAdapterInterface
 import cgy.memoriz.data.SetData
 import cgy.memoriz.data.SlideData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -31,6 +32,7 @@ class StudentSlideSetDetail : MainActivityBaseFragment(), SlideAdapterInterface 
     private lateinit var recycleView: RecyclerView
 
     private var set = SetData()
+    private var dialogFactory = DialogFactory()
 
     fun newInstance(set: SetData): StudentSlideSetDetail{
         val args = Bundle()
@@ -66,6 +68,11 @@ class StudentSlideSetDetail : MainActivityBaseFragment(), SlideAdapterInterface 
             setTitle("Slide List")
 
             loadSlideList(set)
+
+            view.slide_set_base.setOnClickListener {
+                dialogFactory.createOneButtonDialog(context!!, "Slide Set Name", set.name.toString(),
+                        "back").show()
+            }
 
             view.addSlideBtn.text = "View Slide"
             view.addSlideBtn.setOnClickListener {

@@ -36,7 +36,7 @@ class Chat : MainActivityBaseFragment(), ChatHistoryInterface {
          * Eg: view.btn_add_group.visibility=GONE
          */
         showProgressDialog()
-        firebaseChat.getChatHistory(SharedPref.userEmail)
+        firebaseChat.getChatHistory(SharedPref.userID)
 
         view.btn_add.setOnClickListener {
             switchFragment(ShowAvailableUser())

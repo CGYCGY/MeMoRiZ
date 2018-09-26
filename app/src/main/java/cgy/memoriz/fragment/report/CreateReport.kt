@@ -24,7 +24,7 @@ class CreateReport : MainActivityBaseFragment() {
 
     private var textGet : String ?= null
     private var typeSelected : String ?= null
-    private val type = arrayListOf("Flashcard Section", "Question Section", "Class Section", "Students Hall Section", "Others")
+    private val type = arrayListOf("Flashcard Section", "Question Section", "Class Section", "Chat Section", "Class Manager Section", "Others")
 
     fun newInstance(text : String) : CreateReport {
         val args = Bundle()

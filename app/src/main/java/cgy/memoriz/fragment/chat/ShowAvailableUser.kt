@@ -147,12 +147,14 @@ class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface, Grou
         for (i in 0 until obj.length())
             if (obj.getJSONObject(i).getString("u_type") == "Student" && obj.getJSONObject(i).getString("u_email") != SharedPref.userEmail) {
                 studentList.add(UserData(
+                        obj.getJSONObject(i).getInt("u_id"),
                         obj.getJSONObject(i).getString("u_email"),
                         obj.getJSONObject(i).getString("u_name"),
                         obj.getJSONObject(i).getString("u_type")))
             }
             else if (obj.getJSONObject(i).getString("u_type") == "Lecturer" && obj.getJSONObject(i).getString("u_email") != SharedPref.userEmail) {
                 lecturerList.add(UserData(
+                        obj.getJSONObject(i).getInt("u_id"),
                         obj.getJSONObject(i).getString("u_email"),
                         obj.getJSONObject(i).getString("u_name"),
                         obj.getJSONObject(i).getString("u_type")))

@@ -17,6 +17,7 @@ import cgy.memoriz.adapter.QuizSetAdapterInterface
 import cgy.memoriz.data.ClassData
 import cgy.memoriz.data.SetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -31,6 +32,7 @@ class StudentQuizList : MainActivityBaseFragment(),QuizSetAdapterInterface {
     private lateinit var recycleView: RecyclerView
 
     private lateinit var classInfo : ClassData
+    private var dialogFactory = DialogFactory()
 
     fun newInstance(text : String) : StudentQuizList {
         val args = Bundle()
@@ -50,11 +52,16 @@ class StudentQuizList : MainActivityBaseFragment(),QuizSetAdapterInterface {
 
     override fun onClick(quiz: SetData) {
         Log.d("CLICKED HERE YOUR DATA", quiz.name)
-        switchFragment(StudentStartQuiz().newInstance(quiz))
+        if (quiz.size!! < 4) {
+            Toast.makeText(context, "this quiz set has too less question, please wait lecturer to update it. ", Toast.LENGTH_LONG).show()
+        } else
+            switchFragment(StudentStartQuiz().newInstance(quiz))
     }
 
     override fun onLongClick(quiz: SetData) {
         Log.d("LONG CLICKED! YOUR DATA", quiz.name)
+        dialogFactory.createOneButtonDialog(context!!, "Quiz Set Name", quiz.name.toString(),
+                "back").show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -68,10 +75,8 @@ class StudentQuizList : MainActivityBaseFragment(),QuizSetAdapterInterface {
         val bundle = arguments
         if (bundle != null) {
             classInfo = bundle.getSerializable("class info") as ClassData
-            setTitle("Quiz Set List")
-        }else {
-            setTitle("Quiz Set List")
         }
+        setTitle("Quiz Set List")
 
         loadQuizList()
 

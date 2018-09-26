@@ -16,6 +16,7 @@ import cgy.memoriz.adapter.FlashcardAdapterInterface
 import cgy.memoriz.data.FCSetData
 import cgy.memoriz.data.FlashcardData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -31,6 +32,7 @@ class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface
     private lateinit var recycleView: RecyclerView
 
     private var fcSetInfo = FCSetData()
+    private var dialogFactory = DialogFactory()
 
     fun newInstance(fcSetInfo : FCSetData): StudentFCSetDetail{
         val args = Bundle()
@@ -47,6 +49,8 @@ class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface
 
     override fun onLongClick(flashcard : FlashcardData) {
         Log.d("LONG CLICKED! YOUR DATA", flashcard.card1)
+        dialogFactory.createOneButtonDialog(context!!, "Flashcard", "FRONT: " + flashcard.card1.toString() + "\nBACK: " + flashcard.card2.toString(),
+                "back").show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +72,11 @@ class StudentFCSetDetail : MainActivityBaseFragment(), FlashcardAdapterInterface
             setTitle("Flashcard List")
 
             loadFlashcardList(fcSetInfo)
+
+            view.fcset.setOnClickListener {
+                dialogFactory.createOneButtonDialog(context!!, "Flashcard Set Name", fcSetInfo.name.toString(),
+                        "back").show()
+            }
 
             view.addFlashcardBtn.setOnClickListener{
 //                switchFragment(CreateFlashcardMode().newInstance(fcSetInfo.id.toString()))

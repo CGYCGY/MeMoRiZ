@@ -67,15 +67,15 @@ class   ChatRoom : MainActivityBaseFragment() {
             if (bundle.containsKey("new user")) {
                 receiver = bundle.getSerializable("new user") as UserData
                 receiverName = receiver!!.name.toString()
-                receiverID = receiver!!.email.toString()
-                firebase.checkExistingChatKey(SharedPref.userEmail, receiverID)
+                receiverID = receiver!!.id.toString()
+                firebase.checkExistingChatKey(SharedPref.userID, receiverID)
             }
             else if (bundle.containsKey("group")) {
                 groupChat = bundle.getSerializable("group") as GroupChatData
                 receiverName = groupChat!!.groupName.toString()
                 receiverID = groupChat!!.groupID.toString()
                 groupChatKey = receiverID
-                firebase.checkExistingChatKey(SharedPref.userEmail, receiverID)
+                firebase.checkExistingChatKey(SharedPref.userID, receiverID)
             }
             else {
                 chatHistory = bundle.getSerializable("chat") as ChatHistoryData
@@ -110,7 +110,7 @@ class   ChatRoom : MainActivityBaseFragment() {
         if (TextUtils.isEmpty(messageToSend)) {
             return
         } else {
-            firebase.saveChatHistory(SharedPref.userEmail, SharedPref.userName,
+            firebase.saveChatHistory(SharedPref.userID, SharedPref.userName,
                     receiverID, receiverName, messageToSend, chatKey, groupChatKey)
             view!!.et_message.setText("")
         }

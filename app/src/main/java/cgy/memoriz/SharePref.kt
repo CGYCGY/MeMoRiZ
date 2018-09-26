@@ -15,6 +15,7 @@ object SharedPref {
     private val backData = Pair("back", false)
     private val userNameData = Pair("user's name", "")
     private val userEmailData = Pair("user's email", "")
+    private val userIdData = Pair("user's id", "")
     private val userTypeData = Pair("user's type", "")
     private val quizRecordData = Pair("quiz record", "")
 
@@ -84,6 +85,13 @@ object SharedPref {
 
         set(value) = sharedPreferences.edit {
             it.putString(userEmailData.first, value)
+        }
+
+    var userID: String
+        get() = sharedPreferences.getString(userIdData.first, userIdData.second)
+
+        set(value) = sharedPreferences.edit {
+            it.putString(userIdData.first, value)
         }
 
     var userType: String

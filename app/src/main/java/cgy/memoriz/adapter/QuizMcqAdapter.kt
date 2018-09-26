@@ -47,7 +47,8 @@ class QuizMcqAdapter : RecyclerView.Adapter<QuizMcqAdapter.ViewHolder> {
         Log.e("position", position.toString())
 
         val data = quizMcqList[position]
-        holder.no.text = (position+1).toString()
+        val number = " " + (position+1).toString()
+        holder.no.text = number
         holder.question.text = data.question
         holder.choice[0].text = data.choices[0]
         holder.choice[1].text = data.choices[1]

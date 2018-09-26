@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,7 +9,7 @@
     <EditText
         android:id="@+id/create_quiz_question"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -17,22 +18,26 @@
         android:hint="Quiz question"
         android:inputType="textMultiLine"
         android:textSize="36sp"
-        android:lines="2"
-        android:minLines="1"
-        android:maxLines="2"/>
+        android:singleLine="false"/>
 
     <EditText
         android:id="@+id/create_quiz_answer"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="15dp"
         android:ems="10"
         android:hint="Quiz answer"
         android:inputType="textMultiLine"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:singleLine="false"/>
 
-    <info.hoang8f.widget.FButton        fbutton:fButtonColor="@color/fbutton_color_amethyst"        fbutton:shadowColor="@color/fbutton_color_wisteria"        fbutton:shadowEnabled="true"        fbutton:shadowHeight="5dp"        fbutton:cornerRadius="15dp"
+    <info.hoang8f.widget.FButton
+        fbutton:fButtonColor="@color/fbutton_color_amethyst"
+        fbutton:shadowColor="@color/fbutton_color_wisteria"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        fbutton:cornerRadius="15dp"
         android:id="@+id/createQuizBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

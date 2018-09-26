@@ -16,6 +16,7 @@ import cgy.memoriz.adapter.QSolverAnswerAdapterInterface
 import cgy.memoriz.data.AnswerData
 import cgy.memoriz.data.QuestionData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -30,6 +31,8 @@ class StudentQSolverDetail : MainActivityBaseFragment(), QSolverAnswerAdapterInt
     private lateinit var recycleAdapter: QSolverAnswerAdapter
     private lateinit var recycleView: RecyclerView
 
+    private var dialogFactory = DialogFactory()
+
     fun newInstance(question: QuestionData): StudentQSolverDetail{
         val args = Bundle()
         args.putSerializable("question detail", question)
@@ -40,6 +43,8 @@ class StudentQSolverDetail : MainActivityBaseFragment(), QSolverAnswerAdapterInt
 
     override fun onClick(answer: AnswerData) {
         Log.d("CLICKED HERE YOUR DATA", answer.body)
+        dialogFactory.createOneButtonDialog(context!!, "Answer", answer.body.toString(),
+                "back").show()
     }
 
     override fun onLongClick(answer: AnswerData) {
@@ -66,6 +71,13 @@ class StudentQSolverDetail : MainActivityBaseFragment(), QSolverAnswerAdapterInt
             setTitle("Question Answer List")
 
             loadAnswerList(question)
+
+            val longtext = "Title: " + question.title +"\nBody: " + question.body
+
+            view.qsolver_base.setOnClickListener {
+                dialogFactory.createOneButtonDialog(context!!, "Question", longtext,
+                        "back").show()
+            }
 
             view.submitAnswerBtn.setOnClickListener{
                 switchFragment(SubmitAnswer().newInstance(question))

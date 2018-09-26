@@ -37,7 +37,7 @@ class ChatRoomAdapter : RecyclerView.Adapter<ChatRoomAdapter.ViewHolder> {
         holder.tv_chat_box.text = chat
         holder.tv_time.text=data.time
         /*Use share preference here , to get sender id , or else u can pass sender id th constructor*/
-        if(data.senderID == SharedPref.userEmail){
+        if(data.senderID == SharedPref.userID){
             holder.tv_chat_box.text = data.message
             holder.tv_chat_box.gravity= Gravity.END
             holder.ll_main.gravity=Gravity.END

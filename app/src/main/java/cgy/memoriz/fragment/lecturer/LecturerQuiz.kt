@@ -16,6 +16,7 @@ import cgy.memoriz.adapter.QuizAdapterInterface
 import cgy.memoriz.data.QuizData
 import cgy.memoriz.data.SetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -31,6 +32,7 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
     private lateinit var recycleView: RecyclerView
 
     private var quiz = SetData()
+    private var dialogFactory = DialogFactory()
 
     fun newInstance(quiz: SetData): LecturerQuiz{
         val args = Bundle()
@@ -47,6 +49,9 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
 
     override fun onLongClick(quiz: QuizData) {
         Log.d("LONG CLICKED! YOUR DATA", quiz.question)
+        val quizDetail = "Quiz Question: " + quiz.question + " \nQuiz Answer: " + quiz.answer
+        dialogFactory.createOneButtonDialog(context!!, "Quiz Detail", quizDetail,
+                "back").show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +71,11 @@ class LecturerQuiz : MainActivityBaseFragment(), QuizAdapterInterface {
             setTitle("Quiz Answer List")
 
             loadQuizList(quiz)
+
+            view.quiz_set_base.setOnClickListener {
+                dialogFactory.createOneButtonDialog(context!!, "Quiz Set Name", quiz.name.toString(),
+                        "back").show()
+            }
 
             view.addQuizBtn.setOnClickListener{
                 switchFragment(AddQuiz().newInstance(quiz))

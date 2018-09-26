@@ -16,6 +16,7 @@ import cgy.memoriz.adapter.FCSetAdapter
 import cgy.memoriz.adapter.FCSetAdapterInterface
 import cgy.memoriz.data.FCSetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -30,6 +31,7 @@ class StudentFCSetList : MainActivityBaseFragment(), FCSetAdapterInterface {
     private lateinit var recycleView: RecyclerView
 
     private var textGet : String ?= null
+    private var dialogFactory = DialogFactory()
 
     fun newInstance(text : String) : StudentFCSetList {
         val args = Bundle()
@@ -46,6 +48,8 @@ class StudentFCSetList : MainActivityBaseFragment(), FCSetAdapterInterface {
 
     override fun onLongClick(fcSetInfo : FCSetData) {
         Log.d("LONG CLICKED! YOUR DATA", fcSetInfo.name)
+        dialogFactory.createOneButtonDialog(context!!, "Flashcard Set Name", fcSetInfo.name.toString(),
+                "back").show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

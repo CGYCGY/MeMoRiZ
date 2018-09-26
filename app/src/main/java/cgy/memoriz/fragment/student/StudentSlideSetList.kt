@@ -17,6 +17,7 @@ import cgy.memoriz.adapter.SlideSetAdapter
 import cgy.memoriz.data.ClassData
 import cgy.memoriz.data.SetData
 import cgy.memoriz.fragment.MainActivityBaseFragment
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -31,6 +32,7 @@ class StudentSlideSetList : MainActivityBaseFragment(),QuizSetAdapterInterface {
     private lateinit var recycleView: RecyclerView
 
     private lateinit var classInfo : ClassData
+    private var dialogFactory = DialogFactory()
 
     fun newInstance(text : String) : StudentSlideSetList {
         val args = Bundle()
@@ -56,6 +58,8 @@ class StudentSlideSetList : MainActivityBaseFragment(),QuizSetAdapterInterface {
 
     override fun onLongClick(quiz: SetData) {
         Log.d("LONG CLICKED! YOUR DATA", quiz.name)
+        dialogFactory.createOneButtonDialog(context!!, "Slide Set Name", quiz.name.toString(),
+                "back").show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

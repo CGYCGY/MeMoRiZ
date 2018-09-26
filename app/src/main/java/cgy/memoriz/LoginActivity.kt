@@ -62,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
                             SharedPref.userName = obj.getString("message").substring(8)
                             SharedPref.userEmail = login_userEmail.text.toString()
                             SharedPref.userType = obj.getString("type")
+                            SharedPref.userID = obj.getString("id")
                             Log.d("user Name", SharedPref.userName)
 
                             val intent = Intent(this, MainMenuActivity::class.java)

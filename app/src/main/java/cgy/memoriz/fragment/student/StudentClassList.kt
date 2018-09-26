@@ -17,6 +17,7 @@ import cgy.memoriz.adapter.ClassListAdapterInterface
 import cgy.memoriz.data.ClassData
 import cgy.memoriz.fragment.MainActivityBaseFragment
 import cgy.memoriz.fragment.mainmenu.second.MainMenu2
+import cgy.memoriz.others.DialogFactory
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -31,6 +32,7 @@ class StudentClassList : MainActivityBaseFragment(), ClassListAdapterInterface {
     private lateinit var recycleView: RecyclerView
 
     private var textGet : String ?= null
+    private var dialogFactory = DialogFactory()
 
     fun newInstance(text : String) : StudentClassList {
         val args = Bundle()
@@ -47,6 +49,8 @@ class StudentClassList : MainActivityBaseFragment(), ClassListAdapterInterface {
 
     override fun onLongClick(classInfo: ClassData) {
         Log.d("LONG CLICKED! YOUR DATA", classInfo.name)
+        dialogFactory.createOneButtonDialog(context!!, "Class Name", classInfo.name.toString(),
+                "back").show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

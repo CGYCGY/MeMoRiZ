@@ -1,7 +1,7 @@
 package cgy.memoriz
 
-import android.util.Log
 import android.util.Base64
+import android.util.Log
 import java.nio.ByteBuffer
 import java.security.SecureRandom
 import java.util.*
@@ -24,14 +24,14 @@ fun generateKey() : ByteArray {
 }
 
 fun String.encryptPass() : String {
-    Log.d("string", this)
+//    Log.d("string", this)
     val key = Base64.decode("v7Hfvbf7h8jka3xpVtL7Mw==", Base64.DEFAULT)
 
-    Log.d("key", Base64.encodeToString(key, Base64.DEFAULT))
+//    Log.d("key", Base64.encodeToString(key, Base64.DEFAULT))
 
     val iv = generateIV()
 
-    Log.d("iv", Base64.encodeToString(iv, Base64.DEFAULT))
+//    Log.d("iv", Base64.encodeToString(iv, Base64.DEFAULT))
 
     val secretKey = SecretKeySpec(key, "AES")
     val paramSpec = GCMParameterSpec(128, iv)
@@ -49,20 +49,20 @@ fun String.encryptPass() : String {
 
     Arrays.fill(key, 0.toByte())
 
-    Log.d("before encode size", encryptedPass.size.toString())
-    Log.d("encrypted string", Base64.encodeToString(encryptedPass, Base64.DEFAULT))
+//    Log.d("before encode size", encryptedPass.size.toString())
+//    Log.d("encrypted string", Base64.encodeToString(encryptedPass, Base64.DEFAULT))
     return Base64.encodeToString(encryptedPass, Base64.DEFAULT)
 }
 
 fun String.decryptPass() : String? {
-    Log.d("before", this)
+//    Log.d("before", this)
 
     val byteThis = Base64.decode(this, Base64.DEFAULT)
 
-    Log.d("after decode size", byteThis.size.toString())
+//    Log.d("after decode size", byteThis.size.toString())
 
     val byteBuffer = ByteBuffer.wrap(byteThis)
-    Log.d("byteBuffer size", byteBuffer.limit().toString())
+//    Log.d("byteBuffer size", byteBuffer.limit().toString())
 
     val ivSize =
             if (byteBuffer.limit() <= 0) 0
@@ -70,18 +70,18 @@ fun String.decryptPass() : String? {
 
 //    if (ivSize < 12 || ivSize >= 16) throw IllegalArgumentException("invalid iv length")
     if (ivSize in 12..15) {
-        Log.d("byteBuffer position", byteBuffer.position().toString())
+//        Log.d("byteBuffer position", byteBuffer.position().toString())
         val iv = ByteArray(ivSize)
         byteBuffer.get(iv)
 
-        Log.d("iv", Base64.encodeToString(iv, Base64.DEFAULT))
+//        Log.d("iv", Base64.encodeToString(iv, Base64.DEFAULT))
 
-        Log.d("byteBuffer position", byteBuffer.position().toString())
+//        Log.d("byteBuffer position", byteBuffer.position().toString())
 
         val tempPass = ByteArray(byteBuffer.remaining())
         byteBuffer.get(tempPass)
 
-        Log.d("byteBuffer position", byteBuffer.position().toString())
+//        Log.d("byteBuffer position", byteBuffer.position().toString())
 
         val key = Base64.decode("v7Hfvbf7h8jka3xpVtL7Mw==", Base64.DEFAULT)
 
@@ -89,7 +89,7 @@ fun String.decryptPass() : String? {
         decrypt.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(128, iv))
         val decryptedPass = decrypt.doFinal(tempPass)
 
-        Log.d("decrypted string", String(decryptedPass))
+//        Log.d("decrypted string", String(decryptedPass))
         return String(decryptedPass)
     } else {
 

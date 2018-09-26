@@ -18,4 +18,14 @@ class DialogFactory {
                 })
         return alertDialog.create()
     }
+
+    fun createOneButtonDialog(context: Context, title: String, message: String, buttonName: String): Dialog {
+        val alertDialog = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+        alertDialog.setTitle("$title")
+                .setMessage("$message")
+                .setPositiveButton(buttonName, DialogInterface.OnClickListener{ dialog, which ->
+                    dialog.dismiss()
+                })
+        return alertDialog.create()
+    }
 }

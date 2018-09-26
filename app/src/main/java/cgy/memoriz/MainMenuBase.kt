@@ -17,7 +17,6 @@ import android.view.MenuItem
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import cgy.memoriz.fragment.StudentMainMenu
-import cgy.memoriz.fragment.second.SecondPage
 import cgy.memoriz.others.CustomColor
 import cgy.memoriz.others.DialogFactory
 import kotlinx.android.synthetic.main.main_app_bar.*
@@ -87,10 +86,10 @@ open class MainMenuBase : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.Setting -> {
-                replaceContainerFragment(SecondPage())
-            }
+
             R.id.Exit -> {
+                dialogFactory.createTwoButtonDialog(this, "ALERT!", "Do you want to proceed to Log Out??",
+                        DialogInterface.OnClickListener { dialog, which -> finish() }).show()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)

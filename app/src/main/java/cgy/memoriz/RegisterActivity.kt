@@ -19,7 +19,8 @@ import org.json.JSONObject
 class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var typeSelected : String ?= null
-    private val type = arrayListOf("Student", "Lecturer", "Admin")
+    private val type = arrayListOf("Student", "Lecturer")
+//    private val type = arrayListOf("Student", "Lecturer", "Admin")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -11,6 +11,13 @@ open class UserData : Serializable {
     var experience : String? = null
     var picture : String? = null
 
+    constructor(id: Int?, email: String?, name: String?, type: String?) {
+        this.id = id
+        this.email = email
+        this.name = name
+        this.type = type
+    }
+
     constructor(id: Int?, name : String?, type: String?) {
         this.id = id
         this.name = name

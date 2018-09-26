@@ -194,7 +194,7 @@ class EditProfilePicture : MainActivityBaseFragment() {
                         Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show()
 
                         if (obj.getString("message") == "Profile photo upload successfully") {
-//                            super.getBaseActivity()!!.onBackPressed()
+                            getBaseActivity()!!.onBackPressed()
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()

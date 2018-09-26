@@ -35,8 +35,9 @@ class QuizSetAdapter : RecyclerView.Adapter<QuizSetAdapter.ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val data = quizSetList[position]
+        val qsize = "Quiz Set Size: " + data.size.toString()
         holder.name.text = data.name
-        holder.size.text = data.size.toString()
+        holder.size.text = qsize
 
         holder.itemView?.setOnClickListener {
             quizSetView.onClick(data)

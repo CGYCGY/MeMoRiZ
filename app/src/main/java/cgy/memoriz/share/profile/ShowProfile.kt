@@ -173,7 +173,7 @@ class ShowProfile : MainActivityBaseFragment() {
             view!!.profile_show_exp.text = getString(R.string.EduLevel) + userProfile.experience
         }
         else {
-            view!!.profile_show_exp.text = getString(R.string.TeachExp) + userProfile.experience
+            view!!.profile_show_exp.text = getString(R.string.TeachExp) + " " + userProfile.experience
         }
 
         if (userProfile.picture !== "") {

@@ -48,7 +48,7 @@ class StudentFlashcardDetail : MainActivityBaseFragment() {
             val setID= bundle.getInt("flashcard id")
 
             view.edit_quiz_question.text = Editable.Factory.getInstance().newEditable(flashcard.card1)
-            view.edit_quiz_answer.text = Editable.Factory.getInstance().newEditable(flashcard.card1)
+            view.edit_quiz_answer.text = Editable.Factory.getInstance().newEditable(flashcard.card2)
             view.updateQuizBtn.text = getString(R.string.updateFC)
             view.deleteQuizBtn.text = getString(R.string.deleteFC)
 

@@ -23,7 +23,6 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:text="name"
-            android:textSize="36sp"
             android:background="@drawable/layout_roundcorner_type0"/>
 
         <TextView
@@ -35,7 +34,6 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:text="name"
-            android:textSize="36sp"
             android:background="@drawable/layout_roundcorner_type0"/>
 
         <ImageView
