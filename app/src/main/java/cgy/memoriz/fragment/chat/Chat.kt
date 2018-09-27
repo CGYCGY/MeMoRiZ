@@ -31,8 +31,8 @@ class Chat : MainActivityBaseFragment(), ChatHistoryInterface {
         recycleView = view.rv_recent_chat
         setTitle("Chat")
 
-        /*Use sharepreference get back your current acount id.
-         *Use sharepreference to get back your current account user type. If not lecturer , make the button add group gone.
+        /*Use SharePref get back your current acount id.
+         *Use SharePref to get back your current account user type. If not lecturer , make the button add group gone.
          * Eg: view.btn_add_group.visibility=GONE
          */
         showProgressDialog()

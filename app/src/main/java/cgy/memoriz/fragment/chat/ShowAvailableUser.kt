@@ -62,7 +62,7 @@ class ShowAvailableUser : MainActivityBaseFragment(), UserAdapterInterface, Grou
         view.btn_lecturer.setOnClickListener{
             setRecycleView(lecturerList)
         }
-        /*The group chat  i use firebase store,  so no need use your mysql database to store. */
+//        The group chat  i use firebase store,  so no need use your mysql database to store
         view.btn_classroom.setOnClickListener{
             firebase.getAvailableGroupChat()
         }

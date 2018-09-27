@@ -24,8 +24,7 @@ class AddGroup : MainActivityBaseFragment() {
 
         view.btn_next.setOnClickListener{
             if(!TextUtils.isEmpty(view.et_name.text.toString())){
-                /*If want dialog(yes/no) for user to confirm whether want create group
-                 , can just use dialog factory call createTwoButtonDialog.*/
+//                can put dialog factory here
                 firebase.saveGroupChat(view.et_name.text.toString(), SharedPref.userID)
                 showToastMessage("Successfully create group.")
             }

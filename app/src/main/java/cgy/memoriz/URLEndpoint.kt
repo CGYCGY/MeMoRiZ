@@ -1,10 +1,10 @@
 package cgy.memoriz
 
 object URLEndpoint {
-    private val urlRoot = "http://192.168.0.166/linkdbAPI/v1/?op="
-//    private val urlRoot = "http://192.168.43.138/linkdbAPI/v1/?op="
-    private val urlBase = "http://192.168.0.166/linkdbAPI/"
-//    private val urlBase = "http://192.168.43.138/linkdbAPI/"
+//    private val urlRoot = "http://192.168.0.166/linkdbAPI/v1/?op="
+    private val urlRoot = "http://192.168.43.138/linkdbAPI/v1/?op="
+//    private val urlBase = "http://192.168.0.166/linkdbAPI/"
+    private val urlBase = "http://192.168.43.138/linkdbAPI/"
 
     val urlRegister = urlRoot + "register"
     val urlLogin = urlRoot + "login"

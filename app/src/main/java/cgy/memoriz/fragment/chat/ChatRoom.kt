@@ -60,8 +60,8 @@ class   ChatRoom : MainActivityBaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat_room, container, false)
         recycleView = view.rv_chat
-        /*The user can come to this fragment by select from recent chat
-         *Or come from search user / group there . */
+//        The user can come to this fragment by switch to recent chat
+//         Or redirect to user / group list there .
         val bundle = arguments
         if (bundle != null) {
             if (bundle.containsKey("new user")) {
